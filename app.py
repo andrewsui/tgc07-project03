@@ -18,8 +18,12 @@ db = client[DB_NAME]
 
 @app.route('/')
 def home():
-    return "Initial commit"
+    return "Test home page"
 
+@app.route('/categories')
+def categories():
+    all_categories = db.categories.find()
+    return render_template('categories.html', categories=all_categories)
 
 
 

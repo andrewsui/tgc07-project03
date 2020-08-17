@@ -1,0 +1,16 @@
+{% extends 'base-template.html' %}
+
+{% block title %}
+    Categories
+{% endblock %}
+
+{% block content %}
+    <ul>
+        {% for category in categories %}
+            <h3>{{category.category}}:</h3>
+            {% for sub_category in category.sub_categories %}
+            <li>{{sub_category.category}}</li>
+            {% endfor %}
+        {% endfor %}
+    </ul>
+{% endblock %}
