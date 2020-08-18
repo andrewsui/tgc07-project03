@@ -22,3 +22,12 @@ def dal_category_create_1(collection, category_value, parent_id):
             }
         }
     })
+
+def dal_category_update_0(collection, category_value, category_id):
+    return collection.update_one({
+        '_id': ObjectId(category_id)
+    }, {
+        '$set': {
+            'category': category_value
+            }
+    })

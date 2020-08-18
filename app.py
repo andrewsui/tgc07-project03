@@ -51,6 +51,14 @@ def create_category_1(parent_id):
         module_services.service_category_create_1(db, request.form, parent_id)
         return redirect(url_for('categories'))
 
+@app.route('/categories/update-0/<category_id>', methods=['GET','POST'])
+def update_category_0(category_id):
+    if request.method == 'GET':
+        return render_template('categories/update-category-0.html')
+    elif request.method == 'POST':
+        module_services.service_category_update_0(db, request.form, category_id)
+        return redirect(url_for('categories'))
+
 # App start point
 if __name__ == '__main__':
     app.run(host=os.environ.get('IP'),
