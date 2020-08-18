@@ -7,7 +7,7 @@
 {% block content %}
     <select name="categories" id="categories" size="8">
         {% for category in categories %}
-            <option value="category._id">{{category.category}}</option>
+            <option value="{{category._id}}" id="{{category.category}}" class="category-0">{{category.category}}</option>
         {% endfor %}
     </select>
 {% endblock %}
