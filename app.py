@@ -13,11 +13,8 @@ load_dotenv()
 app = Flask(__name__)
 app.secret_key = os.environ.get('SECRET_KEY')
 
-MONGO_URI = os.environ.get('MONGO_URI')
-DB_NAME = "pc_forum"
-
-client = pymongo.MongoClient(MONGO_URI)
-db = client[DB_NAME]
+client = pymongo.MongoClient(os.environ.get('MONGO_URI'))
+db = client['pc_forum']
 
 @app.route('/')
 def home():
