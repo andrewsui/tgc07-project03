@@ -25,12 +25,12 @@ def home():
 
 @app.route('/categories')
 def categories():
-    all_categories = module_services.get_categories_service(db)
+    all_categories = module_services.service_category_get(db)
     return render_template('categories.html', categories=all_categories)
 
 @app.route('/api/categories')
 def api_categories():
-    all_categories = module_services.get_categories_service(db)
+    all_categories = module_services.service_category_get(db)
     return {
         'categories': json.loads(dumps(all_categories))
     }

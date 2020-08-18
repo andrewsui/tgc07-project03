@@ -1,4 +1,4 @@
 import module_dal
 
-def get_categories_service(db):
-    return module_dal.get_categories_dal(db.categories)
+def service_category_get(db):
+    return module_dal.dal_category_get(db.categories)
