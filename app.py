@@ -3,6 +3,8 @@ import os
 import pymongo
 from dotenv import load_dotenv
 from bson.objectid import ObjectId
+from bson.json_util import dumps
+import json
 import datetime
 
 load_dotenv()
@@ -25,7 +27,20 @@ def categories():
     all_categories = db.categories.find()
     return render_template('categories.html', categories=all_categories)
 
+@app.route('/api/categories')
+def api_categories():
+    all_categories = db.categories.find()
+    return {
+        'categories': json.loads(dumps(all_categories))
+    }
 
+@app.route('/categories/create', methods=['GET','POST'])
+def create_category():
+    if request.method == 'GET':
+        all_categories = db.categories.find()
+        return render_template('create-category.html', categories=all_categories)
+    elif request.method == 'POST':
+        return "POST"
 
 # App start point
 if __name__ == '__main__':
