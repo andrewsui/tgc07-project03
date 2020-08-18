@@ -48,19 +48,7 @@ def create_category_1(parent_id):
     if request.method == 'GET':
         return render_template('categories/create-category-1.html')
     elif request.method == 'POST':
-        # module_services.service_category_create(db, request.form)
-        category_value = request.form.get('category')
-        db.categories.update({
-            '_id': ObjectId(parent_id)
-        }, {
-            '$push': {
-                'sub_categories': {
-                    '_id': ObjectId(),
-                    'category' : category_value,
-                    'sub_categories': []
-                }
-            }
-        })
+        module_services.service_category_create_1(db, request.form, parent_id)
         return redirect(url_for('categories'))
 
 # App start point
