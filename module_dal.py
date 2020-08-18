@@ -11,7 +11,7 @@ def dal_category_create(collection, category_value):
     return collection.insert_one(new_record)
 
 def dal_category_create_1(collection, category_value, parent_id):
-    return collection.update({
+    return collection.update_one({
         '_id': ObjectId(parent_id)
     }, {
         '$push': {
