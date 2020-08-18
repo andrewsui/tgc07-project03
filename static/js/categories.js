@@ -1,6 +1,6 @@
 $('#categories').on('click', ".category-0", async function() {
     // console.log(this.id)
-    let response = await axios.get('http://localhost:8080/api/categories')
+    let response = await axios.get('api/categories')
     // console.log(response.data)
     for (let category of response.data.categories) {
         // console.log(category._id.$oid)
