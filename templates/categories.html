@@ -4,6 +4,10 @@
     Categories
 {% endblock %}
 
+{% block javascript %}
+    <script src={{ url_for("static", filename="js/categories.js") }} defer></script>
+{% endblock %}
+
 {% block content %}
     <select name="categories" id="categories" size="8">
         {% for category in categories %}
