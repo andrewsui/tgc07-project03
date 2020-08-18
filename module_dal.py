@@ -31,3 +31,8 @@ def dal_category_update_0(collection, category_value, category_id):
             'category': category_value
             }
     })
+
+def dal_category_delete_0(collection, category_id):
+    return collection.remove({
+        '_id': ObjectId(category_id)
+        })

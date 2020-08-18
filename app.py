@@ -59,6 +59,18 @@ def update_category_0(category_id):
         module_services.service_category_update_0(db, request.form, category_id)
         return redirect(url_for('categories'))
 
+@app.route('/categories/delete-0/<category_id>', methods=['GET','POST'])
+def delete_category_0(category_id):
+    if request.method == 'GET':
+        return render_template('categories/delete-category-0.html')
+    elif request.method == 'POST':
+        # db.categories.remove({
+        # '_id': ObjectId(category_id)
+        # })
+        module_services.service_category_delete_0(db, category_id)
+        return redirect(url_for('categories'))
+
+
 # App start point
 if __name__ == '__main__':
     app.run(host=os.environ.get('IP'),
