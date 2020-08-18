@@ -15,6 +15,10 @@ def service_category_update_0(db, data, category_id):
     category_value = data.get('category')
     return module_dal.dal_category_update_0(db.categories, category_value, category_id)
 
+def service_category_update_1(db, data, category_id):
+    category_value = data.get('category')
+    return module_dal.dal_category_update_1(db.categories, category_value, category_id)
+
 def service_category_delete_0(db, category_id):
     return module_dal.dal_category_delete_0(db.categories, category_id)
 
