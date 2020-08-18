@@ -36,3 +36,16 @@ def dal_category_delete_0(collection, category_id):
     return collection.remove({
         '_id': ObjectId(category_id)
         })
+
+def dal_category_delete_1(collection, category_id):
+    return collection.update_one({
+        'sub_categories._id': ObjectId(category_id)
+        }, {
+            '$pull': {
+                'sub_categories': {
+                    '_id': ObjectId(category_id)
+                }
+            }
+        })
+
+
