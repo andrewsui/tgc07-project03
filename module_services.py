@@ -6,3 +6,7 @@ def service_category_get(db):
 def service_category_create(db, data):
     category_value = data.get('category')
     return module_dal.dal_category_create(db.categories, category_value)
+
+def service_category_create_1(db, data):
+    category_value = data.get('category')
+    return module_dal.dal_category_create(db.categories, category_value)
