@@ -5,12 +5,9 @@
 {% endblock %}
 
 {% block content %}
-    <ul>
+    <select name="categories" id="categories" size="8">
         {% for category in categories %}
-            <h3>{{category.category}}:</h3>
-            {% for sub_category in category.sub_categories %}
-            <li>{{sub_category.category}}</li>
-            {% endfor %}
+            <option value="category._id">{{category.category}}</option>
         {% endfor %}
-    </ul>
+    </select>
 {% endblock %}
