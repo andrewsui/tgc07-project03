@@ -5,8 +5,8 @@ def dal_category_get(collection):
 
 def dal_category_create_0(collection, category_value):
     new_record = {
-        'category' : category_value,
-        'sub_categories' : []
+        'category': category_value,
+        'sub_categories': []
     }
     return collection.insert_one(new_record)
 
@@ -17,7 +17,7 @@ def dal_category_create_1(collection, category_value, parent_id):
         '$push': {
             'sub_categories': {
                 '_id': ObjectId(),
-                'category' : category_value,
+                'category': category_value,
                 'sub_categories': []
             }
         }
