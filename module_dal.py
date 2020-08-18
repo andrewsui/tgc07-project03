@@ -3,7 +3,7 @@ from bson.objectid import ObjectId
 def dal_category_get(collection):
     return collection.find()
 
-def dal_category_create(collection, category_value):
+def dal_category_create_0(collection, category_value):
     new_record = {
         'category' : category_value,
         'sub_categories' : []

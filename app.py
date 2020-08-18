@@ -40,7 +40,7 @@ def create_category_0():
     if request.method == 'GET':
         return render_template('categories/create-category-0.html')
     elif request.method == 'POST':
-        module_services.service_category_create(db, request.form)
+        module_services.service_category_create_0(db, request.form)
         return redirect(url_for('categories'))
 
 @app.route('/categories/create-1/<parent_id>', methods=['GET','POST'])
