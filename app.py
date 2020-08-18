@@ -38,10 +38,10 @@ def api_categories():
 @app.route('/categories/create', methods=['GET','POST'])
 def create_category():
     if request.method == 'GET':
-        all_categories = db.categories.find()
-        return render_template('create-category.html', categories=all_categories)
+        return render_template('create-category.html')
     elif request.method == 'POST':
-        return "POST"
+        module_services.service_category_create(db, request.form)
+        return redirect(url_for('categories'))
 
 # App start point
 if __name__ == '__main__':
