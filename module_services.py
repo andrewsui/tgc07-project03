@@ -114,5 +114,8 @@ def service_threads_update(db, data, thread_id):
         },
         'sub_posts': []
     }
-    print(updated_record)
+    # print(updated_record)
     return module_dal.dal_threads_update(db.threads, updated_record, thread_id)
+
+def service_threads_delete(db, thread_id):
+    return module_dal.dal_threads_delete(db.threads, thread_id)

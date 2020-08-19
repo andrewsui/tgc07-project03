@@ -138,6 +138,14 @@ def update_thread(thread_id):
         module_services.service_threads_update(db, request.form, thread_id)
         return redirect(url_for('threads'))
 
+@app.route('/threads/delete/<thread_id>', methods=['GET','POST'])
+def delete_thread(thread_id):
+    if request.method == 'GET':
+        return render_template('threads/delete-thread.html')
+    elif request.method == 'POST':
+        module_services.service_threads_delete(db, thread_id)
+        return redirect(url_for('threads'))
+
 # App start point
 if __name__ == '__main__':
     app.run(host=os.environ.get('IP'),

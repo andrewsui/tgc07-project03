@@ -111,3 +111,8 @@ def dal_threads_update(collection, updated_record, thread_id):
             # 'sub_posts': []
         }
     })
+
+def dal_threads_delete(collection, thread_id):
+    return collection.remove({
+        '_id': ObjectId(thread_id)
+        })
