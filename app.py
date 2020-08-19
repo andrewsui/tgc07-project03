@@ -33,6 +33,14 @@ def create_user():
         module_services.service_users_create(db, request.form)
         return redirect(url_for('users'))
 
+@app.route('/users/update/<user_id>', methods=['GET','POST'])
+def update_user(user_id):
+    if request.method == 'GET':
+        return render_template('users/update-user.html')
+    elif request.method == 'POST':
+        module_services.service_users_update(db, request.form, user_id)
+        return redirect(url_for('users'))
+
 
 @app.route('/categories')
 def categories():

@@ -6,6 +6,12 @@ def dal_collection_get(collection):
 def dal_users_create(collection, new_record):
     return collection.insert_one(new_record)
 
+def dal_users_update(collection, updated_record, user_id):
+    return collection.update_one({
+        '_id': ObjectId(user_id)
+    }, {
+        '$set': updated_record
+    })
 
 def dal_categories_create_0(collection, category_value):
     new_record = {
