@@ -26,6 +26,8 @@ def service_users_update(db, data, user_id):
         }
     return module_dal.dal_users_update(db.users, updated_record, user_id)
 
+def service_users_delete(db, user_id):
+    return module_dal.dal_users_delete(db.users, user_id)
 
 # Categories
 def service_categories_get(db):

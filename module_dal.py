@@ -15,6 +15,10 @@ def dal_users_update(collection, updated_record, user_id):
         '$set': updated_record
     })
 
+def dal_users_delete(collection, user_id):
+    return collection.remove({
+        '_id': ObjectId(user_id)
+        })
 
 # Categories
 def dal_categories_create_0(collection, category_value):
