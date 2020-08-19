@@ -83,3 +83,31 @@ def dal_categories_delete_1(collection, category_id):
 # Threads
 def dal_threads_create(collection, new_record):
     return collection.insert_one(new_record)
+
+def dal_threads_update(collection, updated_record, thread_id):
+    return collection.update_one({
+        '_id': ObjectId(thread_id)
+    }, {
+        '$set': {
+            # 'datetime': datetime.datetime.utcnow(),
+            'datetime': updated_record['datetime'],
+            'user': {
+                'user_id': ObjectId(updated_record['user']['user_id']),
+                'username': updated_record['user']['username']
+            },
+            'category': {
+                'category_id': ObjectId(updated_record['category']['category_id']),
+                'category_name': updated_record['category']['category_name']
+            },
+            'product_name': updated_record['product_name'],
+            'price': updated_record['price'],
+            'image': updated_record['image'],
+            'affiliate': updated_record['affiliate'],
+            'description': updated_record['description'],
+            # 'votes': {
+            #     'up_votes': [],
+            #     'down_votes': []
+            # },
+            # 'sub_posts': []
+        }
+    })

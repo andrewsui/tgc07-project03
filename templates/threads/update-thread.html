@@ -1,0 +1,14 @@
+{% extends 'base-template.html' %}
+
+{% block title %}
+    Update Review
+{% endblock %}
+
+{% block content %}
+    <h1>Update review</h1>
+
+    <form action="" method="post">
+        {% include 'threads/base-thread-form.html' %}
+        <input type="submit" value="Update">
+    </form>
+{% endblock %}

@@ -64,6 +64,9 @@ def service_categories_delete_1(db, category_id):
 def service_threads_get_all(db):
     return module_dal.dal_collection_get(db.threads)
 
+def service_threads_get_one(db, thread_id):
+    return module_dal.dal_document_get(db.threads, thread_id)
+
 def service_threads_create(db, data):
     new_record = {
         'datetime': datetime.datetime.utcnow(),
@@ -86,5 +89,30 @@ def service_threads_create(db, data):
         },
         'sub_posts': []
     }
-    print(new_record)
+    # print(new_record)
     return module_dal.dal_threads_create(db.threads, new_record)
+
+def service_threads_update(db, data, thread_id):
+    updated_record = {
+        'datetime': datetime.datetime.utcnow(),
+        'user': {
+            'user_id': data.get('user_id'),
+            'username': data.get('username')
+        },
+        'category': {
+            'category_id': data.get('category_id'),
+            'category_name': [data.get('category_name')]
+        },
+        'product_name': data.get('product_name'),
+        'price': float(data.get('price')),
+        'image': data.get('image'),
+        'affiliate': data.get('affiliate'),
+        'description': data.get('description'),
+        'votes': {
+            'up_votes': [],
+            'down_votes': []
+        },
+        'sub_posts': []
+    }
+    print(updated_record)
+    return module_dal.dal_threads_update(db.threads, updated_record, thread_id)

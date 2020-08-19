@@ -1,35 +1,35 @@
 <div>
     <label for="user_id">User ID</label>
-    <input type="text" name="user_id" id="user_id" placeholder="user_id" value="">
+    <input type="text" name="user_id" id="user_id" placeholder="user_id" {% if not previous_values=={} %}value="{{ previous_values.user.user_id }} {% endif %}">
 </div>
 <div>
     <label for="username">Username</label>
-    <input type="text" name="username" id="username" placeholder="username" value="">
+    <input type="text" name="username" id="username" placeholder="username"  {% if not previous_values=={} %}value="{{ previous_values.user.username }} {% endif %}">
 </div>
 <div>
     <label for="category_id">Category ID</label>
-    <input type="text" name="category_id" id="category_id" placeholder="category_id" value="">
+    <input type="text" name="category_id" id="category_id" placeholder="category_id"  {% if not previous_values=={} %}value="{{ previous_values.category.category_id }} {% endif %}">
 </div>
 <div>
     <label for="category_name">Category Name</label>
-    <input type="text" name="category_name" id="category_name" placeholder="e.g. CPU, GPU, motherboard, etc" value="">
+    <input type="text" name="category_name" id="category_name" placeholder="e.g. CPU, GPU, motherboard, etc"  {% if not previous_values=={} %}value="{{ previous_values.category.category_name|last }} {% endif %}">
 </div>
 <div>
     <label for="product_name">Product name</label>
-    <input type="text" name="product_name" id="product_name" placeholder="e.g. AMD Ryzen 3700X" value="">
+    <input type="text" name="product_name" id="product_name" placeholder="e.g. AMD Ryzen 3700X" value="{{ previous_values.product_name }}">
 </div>
 <div>
     <label for="price">RRP (USD)</label>
-    <input type="text" name="price" id="price" placeholder="e.g. 350.00" value="">
+    <input type="text" name="price" id="price" placeholder="e.g. 350.00" value="{{ previous_values.price }}">
 </div>
 <div>
     <label for="image">Image URL</label>
-    <input type="text" name="image" id="image" placeholder="e.g. https://images-na.ssl-images-amazon.com/images/I/717Di3DGIbL._AC_SL1092_.jpg" value="">
+    <input type="text" name="image" id="image" placeholder="e.g. https://images-na.ssl-images-amazon.com/images/I/717Di3DGIbL._AC_SL1092_.jpg" value="{{ previous_values.image }}">
 </div>
 <div>
     <label for="affiliate">Affiliate link</label>
-    <input type="text" name="affiliate" id="affiliate" placeholder="e.g. https://www.amazon.com/AMD-Ryzen-3700X-16-Thread-Processor/dp/B07SXMZLPK/" value="">
+    <input type="text" name="affiliate" id="affiliate" placeholder="e.g. https://www.amazon.com/AMD-Ryzen-3700X-16-Thread-Processor/dp/B07SXMZLPK/" value="{{ previous_values.affiliate }}">
 </div>
 <div>
-    <textarea name="description" id="description" cols="30" rows="10" placeholder="Enter your review here"></textarea>
+    <textarea name="description" id="description" cols="30" rows="10" placeholder="Enter your review here">{{ previous_values.description }}</textarea>
 </div>

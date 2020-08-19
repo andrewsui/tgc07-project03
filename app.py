@@ -39,7 +39,7 @@ def create_user():
 def update_user(user_id):
     if request.method == 'GET':
         previous_values = module_services.service_users_get_one(db, user_id)
-        print(previous_values)
+        # print(previous_values)
         return render_template('users/update-user.html', previous_values=previous_values)
     elif request.method == 'POST':
         module_services.service_users_update(db, request.form, user_id)
@@ -125,7 +125,17 @@ def create_thread():
     if request.method == 'GET':
         return render_template('threads/create-thread.html')
     elif request.method == 'POST':
-        new_thread = module_services.service_threads_create(db, request.form)
+        module_services.service_threads_create(db, request.form)
+        return redirect(url_for('threads'))
+
+@app.route('/threads/update/<thread_id>', methods=['GET','POST'])
+def update_thread(thread_id):
+    if request.method == 'GET':
+        previous_values = module_services.service_threads_get_one(db, thread_id)
+        print(previous_values)
+        return render_template('threads/update-thread.html', previous_values=previous_values)
+    elif request.method == 'POST':
+        module_services.service_threads_update(db, request.form, thread_id)
         return redirect(url_for('threads'))
 
 # App start point
