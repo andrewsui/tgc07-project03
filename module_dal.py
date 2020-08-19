@@ -5,6 +5,11 @@ def dal_collection_get(collection):
     return collection.find()
 
 # Users
+def dal_users_get_one(collection, user_id):
+    return collection.find_one({
+        '_id': ObjectId(user_id)
+    })
+
 def dal_users_create(collection, new_record):
     return collection.insert_one(new_record)
 

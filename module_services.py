@@ -4,6 +4,9 @@ import module_dal
 def service_users_get(db):
     return module_dal.dal_collection_get(db.users)
 
+def service_users_get_one(db, user_id):
+    return module_dal.dal_users_get_one(db.users, user_id)
+
 def service_users_create(db, data):
     new_record = {
             'username': data.get('username'),

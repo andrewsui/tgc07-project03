@@ -38,7 +38,9 @@ def create_user():
 @app.route('/users/update/<user_id>', methods=['GET','POST'])
 def update_user(user_id):
     if request.method == 'GET':
-        return render_template('users/update-user.html')
+        previous_values = module_services.service_users_get_one(db, user_id)
+        print(previous_values)
+        return render_template('users/update-user.html', previous_values=previous_values)
     elif request.method == 'POST':
         module_services.service_users_update(db, request.form, user_id)
         return redirect(url_for('users'))

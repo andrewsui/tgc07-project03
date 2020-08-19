@@ -1,20 +1,20 @@
 <div>
     <label for="username">Username</label>
-    <input type="text" name="username" id="username" placeholder="username">
+    <input type="text" name="username" id="username" placeholder="username" value="{{ previous_values.username }}">
 </div>
 <div>
     <label for="email">Email</label>
-    <input type="text" name="email" id="email" placeholder="abc@example.com">
+    <input type="text" name="email" id="email" placeholder="abc@example.com" value="{{ previous_values.email }}">
 </div>
 <div>
     <label for="male">Male</label>
-    <input type="radio" name="gender" value="male" id="male">
+    <input type="radio" name="gender" value="male" id="male" {% if previous_values.gender=="male" %}checked{% endif %}>
     <label for="female">Female</label>
-    <input type="radio" name="gender" value="female" id="female">
+    <input type="radio" name="gender" value="female" id="female" {% if previous_values.gender=="female" %}checked{% endif %}>
     <label for="other">Other</label>
-    <input type="radio" name="gender" value="other" id="other">
+    <input type="radio" name="gender" value="other" id="other" {% if previous_values.gender=="other" %}checked{% endif %}>
     <label for="null">Prefer not to say</label>
-    <input type="radio" name="gender" value="null" id="null">
+    <input type="radio" name="gender" value="null" id="null" {% if previous_values.gender==None %}checked{% endif %}>
 </div>
 <div>
     <label for="password">Password</label>
@@ -22,9 +22,9 @@
 </div>
 <div>
     <label for="terms_and_conditions">Terms and conditions</label>
-    <input type="checkbox" name="terms_and_conditions" value="true" id="terms_and_conditions">
+    <input type="checkbox" name="terms_and_conditions" value="true" id="terms_and_conditions" {% if previous_values.terms_and_conditions==True %}checked{% endif %}>
 </div>
 <div>
     <label for="marketing">Marketing list</label>
-    <input type="checkbox" name="marketing" value="true" id="marketing">
+    <input type="checkbox" name="marketing" value="true" id="marketing" {% if previous_values.marketing==True %}checked{% endif %}>
 </div>
