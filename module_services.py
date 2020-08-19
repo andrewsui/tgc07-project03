@@ -1,7 +1,7 @@
 import module_dal
 
 # Users
-def service_users_get(db):
+def service_users_get_all(db):
     return module_dal.dal_collection_get(db.users)
 
 def service_users_get_one(db, user_id):
@@ -33,7 +33,7 @@ def service_users_delete(db, user_id):
     return module_dal.dal_users_delete(db.users, user_id)
 
 # Categories
-def service_categories_get(db):
+def service_categories_get_all(db):
     return module_dal.dal_collection_get(db.categories)
 
 def service_categories_create_0(db, data):

@@ -24,7 +24,7 @@ def home():
 # Users
 @app.route('/users')
 def users():
-    all_users = module_services.service_users_get(db)
+    all_users = module_services.service_users_get_all(db)
     return render_template('users/all-users.html', users=all_users)
 
 @app.route('/users/create', methods=['GET','POST'])
@@ -56,12 +56,12 @@ def delete_user(user_id):
 # Categories
 @app.route('/categories')
 def categories():
-    all_categories = module_services.service_categories_get(db)
+    all_categories = module_services.service_categories_get_all(db)
     return render_template('categories/all-categories.html', categories=all_categories)
 
 @app.route('/api/categories')
 def api_categories():
-    all_categories = module_services.service_categories_get(db)
+    all_categories = module_services.service_categories_get_all(db)
     return {
         'categories': json.loads(dumps(all_categories))
     }
