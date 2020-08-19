@@ -1,0 +1,31 @@
+{% extends 'base-template.html' %}
+
+{% block title %}
+    All Users
+{% endblock %}
+
+
+{% block content %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Username</th>
+                <th scope="col">email</th>
+                <th scope="col">T&C</th>
+                <th scope="col">Marketing</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <th scope="row">{{ user._id }}</th>
+                <td>{{ user.username }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.terms_and_conditions }}</td>
+                <td>{{ user.marketing }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

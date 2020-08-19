@@ -1,5 +1,9 @@
 import module_dal
 
+def service_users_get(db):
+    return module_dal.dal_collection_get(db.users)
+
+
 def service_category_get(db):
     return module_dal.dal_collection_get(db.categories)
 

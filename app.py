@@ -20,6 +20,11 @@ db = client['pc_forum']
 def home():
     return "Test home page"
 
+@app.route('/users')
+def users():
+    all_users = module_services.service_users_get(db)
+    return render_template('users/users.html', users=all_users)
+
 @app.route('/categories')
 def categories():
     all_categories = module_services.service_category_get(db)
