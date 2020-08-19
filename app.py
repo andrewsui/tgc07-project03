@@ -27,12 +27,12 @@ def users():
 
 @app.route('/categories')
 def categories():
-    all_categories = module_services.service_category_get(db)
+    all_categories = module_services.service_categories_get(db)
     return render_template('categories/categories.html', categories=all_categories)
 
 @app.route('/api/categories')
 def api_categories():
-    all_categories = module_services.service_category_get(db)
+    all_categories = module_services.service_categories_get(db)
     return {
         'categories': json.loads(dumps(all_categories))
     }
@@ -42,7 +42,7 @@ def create_category_0():
     if request.method == 'GET':
         return render_template('categories/create-category-0.html')
     elif request.method == 'POST':
-        module_services.service_category_create_0(db, request.form)
+        module_services.service_categories_create_0(db, request.form)
         return redirect(url_for('categories'))
 
 @app.route('/categories/create-1/<parent_id>', methods=['GET','POST'])
@@ -50,7 +50,7 @@ def create_category_1(parent_id):
     if request.method == 'GET':
         return render_template('categories/create-category-1.html')
     elif request.method == 'POST':
-        module_services.service_category_create_1(db, request.form, parent_id)
+        module_services.service_categories_create_1(db, request.form, parent_id)
         return redirect(url_for('categories'))
 
 @app.route('/categories/update-0/<category_id>', methods=['GET','POST'])
@@ -58,7 +58,7 @@ def update_category_0(category_id):
     if request.method == 'GET':
         return render_template('categories/update-category-0.html')
     elif request.method == 'POST':
-        module_services.service_category_update_0(db, request.form, category_id)
+        module_services.service_categories_update_0(db, request.form, category_id)
         return redirect(url_for('categories'))
 
 @app.route('/categories/update-1/<category_id>', methods=['GET','POST'])
@@ -66,7 +66,7 @@ def update_category_1(category_id):
     if request.method == 'GET':
         return render_template('categories/update-category-1.html')
     elif request.method == 'POST':
-        module_services.service_category_update_1(db, request.form, category_id)
+        module_services.service_categories_update_1(db, request.form, category_id)
         return redirect(url_for('categories'))
 
 @app.route('/categories/delete-0/<category_id>', methods=['GET','POST'])
@@ -74,7 +74,7 @@ def delete_category_0(category_id):
     if request.method == 'GET':
         return render_template('categories/delete-category-0.html')
     elif request.method == 'POST':
-        module_services.service_category_delete_0(db, category_id)
+        module_services.service_categories_delete_0(db, category_id)
         return redirect(url_for('categories'))
 
 @app.route('/categories/delete-1/<category_id>', methods=['GET','POST'])
@@ -82,7 +82,7 @@ def delete_category_1(category_id):
     if request.method == 'GET':
         return render_template('categories/delete-category-1.html')
     elif request.method == 'POST':
-        module_services.service_category_delete_1(db, category_id)
+        module_services.service_categories_delete_1(db, category_id)
         return redirect(url_for('categories'))
 
 
