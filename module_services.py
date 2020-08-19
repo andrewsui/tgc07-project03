@@ -3,6 +3,16 @@ import module_dal
 def service_users_get(db):
     return module_dal.dal_collection_get(db.users)
 
+def service_users_create(db, data):
+    new_record = {
+            'username': data.get('username'),
+            'email': data.get('email'),
+            'gender': None if data.get('gender')=="null" else data.get('gender'),
+            'password': data.get('password'),
+            'terms_and_conditions': False if data.get('terms_and_conditions')==None else True,
+            'marketing': False if data.get('marketing')==None else True
+        }
+    return module_dal.dal_users_create(db.users, new_record)
 
 def service_categories_get(db):
     return module_dal.dal_collection_get(db.categories)

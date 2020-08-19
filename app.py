@@ -25,6 +25,15 @@ def users():
     all_users = module_services.service_users_get(db)
     return render_template('users/users.html', users=all_users)
 
+@app.route('/users/create', methods=['GET','POST'])
+def create_user():
+    if request.method == 'GET':
+        return render_template('users/create-user.html')
+    elif request.method == 'POST':
+        module_services.service_users_create(db, request.form)
+        return redirect(url_for('users'))
+
+
 @app.route('/categories')
 def categories():
     all_categories = module_services.service_categories_get(db)
