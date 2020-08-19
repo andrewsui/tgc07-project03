@@ -1,6 +1,6 @@
 from bson.objectid import ObjectId
 
-# Get entire database collection
+# Get entire collection from database
 def dal_collection_get(collection):
     return collection.find()
 
