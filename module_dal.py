@@ -1,6 +1,6 @@
 from bson.objectid import ObjectId
 
-def dal_category_get(collection):
+def dal_collection_get(collection):
     return collection.find()
 
 def dal_category_create_0(collection, category_value):

@@ -1,7 +1,7 @@
 import module_dal
 
 def service_category_get(db):
-    return module_dal.dal_category_get(db.categories)
+    return module_dal.dal_collection_get(db.categories)
 
 def service_category_create_0(db, data):
     category_value = data.get('category')
