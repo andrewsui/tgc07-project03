@@ -1,0 +1,14 @@
+{% extends 'base-template.html' %}
+
+{% block title %}
+    All Threads
+{% endblock %}
+
+{% block content %}
+    <h1>Test threads page</h1>
+    {% for thread in threads %}
+        {{ thread }}
+        <br>
+        <br>
+    {% endfor %}
+{% endblock %}

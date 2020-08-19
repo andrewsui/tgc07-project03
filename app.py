@@ -114,6 +114,19 @@ def delete_category_1(category_id):
         module_services.service_categories_delete_1(db, category_id)
         return redirect(url_for('categories'))
 
+# Forum threads
+@app.route('/threads')
+def threads():
+    all_threads = module_services.service_threads_get_all(db)
+    return render_template('threads/all-threads.html', threads=all_threads)
+
+@app.route('/threads/create', methods=['GET','POST'])
+def create_thread():
+    if request.method == 'GET':
+        return render_template('threads/create-thread.html')
+    elif request.method == 'POST':
+        new_thread = module_services.service_threads_create(db, request.form)
+        return redirect(url_for('threads'))
 
 # App start point
 if __name__ == '__main__':

@@ -1,0 +1,22 @@
+{% extends 'base-template.html' %}
+
+{% block title %}
+    Create Review
+{% endblock %}
+
+{% block content %}
+    <h1>Create new review</h1>
+
+    <form action="" method="post">
+        {% with %}
+            {% if not previous_values %}
+                {% set previous_values = {} %}
+            {% endif %}
+
+            {% include 'threads/base-thread-form.html' %}
+
+        {% endwith %}
+        
+        <input type="submit" value="Create">
+    </form>
+{% endblock %}

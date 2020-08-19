@@ -80,4 +80,6 @@ def dal_categories_delete_1(collection, category_id):
             }
         })
 
-
+# Threads
+def dal_threads_create(collection, new_record):
+    return collection.insert_one(new_record)
