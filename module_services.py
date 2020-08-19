@@ -96,11 +96,11 @@ def service_threads_update(db, data, thread_id):
     updated_record = {
         'datetime': datetime.datetime.utcnow(),
         'user': {
-            'user_id': data.get('user_id'),
+            'user_id': data.get('user_id').strip(),
             'username': data.get('username')
         },
         'category': {
-            'category_id': data.get('category_id'),
+            'category_id': data.get('category_id').strip(),
             'category_name': [data.get('category_name')]
         },
         'product_name': data.get('product_name'),
