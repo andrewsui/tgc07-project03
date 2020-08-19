@@ -16,10 +16,12 @@ app.secret_key = os.environ.get('SECRET_KEY')
 client = pymongo.MongoClient(os.environ.get('MONGO_URI'))
 db = client['pc_forum']
 
+# Home
 @app.route('/')
 def home():
     return "Test home page"
 
+# Users
 @app.route('/users')
 def users():
     all_users = module_services.service_users_get(db)
@@ -41,7 +43,7 @@ def update_user(user_id):
         module_services.service_users_update(db, request.form, user_id)
         return redirect(url_for('users'))
 
-
+# Categories
 @app.route('/categories')
 def categories():
     all_categories = module_services.service_categories_get(db)

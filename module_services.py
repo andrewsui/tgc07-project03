@@ -1,5 +1,6 @@
 import module_dal
 
+# Users
 def service_users_get(db):
     return module_dal.dal_collection_get(db.users)
 
@@ -25,6 +26,8 @@ def service_users_update(db, data, user_id):
         }
     return module_dal.dal_users_update(db.users, updated_record, user_id)
 
+
+# Categories
 def service_categories_get(db):
     return module_dal.dal_collection_get(db.categories)
 
