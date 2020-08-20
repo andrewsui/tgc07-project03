@@ -47,7 +47,7 @@ def user_loader(email):
 # Home
 @app.route('/')
 def home():
-    return "Test home page"
+    return render_template('index.html')
 
 # Users
 @app.route('/users')
@@ -56,7 +56,7 @@ def users():
     return render_template('users/all-users.html', users=all_users)
 
 @app.route('/users/login', methods=['GET','POST'])
-def process_login():
+def login():
     if request.method == 'GET':
         return render_template('users/login-user.html')
     elif request.method == 'POST':
@@ -85,6 +85,12 @@ def process_login():
         else:
             # flash("Email or password did not match our records", "danger")
             return redirect(url_for('login'))
+
+@app.route('/users/logout')
+def logout():
+    flask_login.logout_user()
+    # flash('Logged out', 'success')
+    return redirect(url_for('login'))
 
 @app.route('/users/create', methods=['GET','POST'])
 def create_user():
