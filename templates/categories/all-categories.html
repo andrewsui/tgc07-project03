@@ -4,14 +4,49 @@
     All Categories
 {% endblock %}
 
+{% block css %}
+    <link rel="stylesheet" href={{ url_for("static", filename="css/categories.css") }}>
+{% endblock %}
+
 {% block javascript %}
     <script src={{ url_for("static", filename="js/categories.js") }} defer></script>
 {% endblock %}
 
 {% block content %}
+    <!-- {# -->
     <select name="categories" id="categories" size="8">
         {% for category in categories %}
             <option value="{{category._id}}" id="{{category.category}}" class="category-0">{{category.category}}</option>
         {% endfor %}
     </select>
+    <select name="categories" id="categories" size="8">
+        {% for category in categories %}
+            {% for sub_category in category.sub_categories %}
+            <option value="{{sub_category._id}}" id="{{sub_category.category}}" class="category-0">{{sub_category.category}}</option>
+            {% endfor %}
+        {% endfor %}
+    </select>
+    <!-- #} -->
+
+    <div class="categories-menu">
+        <input type="checkbox" name="categories-menu" id="categories-menu" class="category-checkbox">
+        <label for="categories-menu">&#9776;</label>
+
+        <div class="multi-level">
+            {% for category in categories %}
+            <div class="categories-container">
+                <input type="checkbox" name="{{category._id}}" id="{{category._id}}" class="category-checkbox" value="{{category._id}}">
+                <label for="{{category._id}}">{{category.category}}</label>
+                {% for sub_category in category.sub_categories %}
+                    <ul>
+                        <li>
+                            <input type="checkbox" name="{{sub_category._id}}" id="{{category._id}}-{{sub_category._id}}" class="category-checkbox" value="{{sub_category._id}}">
+                            <label for="{{sub_category._id}}">{{sub_category.category}}</label>
+                        </li>
+                    </ul>
+                {% endfor %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
 {% endblock %}
