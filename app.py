@@ -62,11 +62,6 @@ def login():
     if request.method == 'GET':
         return render_template('users/login-user.html')
     elif request.method == 'POST':
-        # Get email and password from html form
-        # email = request.form.get('email')
-        # password = request.form.get('password')
-
-        # Check user's email exists in the database
         user = db.users.find_one({
             'email': request.form.get('email')
         })
@@ -93,7 +88,7 @@ def logout():
     # flash('Logged out', 'success')
     return redirect(url_for('login'))
 
-@app.route('/users/create', methods=['GET','POST'])
+@app.route('/users/signup', methods=['GET','POST'])
 def create_user():
     if request.method == 'GET':
         return render_template('users/create-user.html')
@@ -187,6 +182,7 @@ def threads():
     return render_template('threads/all-threads.html', threads=all_threads)
 
 @app.route('/threads/create', methods=['GET','POST'])
+@flask_login.login_required
 def create_thread():
     if request.method == 'GET':
         return render_template('threads/create-thread.html')
