@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, flash
 from dotenv import load_dotenv
 from bson.objectid import ObjectId
 from bson.json_util import dumps
+from passlib.hash import pbkdf2_sha256
 import flask_login
 import os
 import pymongo
@@ -36,7 +37,7 @@ def user_loader(email):
         # Create a User object that represents the user
         user_object = User()
         user_object.id = user_db["_id"]
-        user_object.id = user_db["email"]
+        user_object.email = user_db["email"]
          # Return the User object
         return user_object
     else:
@@ -53,6 +54,37 @@ def home():
 def users():
     all_users = module_services.service_users_get_all(db)
     return render_template('users/all-users.html', users=all_users)
+
+@app.route('/users/login', methods=['GET','POST'])
+def process_login():
+    if request.method == 'GET':
+        return render_template('users/login-user.html')
+    elif request.method == 'POST':
+        # Get email and password from html form
+        email = request.form.get('email')
+        password = request.form.get('password')
+
+        # Check if user's email exists in the database
+        user_db = db.users.find_one({
+            'email': email
+        })
+
+        # If user exists in database, check if password matches
+        if user_db and pbkdf2_sha256.verify(password, user_db["password"]):
+            # If password matches, authorise user
+            user_object = User()
+            user_object.id = user_db["_id"]
+            user_object.email = user_db["email"]
+            flask_login.login_user(user_object)
+
+            # Redirect to a page that says login is successful
+            # flash("Login successful", "success")
+            return redirect(url_for('home'))
+
+        # If login fails, return back to login page
+        else:
+            # flash("Email or password did not match our records", "danger")
+            return redirect(url_for('login'))
 
 @app.route('/users/create', methods=['GET','POST'])
 def create_user():
