@@ -29,6 +29,7 @@ def dal_users_delete(collection, user_id):
 def dal_categories_create_0(collection, category_value):
     new_record = {
         'category': category_value,
+        'parent': None,
         'sub_categories': []
     }
     return collection.insert_one(new_record)
@@ -41,6 +42,7 @@ def dal_categories_create_1(collection, category_value, parent_id):
             'sub_categories': {
                 '_id': ObjectId(),
                 'category': category_value,
+                'parent': ObjectId(parent_id),
                 'sub_categories': []
             }
         }
