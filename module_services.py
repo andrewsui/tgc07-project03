@@ -1,4 +1,5 @@
 from bson.objectid import ObjectId
+from passlib.hash import pbkdf2_sha256
 import module_dal
 import datetime
 
@@ -14,7 +15,7 @@ def service_users_create(db, data):
             'username': data.get('username'),
             'email': data.get('email'),
             'gender': None if data.get('gender')=="null" else data.get('gender'),
-            'password': data.get('password'),
+            'password': pbkdf2_sha256.hash(data.get('password')),
             'terms_and_conditions': False if data.get('terms_and_conditions')==None else True,
             'marketing': False if data.get('marketing')==None else True
         }
@@ -25,7 +26,7 @@ def service_users_update(db, data, user_id):
             'username': data.get('username'),
             'email': data.get('email'),
             'gender': None if data.get('gender')=="null" else data.get('gender'),
-            'password': data.get('password'),
+            'password': pbkdf2_sha256.hash(data.get('password')),
             'terms_and_conditions': False if data.get('terms_and_conditions')==None else True,
             'marketing': False if data.get('marketing')==None else True
         }

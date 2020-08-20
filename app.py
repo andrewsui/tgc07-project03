@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, flash
 from dotenv import load_dotenv
 from bson.objectid import ObjectId
 from bson.json_util import dumps
-from passlib.hash import pbkdf2_sha256
+import flask_login
 import os
 import pymongo
 import json
@@ -16,6 +16,32 @@ app.secret_key = os.environ.get('SECRET_KEY')
 
 client = pymongo.MongoClient(os.environ.get('MONGO_URI'))
 db = client['pc_forum']
+
+class User(flask_login.UserMixin):
+    pass
+
+# Initialise flask-login
+login_manager = flask_login.LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = 'login'
+
+@login_manager.user_loader
+def user_loader(email):
+    user_db = db.users.find_one({
+        'email':email
+    })
+
+    # Check if the user exists based on email
+    if user_db:
+        # Create a User object that represents the user
+        user_object = User()
+        user_object.id = user_db["_id"]
+        user_object.id = user_db["email"]
+         # Return the User object
+        return user_object
+    else:
+        # If the email does not exist in the database, report an error
+        return None
 
 # Home
 @app.route('/')
