@@ -191,6 +191,7 @@ def create_thread():
         return redirect(url_for('threads'))
 
 @app.route('/threads/update/<thread_id>', methods=['GET','POST'])
+@flask_login.login_required
 def update_thread(thread_id):
     if request.method == 'GET':
         previous_values = module_services.service_threads_get_one(db, thread_id)
