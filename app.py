@@ -28,25 +28,25 @@ login_manager.login_view = 'login'
 
 @login_manager.user_loader
 def user_loader(email):
-    user_db = db.users.find_one({
+    user = db.users.find_one({
         'email':email
     })
 
-    # Check if the user exists based on email
-    if user_db:
-        # Create a User object that represents the user
+    # Check if user exists based on email
+    if user:
+        # Create User object
         user_object = User()
-        user_object.id = user_db["_id"]
-        user_object.email = user_db["email"]
-         # Return the User object
+        user_object.id = user["email"]
+         # Return User object
         return user_object
     else:
-        # If the email does not exist in the database, report an error
+        # If email does not exist in database, report an error
         return None
 
 # Home
 @app.route('/')
 def home():
+    print(flask_login.current_user.is_authenticated)
     return render_template('index.html')
 
 # Users
@@ -55,36 +55,36 @@ def users():
     all_users = module_services.service_users_get_all(db)
     return render_template('users/all-users.html', users=all_users)
 
-@app.route('/users/login', methods=['GET','POST'])
+@app.route('/login')
 def login():
-    if request.method == 'GET':
-        return render_template('users/login-user.html')
-    elif request.method == 'POST':
-        # Get email and password from html form
-        email = request.form.get('email')
-        password = request.form.get('password')
+    return render_template('users/login-user.html')
 
-        # Check if user's email exists in the database
-        user_db = db.users.find_one({
-            'email': email
-        })
+@app.route('/login', methods=["POST"])
+def process_login():
+    # Get email and password from html form
+    email = request.form.get('email')
+    password = request.form.get('password')
 
-        # If user exists in database, check if password matches
-        if user_db and pbkdf2_sha256.verify(password, user_db["password"]):
-            # If password matches, authorise user
-            user_object = User()
-            user_object.id = user_db["_id"]
-            user_object.email = user_db["email"]
-            flask_login.login_user(user_object)
+    # Check user's email exists in the database
+    user = db.users.find_one({
+        'email': email
+    })
 
-            # Redirect to a page that says login is successful
-            # flash("Login successful", "success")
-            return redirect(url_for('home'))
+    # If user exists, check if password matches
+    if user and pbkdf2_sha256.verify(password, user["password"]):
+        # If password matches, authorise user
+        user_object = User()
+        user_object.id = user["email"]
+        flask_login.login_user(user_object)
 
-        # If login fails, return back to login page
-        else:
-            # flash("Email or password did not match our records", "danger")
-            return redirect(url_for('login'))
+        # Redirect to a page that says login is successful
+        # flash("Login successful", "success")
+        return redirect(url_for('home'))
+
+    # If login fails, return back to the login page
+    else:
+        # flash("Wrong email or password", "danger")
+        return redirect(url_for('login'))
 
 @app.route('/users/logout')
 def logout():
