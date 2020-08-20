@@ -29,14 +29,14 @@ login_manager.login_view = 'login'
 @login_manager.user_loader
 def user_loader(email):
     user = db.users.find_one({
-        'email':email
+        'email': email
     })
 
     # Check if user exists based on email
     if user:
         # Create User object
         user_object = User()
-        user_object.id = user['_id']
+        user_object._id = user['_id']
         user_object.username = user['username']
         user_object.email = user['email']
          # Return User object
@@ -63,19 +63,19 @@ def login():
         return render_template('users/login-user.html')
     elif request.method == 'POST':
         # Get email and password from html form
-        email = request.form.get('email')
-        password = request.form.get('password')
+        # email = request.form.get('email')
+        # password = request.form.get('password')
 
         # Check user's email exists in the database
         user = db.users.find_one({
-            'email': email
+            'email': request.form.get('email')
         })
 
         # If user exists, check if password matches
-        if user and pbkdf2_sha256.verify(password, user["password"]):
+        if user and pbkdf2_sha256.verify(request.form.get('password'), user['password']):
             # If password matches, authorise user
             user_object = User()
-            user_object.id = user["email"]
+            user_object.id = user['email']
             flask_login.login_user(user_object)
 
             # Redirect to a page that says login is successful
