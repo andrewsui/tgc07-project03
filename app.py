@@ -36,7 +36,9 @@ def user_loader(email):
     if user:
         # Create User object
         user_object = User()
-        user_object.id = user["email"]
+        user_object.id = user['_id']
+        user_object.username = user['username']
+        user_object.email = user['email']
          # Return User object
         return user_object
     else:
@@ -55,36 +57,35 @@ def users():
     all_users = module_services.service_users_get_all(db)
     return render_template('users/all-users.html', users=all_users)
 
-@app.route('/login')
+@app.route('/users/login', methods=['GET','POST'])
 def login():
-    return render_template('users/login-user.html')
+    if request.method == 'GET':
+        return render_template('users/login-user.html')
+    elif request.method == 'POST':
+        # Get email and password from html form
+        email = request.form.get('email')
+        password = request.form.get('password')
 
-@app.route('/login', methods=["POST"])
-def process_login():
-    # Get email and password from html form
-    email = request.form.get('email')
-    password = request.form.get('password')
+        # Check user's email exists in the database
+        user = db.users.find_one({
+            'email': email
+        })
 
-    # Check user's email exists in the database
-    user = db.users.find_one({
-        'email': email
-    })
+        # If user exists, check if password matches
+        if user and pbkdf2_sha256.verify(password, user["password"]):
+            # If password matches, authorise user
+            user_object = User()
+            user_object.id = user["email"]
+            flask_login.login_user(user_object)
 
-    # If user exists, check if password matches
-    if user and pbkdf2_sha256.verify(password, user["password"]):
-        # If password matches, authorise user
-        user_object = User()
-        user_object.id = user["email"]
-        flask_login.login_user(user_object)
+            # Redirect to a page that says login is successful
+            # flash("Login successful", "success")
+            return redirect(url_for('home'))
 
-        # Redirect to a page that says login is successful
-        # flash("Login successful", "success")
-        return redirect(url_for('home'))
-
-    # If login fails, return back to the login page
-    else:
-        # flash("Wrong email or password", "danger")
-        return redirect(url_for('login'))
+        # If login fails, return back to the login page
+        else:
+            # flash("Wrong email or password", "danger")
+            return redirect(url_for('login'))
 
 @app.route('/users/logout')
 def logout():

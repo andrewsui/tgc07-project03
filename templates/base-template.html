@@ -27,6 +27,15 @@
 </head>
 
 <body>
+    <a href="{{ url_for('login') }}" class="btn btn-success">Login</a><a href="{{ url_for('logout') }}" class="btn btn-danger">Logout</a>
+    <br>
+    {{ current_user.id }}
+    <br>
+    {{ current_user.username }}
+    <br>
+    {{ current_user.email }}
+    <br>
+
     {% block content %}
     {% endblock %}
 </body>
