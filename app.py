@@ -209,6 +209,15 @@ def delete_thread(thread_id):
         module_services.service_threads_delete(db, thread_id)
         return redirect(url_for('threads'))
 
+@app.route('/threads/<thread_id>/comments/create', methods=['GET','POST'])
+def create_comment(thread_id):
+    if request.method == 'GET':
+        return render_template('threads/comments/create-comment.html')
+    elif request.method == 'POST':
+        module_services.service_comments_create(db, request.form, thread_id)
+        return request.form
+
+
 # App start point
 if __name__ == '__main__':
     app.run(host=os.environ.get('IP'),

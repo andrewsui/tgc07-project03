@@ -118,3 +118,23 @@ def dal_threads_delete(collection, thread_id):
     return collection.remove({
         '_id': ObjectId(thread_id)
         })
+
+# Thread comments
+def dal_comments_create(collection, updated_record, thread_id):
+    return collection.update_one({
+        '_id': ObjectId(thread_id)
+    }, {
+        '$push': {
+            'sub_posts': {
+                '_id': ObjectId(),
+                'parent': ObjectId(thread_id),
+                'datetime': updated_record['datetime'],
+                'user': {
+                    'user_id': ObjectId(updated_record['user']['user_id']),
+                    'username': updated_record['user']['username']
+                },
+                'comment': updated_record['comment'],
+                'quote': updated_record['quote']
+            }
+        }
+    })
