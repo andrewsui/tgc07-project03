@@ -82,6 +82,13 @@ def dal_categories_delete_1(collection, category_id):
             }
         })
 
+def dal_sub_categories_get(collection, parent_id):
+    return collection.find({
+        '_id': ObjectId(parent_id)
+    }, {
+        'sub_categories': 1
+    })
+
 # Threads
 def dal_threads_create(collection, new_record):
     return collection.insert_one(new_record)

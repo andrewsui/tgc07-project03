@@ -62,6 +62,9 @@ def service_categories_delete_0(db, category_id):
 def service_categories_delete_1(db, category_id):
     return module_dal.dal_categories_delete_1(db.categories, category_id)
 
+def service_sub_categories_get(db, parent_id):
+    return module_dal.dal_sub_categories_get(db.categories, parent_id)
+
 # Threads
 def service_threads_get_all(db):
     return module_dal.dal_collection_get(db.threads)

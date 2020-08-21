@@ -175,6 +175,13 @@ def delete_category_1(category_id):
         module_services.service_categories_delete_1(db, category_id)
         return redirect(url_for('categories'))
 
+@app.route('/api/sub-categories/<parent_id>')
+def get_sub_categories(parent_id):
+    sub_categories = module_services.service_sub_categories_get(db, parent_id)
+    return {
+        'results': json.loads(dumps(sub_categories))
+    }
+
 # Forum threads
 @app.route('/threads')
 def threads():
