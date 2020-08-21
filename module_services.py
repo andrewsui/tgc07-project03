@@ -128,6 +128,18 @@ def service_threads_delete(db, thread_id):
 
 # Thread comments
 def service_comments_create(db, data, thread_id):
+    new_record = {
+        'datetime': datetime.datetime.utcnow(),
+        'user': {
+            'user_id': ObjectId(flask_login.current_user._id),
+            'username': flask_login.current_user.username
+        },
+        'comment': data.get('comment'),
+        'quote': None
+    }
+    return module_dal.dal_comments_create(db.threads, new_record, thread_id)
+
+def service_comments_update(db, data, thread_id, comment_id):
     updated_record = {
         'datetime': datetime.datetime.utcnow(),
         'user': {
@@ -137,4 +149,5 @@ def service_comments_create(db, data, thread_id):
         'comment': data.get('comment'),
         'quote': None
     }
-    return module_dal.dal_comments_create(db.threads, updated_record, thread_id)
+    return module_dal.dal_comments_update(db.threads, updated_record, thread_id, comment_id)
+

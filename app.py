@@ -217,6 +217,14 @@ def create_comment(thread_id):
         module_services.service_comments_create(db, request.form, thread_id)
         return request.form
 
+@app.route('/threads/<thread_id>/comments/<comment_id>/update', methods=['GET','POST'])
+def update_comment(thread_id, comment_id):
+    if request.method == 'GET':
+        return render_template('threads/comments/update-comment.html')
+    elif request.method == 'POST':
+        module_services.service_comments_update(db, request.form, thread_id, comment_id)
+        return request.form
+
 
 # App start point
 if __name__ == '__main__':

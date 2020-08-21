@@ -138,3 +138,15 @@ def dal_comments_create(collection, updated_record, thread_id):
             }
         }
     })
+
+def dal_comments_update(collection, updated_record, thread_id, comment_id):
+    return collection.update_one({
+            'sub_posts._id': ObjectId(comment_id)
+        }, {
+            '$set': {
+                'sub_posts.$.comment': updated_record['comment']
+            }
+        })
+    
+
+

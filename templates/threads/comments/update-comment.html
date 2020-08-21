@@ -1,0 +1,22 @@
+{% extends 'base-template.html' %}
+
+{% block title %}
+    Update Comment
+{% endblock %}
+
+{% block content %}
+    <h1>Update comment</h1>
+
+    <form action="" method="post">
+        {% with %}
+            {% if not previous_values %}
+                {% set previous_values = {} %}
+            {% endif %}
+
+            {% include 'threads/comments/base-comment-form.html' %}
+
+        {% endwith %}
+        
+        <input type="submit" value="Update comment">
+    </form>
+{% endblock %}
