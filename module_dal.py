@@ -106,7 +106,7 @@ def dal_threads_update(collection, updated_record, thread_id):
             },
             'category': {
                 'category_id': ObjectId(updated_record['category']['category_id']),
-                'category_name': updated_record['category']['category_name']
+                'sub_category_id': updated_record['category']['sub_category_id']
             },
             'product_name': updated_record['product_name'],
             'price': updated_record['price'],

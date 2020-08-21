@@ -192,7 +192,8 @@ def threads():
 @flask_login.login_required
 def create_thread():
     if request.method == 'GET':
-        return render_template('threads/create-thread.html')
+        all_categories = module_services.service_categories_get_all(db)
+        return render_template('threads/create-thread.html', categories=all_categories)
     elif request.method == 'POST':
         module_services.service_threads_create(db, request.form)
         return redirect(url_for('threads'))
@@ -201,9 +202,10 @@ def create_thread():
 @flask_login.login_required
 def update_thread(thread_id):
     if request.method == 'GET':
+        all_categories = module_services.service_categories_get_all(db)
         previous_values = module_services.service_threads_get_one(db, thread_id)
         print(previous_values)
-        return render_template('threads/update-thread.html', previous_values=previous_values)
+        return render_template('threads/update-thread.html', categories=all_categories, previous_values=previous_values)
     elif request.method == 'POST':
         module_services.service_threads_update(db, request.form, thread_id)
         return redirect(url_for('threads'))

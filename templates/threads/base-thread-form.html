@@ -1,10 +1,18 @@
+{% block javascript %}
+    <script src={{ url_for("static", filename="js/sub-categories.js") }} defer></script>
+{% endblock %}
+
 <div>
-    <label for="category_id">Category ID</label>
-    <input type="text" name="category_id" id="category_id" placeholder="category_id"  {% if not previous_values=={} %}value="{{ previous_values.category.category_id }} {% endif %}">
+    <label for="categories">Category</label>
+    <select name="categories" id="categories">
+        {% for category in categories %}
+        <option id="{{ category._id }}" class="category-0" value="{{ category._id }}" {% if previous_values.category.category_id==category._id %}selected{% endif %}>{{ category.category }}</option>
+        {% endfor %}
+    </select>
 </div>
 <div>
-    <label for="category_name">Category Name</label>
-    <input type="text" name="category_name" id="category_name" placeholder="e.g. CPU, GPU, motherboard, etc"  {% if not previous_values=={} %}value="{{ previous_values.category.category_name|last }} {% endif %}">
+    <label for="sub_categories">Sub-category</label>
+    <select name="sub_categories" id="sub_categories"></select>
 </div>
 <div>
     <label for="product_name">Product name</label>

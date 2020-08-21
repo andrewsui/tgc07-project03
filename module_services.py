@@ -76,14 +76,12 @@ def service_threads_create(db, data):
     new_record = {
         'datetime': datetime.datetime.utcnow(),
         'user': {
-            # 'user_id': ObjectId(data.get('user_id')),
-            # 'username': data.get('username')
             'user_id': ObjectId(flask_login.current_user._id),
             'username': flask_login.current_user.username
         },
         'category': {
-            'category_id': ObjectId(data.get('category_id')),
-            'category_name': [data.get('category_name')]
+            'category_id': ObjectId(data.get('categories')),
+            'sub_category_id': ObjectId(data.get('sub_categories'))
         },
         'product_name': data.get('product_name'),
         'price': float(data.get('price')),
@@ -109,8 +107,8 @@ def service_threads_update(db, data, thread_id):
             'username': flask_login.current_user.username
         },
         'category': {
-            'category_id': data.get('category_id').strip(),
-            'category_name': [data.get('category_name')]
+            'category_id': ObjectId(data.get('categories')),
+            'sub_category_id': ObjectId(data.get('sub_categories'))
         },
         'product_name': data.get('product_name'),
         'price': float(data.get('price')),
