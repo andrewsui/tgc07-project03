@@ -151,3 +151,6 @@ def service_comments_update(db, data, thread_id, comment_id):
     }
     return module_dal.dal_comments_update(db.threads, updated_record, thread_id, comment_id)
 
+def service_comments_delete(db, comment_id):
+    return module_dal.dal_comments_delete(db.threads, comment_id)
+

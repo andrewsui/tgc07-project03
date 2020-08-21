@@ -147,6 +147,17 @@ def dal_comments_update(collection, updated_record, thread_id, comment_id):
                 'sub_posts.$.comment': updated_record['comment']
             }
         })
-    
+
+def dal_comments_delete(collection, comment_id):
+    return collection.update_one({
+        'sub_posts._id': ObjectId(comment_id)
+        }, {
+            '$pull': {
+                'sub_posts': {
+                    '_id': ObjectId(comment_id)
+                }
+            }
+        })
+
 
 
