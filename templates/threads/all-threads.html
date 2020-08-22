@@ -1,5 +1,9 @@
 {% extends 'base-template.html' %}
 
+{% block javascript %}
+    <script src={{ url_for("static", filename="js/threads.js") }} defer></script>
+{% endblock %}
+
 {% block title %}
     All Threads
 {% endblock %}
@@ -8,6 +12,8 @@
     <h1>Test threads page</h1>
     {% for thread in threads %}
         {{ thread }}
+        <i id="down-{{ thread._id }}" class="vote-down fa fa-thumbs-o-down" aria-hidden="true"></i>
+        <i id="up-{{ thread._id }}" class="vote-up fa fa-thumbs-o-up" aria-hidden="true"></i>
         <br>
         <br>
     {% endfor %}
