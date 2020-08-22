@@ -155,3 +155,10 @@ def service_comments_update(db, data, thread_id, comment_id):
 def service_comments_delete(db, comment_id):
     return module_dal.dal_comments_delete(db.threads, comment_id)
 
+# Voting
+def service_vote_up(db, thread_id):
+    return module_dal.dal_vote_up(db.threads, thread_id)
+
+def service_vote_down(db, thread_id):
+    return module_dal.dal_vote_down(db.threads, thread_id)
+

@@ -187,6 +187,9 @@ def get_sub_categories(parent_id):
 def threads():
     all_threads = module_services.service_threads_get_all(db)
     return render_template('threads/all-threads.html', threads=all_threads)
+    # return {
+    #     'threads': json.loads(dumps(all_threads))
+    # }
 
 @app.route('/threads/create', methods=['GET','POST'])
 @flask_login.login_required
@@ -241,6 +244,18 @@ def delete_comment(thread_id, comment_id):
     elif request.method == 'POST':
         module_services.service_comments_delete(db, comment_id)
         return redirect(url_for('threads'))
+
+# Voting
+@app.route('/api/threads/<thread_id>/vote-up', methods=['PATCH'])
+def vote_up(thread_id):
+    module_services.service_vote_up(db, thread_id)
+    return { "status": 200 }
+
+@app.route('/api/threads/<thread_id>/vote-down', methods=['PATCH'])
+def vote_down(thread_id):
+    module_services.service_vote_down(db, thread_id)
+    return { "status": 200 }
+
 
 
 # App start point

@@ -1,4 +1,5 @@
 from bson.objectid import ObjectId
+import flask_login
 
 # Generic database queries
 def dal_collection_get(collection):
@@ -166,5 +167,22 @@ def dal_comments_delete(collection, comment_id):
             }
         })
 
+# Voting
+def dal_vote_up(collection, thread_id):
+    return collection.update_one({
+            '_id': ObjectId(thread_id)
+        }, {
+            '$addToSet': {
+                'votes.up_votes': ObjectId(flask_login.current_user._id)
+            }
+        })
 
+def dal_vote_down(collection, thread_id):
+    return collection.update_one({
+            '_id': ObjectId(thread_id)
+        }, {
+            '$addToSet': {
+                'votes.down_votes': ObjectId(flask_login.current_user._id)
+            }
+        })
 
