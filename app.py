@@ -260,6 +260,10 @@ def vote_down(thread_id):
 def vote_up_check(thread_id):
     return { "response": module_services.service_vote_up_check(db, thread_id) }
 
+@app.route('/api/threads/<thread_id>/vote-down-check')
+def vote_down_check(thread_id):
+    return { "response": module_services.service_vote_down_check(db, thread_id) }
+
 
 # App start point
 if __name__ == '__main__':

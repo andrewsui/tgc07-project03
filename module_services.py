@@ -164,3 +164,6 @@ def service_vote_down(db, thread_id):
 
 def service_vote_up_check(db, thread_id):
     return module_dal.dal_vote_up_check(db.threads, thread_id)
+
+def service_vote_down_check(db, thread_id):
+    return module_dal.dal_vote_down_check(db.threads, thread_id)
