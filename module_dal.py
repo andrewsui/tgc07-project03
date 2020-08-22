@@ -197,3 +197,21 @@ def dal_vote_down_check(collection, thread_id):
             '_id': ObjectId(thread_id),
             'votes.down_votes': { '$in': [ObjectId(flask_login.current_user._id)] }
         }).count()
+
+def dal_vote_up_remove(collection, thread_id):
+    return collection.update_one({
+            '_id': ObjectId(thread_id)
+        }, {
+            '$pull': {
+                'votes.up_votes': ObjectId(flask_login.current_user._id)
+            }
+        })
+
+def dal_vote_down_remove(collection, thread_id):
+    return collection.update_one({
+            '_id': ObjectId(thread_id)
+        }, {
+            '$pull': {
+                'votes.down_votes': ObjectId(flask_login.current_user._id)
+            }
+        })

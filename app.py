@@ -264,6 +264,16 @@ def vote_up_check(thread_id):
 def vote_down_check(thread_id):
     return { "response": module_services.service_vote_down_check(db, thread_id) }
 
+@app.route('/api/threads/<thread_id>/vote-up-remove')
+def vote_up_check_remove(thread_id):
+    module_services.service_vote_up_remove(db, thread_id)
+    return { "status": 200 }
+
+@app.route('/api/threads/<thread_id>/vote-down-remove')
+def vote_down_check_remove(thread_id):
+    module_services.service_vote_down_remove(db, thread_id)
+    return { "status": 200 }
+
 
 # App start point
 if __name__ == '__main__':
