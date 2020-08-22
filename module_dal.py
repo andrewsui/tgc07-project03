@@ -186,3 +186,8 @@ def dal_vote_down(collection, thread_id):
             }
         })
 
+def dal_vote_up_check(collection, thread_id):
+    return collection.find({
+            '_id': ObjectId(thread_id),
+            'votes.up_votes': { '$in': [ObjectId(flask_login.current_user._id)] }
+        }).count()

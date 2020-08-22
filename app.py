@@ -256,6 +256,9 @@ def vote_down(thread_id):
     module_services.service_vote_down(db, thread_id)
     return { "status": 200 }
 
+@app.route('/api/threads/<thread_id>/vote-up-check')
+def vote_up_check(thread_id):
+    return { "response": module_services.service_vote_up_check(db, thread_id) }
 
 
 # App start point
