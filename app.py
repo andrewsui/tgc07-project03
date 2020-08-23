@@ -187,10 +187,14 @@ def get_sub_categories(parent_id):
 def threads():
     all_categories = module_services.service_categories_get_all(db)
     all_threads = module_services.service_threads_get_all(db)
+
+    category_id = request.args.get('categories')
+    sub_category_id = request.args.get('sub_categories')
+    search_box = request.args.get('search-box')
+
+    # TO DO... query db using serach terms
+
     return render_template('threads/all-threads.html', categories=all_categories, threads=all_threads)
-    # return {
-    #     'threads': json.loads(dumps(all_threads))
-    # }
 
 @app.route('/threads/create', methods=['GET','POST'])
 @flask_login.login_required
