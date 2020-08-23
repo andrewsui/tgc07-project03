@@ -19,8 +19,10 @@ $("#categories").on("click", ".category-0", async function() {
 
 window.addEventListener('load', async (event) => {
     let subCategoriesElement = document.querySelector("#categories");
-    let subCategoriesUrl = "/api/sub-categories/" + subCategoriesElement.value;
-    await displaySubCategories(subCategoriesUrl);
-    let previousSubCategoryId = document.querySelector("#previous_sub_categories").value;
-    previousSubCategoryId ? document.getElementById(previousSubCategoryId).selected = true : null;
+    if (subCategoriesElement.value) {
+        let subCategoriesUrl = "/api/sub-categories/" + subCategoriesElement.value;
+        await displaySubCategories(subCategoriesUrl);
+        let previousSubCategoryId = document.querySelector("#previous_sub_categories").value;
+        previousSubCategoryId ? document.getElementById(previousSubCategoryId).selected = true : null;
+    }
 })
