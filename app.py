@@ -222,6 +222,7 @@ def delete_thread(thread_id):
         return redirect(url_for('threads'))
 
 @app.route('/threads/<thread_id>/comments/create', methods=['GET','POST'])
+@flask_login.login_required
 def create_comment(thread_id):
     if request.method == 'GET':
         return render_template('threads/comments/create-comment.html')
@@ -230,6 +231,7 @@ def create_comment(thread_id):
         return request.form
 
 @app.route('/threads/<thread_id>/comments/<comment_id>/update', methods=['GET','POST'])
+@flask_login.login_required
 def update_comment(thread_id, comment_id):
     if request.method == 'GET':
         return render_template('threads/comments/update-comment.html')
