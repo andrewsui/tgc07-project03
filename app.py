@@ -200,6 +200,28 @@ def threads():
     if sub_category_id:
         search_criteria['category.sub_category_id'] = ObjectId(sub_category_id)
 
+    if search_box:
+        search_criteria['$or'] = [
+            {
+                'product_name': {
+                    '$regex': search_box,
+                    '$options': 'i'
+                }
+            },
+            {
+                'description': {
+                    '$regex': search_box,
+                    '$options': 'i'
+                }
+            },
+            {
+                'sub_posts.comment': {
+                    '$regex': search_box,
+                    '$options': 'i'
+                }
+            }
+        ]
+
     all_threads = db.threads.find(search_criteria)
 
     return render_template('threads/all-threads.html', categories=all_categories, threads=all_threads)
