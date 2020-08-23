@@ -258,11 +258,17 @@ def vote_down(thread_id):
 
 @app.route('/api/threads/<thread_id>/vote-up-check')
 def vote_up_check(thread_id):
-    return { "response": module_services.service_vote_up_check(db, thread_id) }
+    if flask_login.current_user.is_authenticated:
+        return { "response": module_services.service_vote_up_check(db, thread_id) }
+    else:
+        return "0"
 
 @app.route('/api/threads/<thread_id>/vote-down-check')
 def vote_down_check(thread_id):
-    return { "response": module_services.service_vote_down_check(db, thread_id) }
+    if flask_login.current_user.is_authenticated:
+        return { "response": module_services.service_vote_down_check(db, thread_id) }
+    else:
+        return "0"
 
 @app.route('/api/threads/<thread_id>/vote-up-remove')
 def vote_up_check_remove(thread_id):
