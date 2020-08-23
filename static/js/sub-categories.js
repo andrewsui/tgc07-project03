@@ -2,6 +2,12 @@ async function displaySubCategories(subCategoriesUrl) {
     let response = await axios.get(subCategoriesUrl);
     let parentElement = document.querySelector("#sub_categories");
     parentElement.innerText = "";
+    let wildCardSubCategory = document.createElement("option");
+        wildCardSubCategory.value = "";
+        wildCardSubCategory.id = "";
+        wildCardSubCategory.className = "category-1";
+        wildCardSubCategory.innerText = "Any";
+        parentElement.appendChild(wildCardSubCategory);
     for (let subCategory of response.data.results[0].sub_categories) {
         let newElement = document.createElement("option");
         newElement.value = subCategory._id.$oid;
