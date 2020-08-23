@@ -248,13 +248,19 @@ def delete_comment(thread_id, comment_id):
 # Voting
 @app.route('/api/threads/<thread_id>/vote-up', methods=['PATCH'])
 def vote_up(thread_id):
-    module_services.service_vote_up(db, thread_id)
-    return { "status": 200 }
+    if flask_login.current_user.is_authenticated:
+        module_services.service_vote_up(db, thread_id)
+        return { "status": 200 }
+    else:
+        return "0"
 
 @app.route('/api/threads/<thread_id>/vote-down', methods=['PATCH'])
 def vote_down(thread_id):
-    module_services.service_vote_down(db, thread_id)
-    return { "status": 200 }
+    if flask_login.current_user.is_authenticated:
+        module_services.service_vote_down(db, thread_id)
+        return { "status": 200 }
+    else:
+        return "0"
 
 @app.route('/api/threads/<thread_id>/vote-up-check')
 def vote_up_check(thread_id):
@@ -270,15 +276,21 @@ def vote_down_check(thread_id):
     else:
         return "0"
 
-@app.route('/api/threads/<thread_id>/vote-up-remove')
+@app.route('/api/threads/<thread_id>/vote-up-remove', methods=['PATCH'])
 def vote_up_check_remove(thread_id):
-    module_services.service_vote_up_remove(db, thread_id)
-    return { "status": 200 }
+    if flask_login.current_user.is_authenticated:
+        module_services.service_vote_up_remove(db, thread_id)
+        return { "status": 200 }
+    else:
+        return { "response": False }
 
-@app.route('/api/threads/<thread_id>/vote-down-remove')
+@app.route('/api/threads/<thread_id>/vote-down-remove', methods=['PATCH'])
 def vote_down_check_remove(thread_id):
-    module_services.service_vote_down_remove(db, thread_id)
-    return { "status": 200 }
+    if flask_login.current_user.is_authenticated:
+        module_services.service_vote_down_remove(db, thread_id)
+        return { "status": 200 }
+    else:
+        return { "response": False }
 
 
 # App start point

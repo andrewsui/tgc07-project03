@@ -14,7 +14,7 @@ async function vote(threadId, upOrDown) {
 
 async function voteRemove(threadId, upOrDown) {
   let url = "/api/threads/" + threadId + "/vote-" + upOrDown + "-remove";
-  await axios.get(url);
+  await axios.patch(url);
 }
 
 window.addEventListener('load', async (event) => {
