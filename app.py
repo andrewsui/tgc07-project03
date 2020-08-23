@@ -189,6 +189,13 @@ def threads():
     all_threads = module_services.service_threads_search(db, request.args)
     return render_template('threads/all-threads.html', categories=all_categories, threads=all_threads)
 
+@app.route('/threads/<thread_id>', methods=['GET','POST'])
+def display_thread(thread_id):
+    thread = module_services.service_threads_get_one(db, thread_id)
+    return {
+        'results': json.loads(dumps(thread))
+    }
+
 @app.route('/threads/create', methods=['GET','POST'])
 @flask_login.login_required
 def create_thread():
