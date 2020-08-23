@@ -185,8 +185,9 @@ def get_sub_categories(parent_id):
 # Forum threads
 @app.route('/threads')
 def threads():
+    all_categories = module_services.service_categories_get_all(db)
     all_threads = module_services.service_threads_get_all(db)
-    return render_template('threads/all-threads.html', threads=all_threads)
+    return render_template('threads/all-threads.html', categories=all_categories, threads=all_threads)
     # return {
     #     'threads': json.loads(dumps(all_threads))
     # }
