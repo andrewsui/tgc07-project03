@@ -186,44 +186,7 @@ def get_sub_categories(parent_id):
 @app.route('/threads')
 def threads():
     all_categories = module_services.service_categories_get_all(db)
-    # all_threads = module_services.service_threads_get_all(db)
-
-    category_id = request.args.get('categories')
-    sub_category_id = request.args.get('sub_categories')
-    search_box = request.args.get('search-box')
-
-    search_criteria = {}
-
-    if category_id:
-        search_criteria['category.category_id'] = ObjectId(category_id)
-
-    if sub_category_id:
-        search_criteria['category.sub_category_id'] = ObjectId(sub_category_id)
-
-    if search_box:
-        search_criteria['$or'] = [
-            {
-                'product_name': {
-                    '$regex': search_box,
-                    '$options': 'i'
-                }
-            },
-            {
-                'description': {
-                    '$regex': search_box,
-                    '$options': 'i'
-                }
-            },
-            {
-                'sub_posts.comment': {
-                    '$regex': search_box,
-                    '$options': 'i'
-                }
-            }
-        ]
-
-    all_threads = db.threads.find(search_criteria)
-
+    all_threads = module_services.service_threads_search(db, request.args)
     return render_template('threads/all-threads.html', categories=all_categories, threads=all_threads)
 
 @app.route('/threads/create', methods=['GET','POST'])

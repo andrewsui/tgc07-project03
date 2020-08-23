@@ -91,6 +91,38 @@ def dal_sub_categories_get(collection, parent_id):
     })
 
 # Threads
+def dal_threads_search(collection, user_input):
+    search_criteria = {}
+    # Search by category
+    if user_input['category_id']:
+        search_criteria['category.category_id'] = ObjectId(user_input['category_id'])
+    # Search by sub-category
+    if user_input['sub_category_id']:
+        search_criteria['category.sub_category_id'] = ObjectId(user_input['sub_category_id'])
+    # Search box queries
+    if user_input['search_box']:
+        search_criteria['$or'] = [
+            {
+                'product_name': {
+                    '$regex': user_input['search_box'],
+                    '$options': 'i'
+                }
+            },
+            {
+                'description': {
+                    '$regex': user_input['search_box'],
+                    '$options': 'i'
+                }
+            },
+            {
+                'sub_posts.comment': {
+                    '$regex': user_input['search_box'],
+                    '$options': 'i'
+                }
+            }
+        ]
+    return collection.find(search_criteria)
+
 def dal_threads_create(collection, new_record):
     return collection.insert_one(new_record)
 

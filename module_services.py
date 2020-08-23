@@ -72,6 +72,14 @@ def service_threads_get_all(db):
 def service_threads_get_one(db, thread_id):
     return module_dal.dal_document_get(db.threads, thread_id)
 
+def service_threads_search(db, data):
+    user_input = {
+        'category_id': data.get('categories'),
+        'sub_category_id': data.get('sub_categories'),
+        'search_box': data.get('search-box')
+    }
+    return module_dal.dal_threads_search(db.threads, user_input)
+
 def service_threads_create(db, data):
     sub_category_id = ObjectId(data.get('sub_categories')) if data.get('sub_categories') else ""
     new_record = {
