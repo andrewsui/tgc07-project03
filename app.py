@@ -186,13 +186,21 @@ def get_sub_categories(parent_id):
 @app.route('/threads')
 def threads():
     all_categories = module_services.service_categories_get_all(db)
-    all_threads = module_services.service_threads_get_all(db)
+    # all_threads = module_services.service_threads_get_all(db)
 
     category_id = request.args.get('categories')
     sub_category_id = request.args.get('sub_categories')
     search_box = request.args.get('search-box')
 
-    # TO DO... query db using serach terms
+    search_criteria = {}
+
+    if category_id:
+        search_criteria['category.category_id'] = ObjectId(category_id)
+
+    if sub_category_id:
+        search_criteria['category.sub_category_id'] = ObjectId(sub_category_id)
+
+    all_threads = db.threads.find(search_criteria)
 
     return render_template('threads/all-threads.html', categories=all_categories, threads=all_threads)
 
