@@ -122,6 +122,7 @@ def user_threads(user_id):
         search_criteria['user.user_id'] = ObjectId(user_id)
         threads_by_user = db.threads.find(search_criteria)
         return render_template('users/user-threads.html', threads=threads_by_user)
+    # POST REQUESTS NEEDED???
 
 # Categories
 @app.route('/categories')
