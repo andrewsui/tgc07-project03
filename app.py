@@ -200,10 +200,13 @@ def threads():
 
 @app.route('/threads/<thread_id>', methods=['GET','POST'])
 def display_thread(thread_id):
-    thread = module_services.service_threads_get_one(db, thread_id)
-    return {
-        'results': json.loads(dumps(thread))
-    }
+    if request.method == 'GET':
+        thread = module_services.service_threads_get_one(db, thread_id)
+        # RETURN TO BE UPDATED
+        return {
+            'results': json.loads(dumps(thread))
+        }
+    # ADD POST REQUEST TO CREATE NEW COMMENTS
 
 @app.route('/threads/create', methods=['GET','POST'])
 @flask_login.login_required
