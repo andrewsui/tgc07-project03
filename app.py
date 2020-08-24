@@ -213,7 +213,8 @@ def create_thread():
         return render_template('threads/create-thread.html', categories=all_categories)
     elif request.method == 'POST':
         module_services.service_threads_create(db, request.form)
-        return redirect(url_for('threads'))
+        new_thread_id = module_services.service_threads_create(db, request.form).inserted_id
+        return redirect(url_for('display_thread', thread_id=new_thread_id))
 
 @app.route('/threads/<thread_id>/update', methods=['GET','POST'])
 @flask_login.login_required
