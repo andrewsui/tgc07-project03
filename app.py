@@ -117,7 +117,10 @@ def delete_user(user_id):
 @app.route('/users/<user_id>/threads', methods=['GET','POST'])
 def user_threads(user_id):
     if request.method == 'GET':
-        return render_template('users/user-threads.html')
+        search_criteria = {}
+        search_criteria['user.user_id'] = ObjectId(user_id)
+        threads_by_user = db.threads.find(search_criteria)
+        return render_template('users/user-threads.html', threads=threads_by_user)
 
 # Categories
 @app.route('/categories')
