@@ -114,6 +114,11 @@ def delete_user(user_id):
         module_services.service_users_delete(db, user_id)
         return redirect(url_for('users'))
 
+@app.route('/users/<user_id>/threads', methods=['GET','POST'])
+def user_threads(user_id):
+    if request.method == 'GET':
+        return render_template('users/user-threads.html')
+
 # Categories
 @app.route('/categories')
 def categories():
