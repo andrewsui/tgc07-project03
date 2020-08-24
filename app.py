@@ -48,8 +48,9 @@ def user_loader(email):
 # Home
 @app.route('/')
 def home():
-    print(flask_login.current_user.is_authenticated)
-    return render_template('index.html')
+    # print(flask_login.current_user.is_authenticated)
+    return redirect(url_for('threads'))
+    # return render_template('index.html')
 
 # Users
 @app.route('/users')
@@ -96,7 +97,7 @@ def create_user():
         module_services.service_users_create(db, request.form)
         return redirect(url_for('users'))
 
-@app.route('/users/update/<user_id>', methods=['GET','POST'])
+@app.route('/users/<user_id>/update', methods=['GET','POST'])
 def update_user(user_id):
     if request.method == 'GET':
         previous_values = module_services.service_users_get_one(db, user_id)
@@ -106,7 +107,7 @@ def update_user(user_id):
         module_services.service_users_update(db, request.form, user_id)
         return redirect(url_for('users'))
 
-@app.route('/users/delete/<user_id>', methods=['GET','POST'])
+@app.route('/users/<user_id>/delete', methods=['GET','POST'])
 def delete_user(user_id):
     if request.method == 'GET':
         return render_template('users/delete-user.html')
@@ -143,7 +144,7 @@ def create_category_0():
         module_services.service_categories_create_0(db, request.form)
         return redirect(url_for('categories'))
 
-@app.route('/categories/create-1/<parent_id>', methods=['GET','POST'])
+@app.route('/categories/<parent_id>/create-1', methods=['GET','POST'])
 def create_category_1(parent_id):
     if request.method == 'GET':
         return render_template('categories/create-category-1.html')
@@ -151,7 +152,7 @@ def create_category_1(parent_id):
         module_services.service_categories_create_1(db, request.form, parent_id)
         return redirect(url_for('categories'))
 
-@app.route('/categories/update-0/<category_id>', methods=['GET','POST'])
+@app.route('/categories/<category_id>/update-0', methods=['GET','POST'])
 def update_category_0(category_id):
     if request.method == 'GET':
         return render_template('categories/update-category-0.html')
@@ -159,7 +160,7 @@ def update_category_0(category_id):
         module_services.service_categories_update_0(db, request.form, category_id)
         return redirect(url_for('categories'))
 
-@app.route('/categories/update-1/<category_id>', methods=['GET','POST'])
+@app.route('/categories/<category_id>/update-1', methods=['GET','POST'])
 def update_category_1(category_id):
     if request.method == 'GET':
         return render_template('categories/update-category-1.html')
@@ -167,7 +168,7 @@ def update_category_1(category_id):
         module_services.service_categories_update_1(db, request.form, category_id)
         return redirect(url_for('categories'))
 
-@app.route('/categories/delete-0/<category_id>', methods=['GET','POST'])
+@app.route('/categories/<category_id>/delete-0', methods=['GET','POST'])
 def delete_category_0(category_id):
     if request.method == 'GET':
         return render_template('categories/delete-category-0.html')
@@ -175,7 +176,7 @@ def delete_category_0(category_id):
         module_services.service_categories_delete_0(db, category_id)
         return redirect(url_for('categories'))
 
-@app.route('/categories/delete-1/<category_id>', methods=['GET','POST'])
+@app.route('/categories/<category_id>/delete-1', methods=['GET','POST'])
 def delete_category_1(category_id):
     if request.method == 'GET':
         return render_template('categories/delete-category-1.html')
@@ -214,7 +215,7 @@ def create_thread():
         module_services.service_threads_create(db, request.form)
         return redirect(url_for('threads'))
 
-@app.route('/threads/update/<thread_id>', methods=['GET','POST'])
+@app.route('/threads/<thread_id>/update', methods=['GET','POST'])
 @flask_login.login_required
 def update_thread(thread_id):
     if request.method == 'GET':
@@ -226,7 +227,7 @@ def update_thread(thread_id):
         module_services.service_threads_update(db, request.form, thread_id)
         return redirect(url_for('threads'))
 
-@app.route('/threads/delete/<thread_id>', methods=['GET','POST'])
+@app.route('/threads/<thread_id>/delete', methods=['GET','POST'])
 def delete_thread(thread_id):
     if request.method == 'GET':
         return render_template('threads/delete-thread.html')
