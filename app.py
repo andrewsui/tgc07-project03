@@ -226,7 +226,7 @@ def update_thread(thread_id):
     if request.method == 'GET':
         all_categories = module_services.service_categories_get_all(db)
         previous_values = module_services.service_threads_get_one(db, thread_id)
-        print(previous_values)
+        # print(previous_values)
         return render_template('threads/update-thread.html', categories=all_categories, previous_values=previous_values)
     elif request.method == 'POST':
         module_services.service_threads_update(db, request.form, thread_id)
@@ -313,22 +313,16 @@ def vote_down_check_remove(thread_id):
     else:
         return { "response": False }
 
-@app.route('/test/<_id>')
-def test(_id):
-    test_result = db.categories.find_one({
+@app.route('/api/threads/<_id>/vote-count/<up_or_down>')
+def test(_id, up_or_down):
+    votes = db.threads.find_one({
         '_id': ObjectId(_id)
-    },
-    {
-        'category': 1
-    })['category']
-    # test_result = db.categories.find_one({
-    #     'sub_categories._id': ObjectId(_id)
-    # },
-    # {
-    #     'sub_categories.$.category': 1
-    # })['sub_categories'][0]['category']
-    print(test_result)
-    return "Test"
+    }, {
+        f'votes.{up_or_down}_votes': 1
+    })['votes'][f'{up_or_down}_votes']
+    return {
+        f'number_of_{up_or_down}_votes': json.loads(dumps(len(votes)))
+    }
 
 
 # App start point
