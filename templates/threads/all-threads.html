@@ -59,6 +59,11 @@
                 <div>
                     {{ thread.user.username }}
                 </div>
+                <div>
+                    {% if current_user._id == thread.user.user_id %}
+                        <a href="{{ url_for('update_thread', thread_id=thread._id) }}" class="btn btn-primary">Edit</a>
+                    {% endif %}
+                </div>
             </div>
         </div>
         {{thread}}
