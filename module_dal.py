@@ -265,3 +265,10 @@ def dal_vote_down_remove(collection, thread_id):
                 'votes.down_votes': ObjectId(flask_login.current_user._id)
             }
         })
+
+def dal_vote_count(collection, thread_id, up_or_down):
+    return collection.find_one({
+        '_id': ObjectId(thread_id)
+    }, {
+        f'votes.{up_or_down}_votes': 1
+    })['votes'][f'{up_or_down}_votes']

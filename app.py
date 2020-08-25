@@ -313,13 +313,9 @@ def vote_down_check_remove(thread_id):
     else:
         return { "response": False }
 
-@app.route('/api/threads/<_id>/vote-count/<up_or_down>')
-def test(_id, up_or_down):
-    votes = db.threads.find_one({
-        '_id': ObjectId(_id)
-    }, {
-        f'votes.{up_or_down}_votes': 1
-    })['votes'][f'{up_or_down}_votes']
+@app.route('/api/threads/<thread_id>/vote-count/<up_or_down>')
+def test(thread_id, up_or_down):
+    votes = module_services.service_vote_count(db, thread_id, up_or_down)
     return {
         f'number_of_{up_or_down}_votes': json.loads(dumps(len(votes)))
     }

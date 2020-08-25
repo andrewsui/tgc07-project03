@@ -203,3 +203,6 @@ def service_vote_up_remove(db, thread_id):
 def service_vote_down_remove(db, thread_id):
     return module_dal.dal_vote_down_remove(db.threads, thread_id)
 
+def service_vote_count(db, thread_id, up_or_down):
+    return module_dal.dal_vote_count(db.threads, thread_id, up_or_down)
+
