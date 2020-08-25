@@ -81,7 +81,14 @@ def service_threads_search(db, data):
     return module_dal.dal_threads_search(db.threads, user_input)
 
 def service_threads_create(db, data):
-    sub_category_id = ObjectId(data.get('sub_categories')) if data.get('sub_categories') else ""
+    category_id = data.get('categories')
+    category_name = module_dal.dal_category_name_get(db.categories, category_id)
+    if data.get('sub_categories'):
+        sub_category_id = ObjectId(data.get('sub_categories'))
+        sub_category_name = module_dal.dal_sub_category_name_get(db.categories, data.get('sub_categories'))
+    else:
+        sub_category_id = ""
+        sub_category_name = ""
     new_record = {
         'datetime': datetime.datetime.utcnow(),
         'user': {
@@ -89,8 +96,10 @@ def service_threads_create(db, data):
             'username': flask_login.current_user.username
         },
         'category': {
-            'category_id': ObjectId(data.get('categories')),
-            'sub_category_id': sub_category_id
+            'category_id': ObjectId(category_id),
+            'category_name': category_name,
+            'sub_category_id': sub_category_id,
+            'sub_category_name': sub_category_name
         },
         'product_name': data.get('product_name'),
         'price': float(data.get('price')),

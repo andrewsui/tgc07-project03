@@ -313,6 +313,23 @@ def vote_down_check_remove(thread_id):
     else:
         return { "response": False }
 
+@app.route('/test/<_id>')
+def test(_id):
+    test_result = db.categories.find_one({
+        '_id': ObjectId(_id)
+    },
+    {
+        'category': 1
+    })['category']
+    # test_result = db.categories.find_one({
+    #     'sub_categories._id': ObjectId(_id)
+    # },
+    # {
+    #     'sub_categories.$.category': 1
+    # })['sub_categories'][0]['category']
+    print(test_result)
+    return "Test"
+
 
 # App start point
 if __name__ == '__main__':

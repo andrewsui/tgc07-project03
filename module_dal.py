@@ -27,6 +27,22 @@ def dal_users_delete(collection, user_id):
         })
 
 # Categories
+def dal_category_name_get(collection, category_id):
+    return collection.find_one({
+        '_id': ObjectId(category_id)
+    },
+    {
+        'category': 1
+    })['category']
+
+def dal_sub_category_name_get(collection, sub_category_id):
+    return collection.find_one({
+        'sub_categories._id': ObjectId(sub_category_id)
+    },
+    {
+        'sub_categories.$.category': 1
+    })['sub_categories'][0]['category']
+
 def dal_categories_create_0(collection, category_value):
     new_record = {
         'category': category_value,
