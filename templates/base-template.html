@@ -40,7 +40,26 @@
 </head>
 
 <body>
-    <a href="{{ url_for('login') }}" class="btn btn-success">Login</a><a href="{{ url_for('logout') }}" class="btn btn-danger">Logout</a>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">PC Hardware Reviews</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-link" href="{{ url_for('threads') }}">Reviews</a>
+                {% if not current_user.is_authenticated %}
+                    <a href="{{ url_for('create_user') }}" class="btn btn-success"><i class="fa fa-user-plus" aria-hidden="true"></i> Sign up</a>
+                    <a href="{{ url_for('login') }}" class="btn btn-primary"><i class="fa fa-user" aria-hidden="true"></i> Log in</a>
+                {% else %}
+                    <a href="{{ url_for('update_user', user_id=current_user._id) }}" class="btn btn-warning"><i class="fa fa-user-circle" aria-hidden="true"></i> Profile</a>
+                    <a href="{{ url_for('logout') }}" class="btn btn-danger"><i class="fa fa-user-o" aria-hidden="true"></i> Log out</a>
+                {% endif %}
+            </div>
+        </div>
+      </nav>
+
+    
     <br>
     {{ current_user._id }}
     <br>
@@ -49,8 +68,10 @@
     {{ current_user.email }}
     <br>
 
-    {% block content %}
-    {% endblock %}
+    <div class="container-fluid">
+        {% block content %}
+        {% endblock %}
+    </div>
 </body>
 
 </html>
