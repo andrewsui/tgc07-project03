@@ -10,11 +10,11 @@
 {% endblock %}
 
 {% block title %}
-    All Threads
+    Threads
 {% endblock %}
 
 {% block content %}
-    <h1>Test threads page</h1>
+    <h3>Reviews</h3>
     <form action="" method="get">
         <div>
             <select name="categories" id="categories">
@@ -32,9 +32,36 @@
     </form>
     <br>
     {% for thread in threads %}
-        {{ thread }}
-        <i id="down-{{ thread._id }}" class="vote-btn vote-down fa fa-thumbs-o-down" aria-hidden="true"></i>
-        <i id="up-{{ thread._id }}" class="vote-btn vote-up fa fa-thumbs-o-up" aria-hidden="true"></i>
+        <div class="thread row">
+            <div class="col-3">
+                <div class="row">
+                    <div class="col">
+                        {{ thread.image }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <i id="down-{{ thread._id }}" class="vote-btn vote-down fa fa-thumbs-o-down" aria-hidden="true"></i>
+                        <i id="up-{{ thread._id }}" class="vote-btn vote-up fa fa-thumbs-o-up" aria-hidden="true"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-9">
+                <div>
+                    {{ thread.datetime }}
+                </div>
+                <div>
+                    {{ thread.product_name }}
+                </div>
+                <div>
+                    {{ thread.price }}
+                </div>
+                <div>
+                    {{ thread.user.username }}
+                </div>
+            </div>
+        </div>
+        {{thread}}
         <br>
         <br>
     {% endfor %}
