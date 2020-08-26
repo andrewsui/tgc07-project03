@@ -3,6 +3,20 @@
     padding: 0;
 } */
 
+body {
+    background-color: rgb(230, 230, 230);
+    padding: 0 1rem;
+}
+
+.thread {
+    background-color: white;
+    border-radius: 0.5rem;
+}
+
+.review-thumbnail {
+    width: 100%;
+}
+
 .vote-down {
     transform: scale(-1, 1);
 }

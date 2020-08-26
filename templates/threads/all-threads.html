@@ -15,28 +15,30 @@
 
 {% block content %}
     <h3>Reviews</h3>
-    <form action="" method="get">
-        <div>
-            <select name="categories" id="categories">
-                <option value="">Categories</option>
-                {% for category in categories %}
-                    <option id="{{ category._id }}" class="category-0" value="{{ category._id }}">{{ category.category }}</option>
-                {% endfor %}
-            </select>
-            <select name="sub_categories" id="sub_categories">
-                <option value="">Sub-categories</option>
-            </select>
-            <input type="text" name="search-box" id="search-box">
-            <span><button class="btn btn-primary" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button></span>
-        </div>
-    </form>
+    <div class="search-container">
+        <form action="" method="get">
+            <div>
+                <select name="categories" id="categories">
+                    <option value="">Categories</option>
+                    {% for category in categories %}
+                        <option id="{{ category._id }}" class="category-0" value="{{ category._id }}">{{ category.category }}</option>
+                    {% endfor %}
+                </select>
+                <select name="sub_categories" id="sub_categories">
+                    <option value="">Sub-categories</option>
+                </select>
+                <input type="text" name="search-box" id="search-box">
+                <span><button class="btn btn-primary" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button></span>
+            </div>
+        </form>
+    </div>
     <br>
     {% for thread in threads %}
-        <div class="thread row">
+        <article class="thread row my-2 px-1 py-3">
             <div class="col-3">
                 <div class="row">
                     <div class="col">
-                        {{ thread.image }}
+                        <img src="{{ thread.image }}" alt="review-thumbnail" class="review-thumbnail">
                     </div>
                 </div>
                 <div class="row">
@@ -47,25 +49,32 @@
                 </div>
             </div>
             <div class="col-9">
-                <div>
-                    {{ thread.datetime }}
+                <div class="row mx-0">
+                    <span>
+                        <h5><a href="{{ url_for('display_thread', thread_id=thread._id) }}">{{ thread.product_name }}</a></h5>
+                    </span>
+                    <span class="ml-auto">
+                        <h6>{{ thread.datetime.strftime('%d %b %Y %H:%M') }}</h6>
+                    </span>
                 </div>
                 <div>
-                    {{ thread.product_name }}
+                    <h5>{{ "US$ {:,.2f}".format(thread.price) }}</h5>
                 </div>
                 <div>
-                    {{ thread.price }}
+                    <p>{{ thread.description|truncate(500) }}</p>
                 </div>
-                <div>
-                    {{ thread.user.username }}
-                </div>
-                <div>
-                    {% if current_user._id == thread.user.user_id %}
-                        <a href="{{ url_for('update_thread', thread_id=thread._id) }}" class="btn btn-primary">Edit</a>
-                    {% endif %}
+                <div class="row mx-0">
+                    <span>
+                        <h5>{{ thread.user.username }}</h5>
+                    </span>
+                    <span class="ml-auto">
+                        {% if current_user._id == thread.user.user_id %}
+                            <a href="{{ url_for('update_thread', thread_id=thread._id) }}" class="btn btn-primary">Edit</a>
+                        {% endif %}
+                    </span>
                 </div>
             </div>
-        </div>
+        </article>
         {{thread}}
         <br>
         <br>
