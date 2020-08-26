@@ -73,6 +73,12 @@
                         {% endif %}
                     </span>
                 </div>
+                <nav class="mt-3" aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/threads?categories={{ thread.category.category_id }}">{{ thread.category.category_name }}</a></li>
+                        <li class="breadcrumb-item"><a href="/threads?categories={{ thread.category.category_id }}&sub_categories={{ thread.category.sub_category_id }}">{{ thread.category.sub_category_name }}</a></li>
+                    </ol>
+                </nav>
             </div>
         </article>
     {% endfor %}
