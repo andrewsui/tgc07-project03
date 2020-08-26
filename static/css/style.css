@@ -17,10 +17,19 @@ body {
     width: 100%;
 }
 
-.vote-down {
-    transform: scale(-1, 1);
+.vote-btn {
+    font-size: 1.5rem;
 }
 
 .vote-btn:hover {
     cursor: pointer;
+}
+
+.vote-down {
+    transform: scale(-1, 1);
+}
+
+.price {
+    color: darkred;
+    font-weight: bold;
 }

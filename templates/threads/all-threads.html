@@ -34,7 +34,7 @@
     </div>
     <br>
     {% for thread in threads %}
-        <article class="thread row my-2 px-1 py-3">
+        <article class="thread row my-3 px-1 py-3">
             <div class="col-3">
                 <div class="row">
                     <div class="col">
@@ -58,14 +58,14 @@
                     </span>
                 </div>
                 <div>
-                    <h5>{{ "US$ {:,.2f}".format(thread.price) }}</h5>
+                    <h5 class="price">{{ "US$ {:,.2f}".format(thread.price) }}</h5>
                 </div>
                 <div>
                     <p>{{ thread.description|truncate(500) }}</p>
                 </div>
                 <div class="row mx-0">
                     <span>
-                        <h5>{{ thread.user.username }}</h5>
+                        <h5><a href="{{ url_for('user_threads', user_id=thread.user.user_id) }}">{{ thread.user.username }}</a></h5>
                     </span>
                     <span class="ml-auto">
                         {% if current_user._id == thread.user.user_id %}
@@ -75,8 +75,5 @@
                 </div>
             </div>
         </article>
-        {{thread}}
-        <br>
-        <br>
     {% endfor %}
 {% endblock %}
