@@ -6,7 +6,7 @@ async function displaySubCategories(subCategoriesUrl) {
         wildCardSubCategory.value = "";
         wildCardSubCategory.id = "";
         wildCardSubCategory.className = "category-1";
-        wildCardSubCategory.innerText = "Any";
+        wildCardSubCategory.innerText = "Sub-categories";
         parentElement.appendChild(wildCardSubCategory);
     for (let subCategory of response.data.results[0].sub_categories) {
         let newElement = document.createElement("option");

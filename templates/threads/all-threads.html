@@ -57,15 +57,15 @@
                         <h6>{{ thread.datetime.strftime('%d %b %Y %H:%M') }}</h6>
                     </span>
                 </div>
-                <div>
+                <div class="my-1">
                     <h5 class="price">{{ "US$ {:,.2f}".format(thread.price) }}</h5>
                 </div>
-                <div>
+                <div class="my-3">
                     <p>{{ thread.description|truncate(500) }}</p>
                 </div>
                 <div class="row mx-0">
                     <span>
-                        <h5><a href="{{ url_for('user_threads', user_id=thread.user.user_id) }}">{{ thread.user.username }}</a></h5>
+                        <h5>Reviewer: <a href="{{ url_for('user_threads', user_id=thread.user.user_id) }}">{{ thread.user.username }}</a></h5>
                     </span>
                     <span class="ml-auto">
                         {% if current_user._id == thread.user.user_id %}
