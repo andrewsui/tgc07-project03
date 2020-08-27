@@ -8,6 +8,12 @@ body {
     padding: 0 1rem;
 }
 
+.btn-danger {
+    background-color: darkred;
+    border: darkred;
+    font-weight: bold;
+}
+
 .thread {
     background-color: white;
     border-radius: 0.5rem;

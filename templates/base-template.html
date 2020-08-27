@@ -52,9 +52,9 @@
                     <a href="{{ url_for('create_user') }}" class="btn btn-success"><i class="fa fa-user-plus" aria-hidden="true"></i> Sign up</a>
                     <a href="{{ url_for('login') }}" class="btn btn-primary"><i class="fa fa-user" aria-hidden="true"></i> Log in</a>
                 {% else %}
-                    <a href="{{ url_for('logout') }}" class="btn btn-danger"><i class="fa fa-user-o" aria-hidden="true"></i> Log out</a>
+                    <a href="{{ url_for('logout') }}" class="btn btn-secondary"><i class="fa fa-user-o" aria-hidden="true"></i> Log out</a>
                     <a href="{{ url_for('update_user', user_id=current_user._id) }}" class="btn btn-warning"><i class="fa fa-user-circle" aria-hidden="true"></i> {{ current_user.username }}'s profile</a>
-                    <a href="{{ url_for('create_thread') }}" class="btn btn-success"><i class="fa fa-plus-square" aria-hidden="true"></i> New review</a>
+                    <a href="{{ url_for('create_thread') }}" class="btn btn-danger"><i class="fa fa-plus-square" aria-hidden="true"></i> New review</a>
                 {% endif %}
             </div>
         </div>
