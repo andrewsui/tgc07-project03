@@ -6,7 +6,6 @@ async function updateVoteCount() {
         let upVotes = upVotesResponse.data.number_of_up_votes;
         let downVotes = downVotesResponse.data.number_of_down_votes;
         element.innerText = upVotes - downVotes;
-        console.log(upVotes - downVotes);
     }
 }
 
