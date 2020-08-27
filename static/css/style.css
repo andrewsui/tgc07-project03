@@ -39,7 +39,7 @@ body {
     transform: scale(-1, 1);
 }
 
-.votes-aggregate {
+.vote-count {
     display: inline-block;
 }
 
