@@ -35,6 +35,10 @@ body {
     transform: scale(-1, 1);
 }
 
+.votes-aggregate {
+    display: inline-block;
+}
+
 .price {
     color: darkred;
     font-weight: bold;
