@@ -266,6 +266,13 @@ def delete_comment(thread_id, comment_id):
         module_services.service_comments_delete(db, comment_id)
         return redirect(url_for('threads'))
 
+@app.route('/api/threads/<thread_id>/comments/count')
+def count_comments(thread_id):
+    comments = module_services.service_comments_count(db, thread_id)
+    return {
+        'comments': json.loads(dumps(len(comments)))
+    }
+
 # Voting
 @app.route('/api/threads/<thread_id>/vote-up', methods=['PATCH'])
 def vote_up(thread_id):

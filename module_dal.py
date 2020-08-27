@@ -217,6 +217,13 @@ def dal_comments_delete(collection, comment_id):
             }
         })
 
+def dal_comments_count(collection, thread_id):
+    return collection.find_one({
+            '_id': ObjectId(thread_id)
+        }, {
+            'sub_posts': 1
+        })['sub_posts']
+
 # Voting
 def dal_vote_up(collection, thread_id):
     return collection.update_one({
