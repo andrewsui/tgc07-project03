@@ -26,13 +26,14 @@ window.addEventListener('load', async (event) => {
     element.addEventListener("click", async () => {
       let response = await axios.get(voteCheckUrl);
       if (response.data.response) {
-        voteRemove(threadId, "up");
+        await voteRemove(threadId, "up");
       } else {
-        vote(threadId, "up");
+        await vote(threadId, "up");
         element.classList.remove("fa-thumbs-o-up");
         element.classList.add("fa-thumbs-up");
-        voteRemove(threadId, "down");
+        await voteRemove(threadId, "down");
       }
+      await updateVoteCount();
     });
   }
   for (let element of voteDownElements) {
@@ -46,13 +47,14 @@ window.addEventListener('load', async (event) => {
     element.addEventListener("click", async () => {
       let response = await axios.get(voteCheckUrl);
       if (response.data.response) {
-        voteRemove(threadId, "down");
+        await voteRemove(threadId, "down");
       } else {
-        vote(threadId, "down");
+        await vote(threadId, "down");
         element.classList.remove("fa-thumbs-o-down");
         element.classList.add("fa-thumbs-down");
-        voteRemove(threadId, "up");
+        await voteRemove(threadId, "up");
       }
+      await updateVoteCount();
     });
   }
 });
