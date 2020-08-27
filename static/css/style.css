@@ -46,6 +46,10 @@ body {
     font-weight: bold;
 }
 
+.fa-comments {
+    font-size: 1.5rem;
+}
+
 .price {
     color: darkred;
     font-weight: bold;
