@@ -216,7 +216,7 @@ def create_thread():
         all_categories = module_services.service_categories_get_all(db)
         return render_template('threads/create-thread.html', categories=all_categories)
     elif request.method == 'POST':
-        module_services.service_threads_create(db, request.form)
+        # module_services.service_threads_create(db, request.form)
         new_thread_id = module_services.service_threads_create(db, request.form).inserted_id
         return redirect(url_for('display_thread', thread_id=new_thread_id))
 
