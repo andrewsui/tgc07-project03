@@ -94,7 +94,11 @@ def create_user():
     if request.method == 'GET':
         return render_template('users/create-user.html')
     elif request.method == 'POST':
+        email = request.form.get('email')
         module_services.service_users_create(db, request.form)
+        user_object = User()
+        user_object.id = email
+        flask_login.login_user(user_object)
         return redirect(url_for('users'))
 
 @app.route('/users/<user_id>/update', methods=['GET','POST'])
