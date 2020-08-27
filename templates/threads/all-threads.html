@@ -66,7 +66,10 @@
                 </div>
                 <div class="row mx-0">
                     <span>
-                        <h5>Reviewer: <a href="{{ url_for('user_threads', user_id=thread.user.user_id) }}">{{ thread.user.username }}</a></h5>
+                        <h5>By <a href="{{ url_for('user_threads', user_id=thread.user.user_id) }}">{{ thread.user.username }}</a></h5>
+                    </span>
+                    <span>
+                        <a href="{{ thread.affiliate }}" class="btn btn-danger ml-5" target="_blank"><i class="fa fa-amazon" aria-hidden="true"></i> Amazon*</a>
                     </span>
                     <span class="ml-auto">
                         {% if current_user._id == thread.user.user_id %}
