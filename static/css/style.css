@@ -50,3 +50,8 @@ body {
     color: darkred;
     font-weight: bold;
 }
+
+.thread-description {
+    max-height: 120px;
+    overflow: hidden;
+}

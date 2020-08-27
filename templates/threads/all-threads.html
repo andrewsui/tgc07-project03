@@ -54,32 +54,40 @@
             </div>
             <div class="col-9">
                 <div class="row mx-0">
-                    <span>
+                    <!-- Product name -->
+                    <span class="col-10 px-0">
                         <h5><a href="{{ url_for('display_thread', thread_id=thread._id) }}">{{ thread.product_name }}</a></h5>
                     </span>
-                    <span class="ml-auto">
+                    <!-- Date posted -->
+                    <span class="col-2 ml-auto px-0 text-right">
                         <h6>{{ thread.datetime.strftime('%d %b %Y %H:%M') }}</h6>
                     </span>
                 </div>
+                <!-- Price -->
                 <div class="my-1">
                     <h5 class="price">{{ "US$ {:,.2f}".format(thread.price) }}</h5>
                 </div>
+                <!-- Review description -->
                 <div class="my-3">
-                    <p>{{ thread.description|truncate(500) }}</p>
+                    <p class="thread-description">{{ thread.description|truncate(500) }}</p>
                 </div>
                 <div class="row mx-0">
+                    <!-- Review poster -->
                     <span>
-                        <h5>By <a href="{{ url_for('user_threads', user_id=thread.user.user_id) }}">{{ thread.user.username }}</a></h5>
+                        <h5 class="mt-1">By <a href="{{ url_for('user_threads', user_id=thread.user.user_id) }}">{{ thread.user.username }}</a></h5>
                     </span>
+                    <!-- Purchase link -->
                     <span>
                         <a href="{{ thread.affiliate }}" class="btn btn-danger ml-5" target="_blank"><i class="fa fa-amazon" aria-hidden="true"></i> Amazon*</a>
                     </span>
+                    <!-- Edit and delete review -->
                     <span class="ml-auto">
                         {% if current_user._id == thread.user.user_id %}
                             <a href="{{ url_for('update_thread', thread_id=thread._id) }}" class="btn btn-primary">Edit</a>
                             <a href="{{ url_for('delete_thread', thread_id=thread._id) }}" class="btn btn-secondary">Delete</a>
                         {% endif %}
                     </span>
+                <!-- Links to search by category and sub-category -->
                 </div>
                 <nav class="mt-3" aria-label="breadcrumb">
                     <ol class="breadcrumb">
