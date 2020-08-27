@@ -33,6 +33,7 @@ body {
 
 .vote-btn:hover {
     cursor: pointer;
+    scale: 1.2;
 }
 
 .vote-down {
@@ -41,6 +42,8 @@ body {
 
 .vote-count {
     display: inline-block;
+    color: darkred;
+    font-weight: bold;
 }
 
 .price {
