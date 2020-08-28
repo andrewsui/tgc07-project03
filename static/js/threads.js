@@ -7,6 +7,12 @@ async function vote(threadId, upOrDown) {
   await axios.patch(url);
 }
 
+// Function to get comment count of review thread
+async function commentCount(threadId) {
+  let url = "/api/threads/" + threadId + "/comments/count";
+  await axios.patch(url);
+}
+
 // Function to remove vote via API endpoint
 async function voteRemove(threadId, upOrDown) {
   let url = "/api/threads/" + threadId + "/vote-" + upOrDown + "-remove";
@@ -17,23 +23,31 @@ async function voteRemove(threadId, upOrDown) {
 }
 
 window.addEventListener('load', async (event) => {
+  // After page loaded, iterate over comment count elements
+  for (let element of document.querySelectorAll(".comment-count")) {
+    // Get thread ID from element's HTML ID
+    let threadId = (element.id.replace(/^comment-count-+/i, ''));
+    // Get comments count from API endpoint
+    let commentsCountResponse = await axios.get("/api/threads/" + threadId + "/comments/count");
+    element.innerText =  commentsCountResponse.data.comments;
+  }
   // After page loaded, iterate over vote-up buttons
   for (let element of voteUpElements) {
     // Get thread ID from element's HTML ID
     let threadId = (element.id.replace(/^up-+/i, ''));
     // Check if user has an existing vote on this thread
     let voteCheckUrl = "/api/threads/" + threadId + "/vote-" + "up" + "-check";
-    let response = await axios.get(voteCheckUrl);
+    let voteCheckResponse = await axios.get(voteCheckUrl);
     // If user has existing vote on this thread, then update button to show vote
-    if (response.data.response) {
+    if (voteCheckResponse.data.response) {
       element.classList.remove("fa-thumbs-o-up");
       element.classList.add("fa-thumbs-up");
     };
     // When up-vote button is clicked:
     element.addEventListener("click", async () => {
       // Check if user has an existing vote on this thread
-      let response = await axios.get(voteCheckUrl);
-      if (response.data.response) {
+      let voteCheckResponse = await axios.get(voteCheckUrl);
+      if (voteCheckResponse.data.response) {
         // If user has existing vote, remove vote
         await voteRemove(threadId, "up");
       } else {
@@ -53,17 +67,17 @@ window.addEventListener('load', async (event) => {
     let threadId = (element.id.replace(/^down-+/i, ''));
     // Check if user has an existing vote on this thread
     let voteCheckUrl = "/api/threads/" + threadId + "/vote-" + "down" + "-check";
-    let response = await axios.get(voteCheckUrl);
+    let voteCheckResponse = await axios.get(voteCheckUrl);
     // If user has existing vote on this thread, then update button to show vote
-    if (response.data.response) {
+    if (voteCheckResponse.data.response) {
       element.classList.remove("fa-thumbs-o-down");
       element.classList.add("fa-thumbs-down");
     };
     // When down-vote button is clicked:
     element.addEventListener("click", async () => {
       // Check if user has an existing vote on this thread
-      let response = await axios.get(voteCheckUrl);
-      if (response.data.response) {
+      let voteCheckResponse = await axios.get(voteCheckUrl);
+      if (voteCheckResponse.data.response) {
         // If user has existing vote, remove vote
         await voteRemove(threadId, "down");
       } else {
