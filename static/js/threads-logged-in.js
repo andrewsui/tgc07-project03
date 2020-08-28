@@ -1,15 +1,6 @@
-let voteUpElements = document.querySelectorAll(".vote-up");
-let voteDownElements = document.querySelectorAll(".vote-down");
-
 // Function to cast up or down vote via API endpoint
 async function vote(threadId, upOrDown) {
   let url = "/api/threads/" + threadId + "/vote-" + upOrDown;
-  await axios.patch(url);
-}
-
-// Function to get comment count of review thread
-async function commentCount(threadId) {
-  let url = "/api/threads/" + threadId + "/comments/count";
   await axios.patch(url);
 }
 
@@ -23,16 +14,12 @@ async function voteRemove(threadId, upOrDown) {
 }
 
 window.addEventListener('load', async (event) => {
-  // After page loaded, iterate over comment count elements
-  for (let element of document.querySelectorAll(".comment-count")) {
-    // Get thread ID from element's HTML ID
-    let threadId = (element.id.replace(/^comment-count-+/i, ''));
-    // Get comments count from API endpoint
-    let commentsCountResponse = await axios.get("/api/threads/" + threadId + "/comments/count");
-    element.innerText =  commentsCountResponse.data.comments;
-  }
-  // After page loaded, iterate over vote-up buttons
+  let voteUpElements = document.querySelectorAll(".vote-up");
+  let voteDownElements = document.querySelectorAll(".vote-down");
+
+  // Up vote buttons
   for (let element of voteUpElements) {
+    // Update vote buttons on page load
     // Get thread ID from element's HTML ID
     let threadId = (element.id.replace(/^up-+/i, ''));
     // Check if user has an existing vote on this thread
@@ -43,6 +30,7 @@ window.addEventListener('load', async (event) => {
       element.classList.remove("fa-thumbs-o-up");
       element.classList.add("fa-thumbs-up");
     };
+    
     // When up-vote button is clicked:
     element.addEventListener("click", async () => {
       // Check if user has an existing vote on this thread
@@ -61,8 +49,10 @@ window.addEventListener('load', async (event) => {
       await updateVoteCount();
     });
   }
-  // After page loaded, iterate over vote-down buttons
+
+  // Down vote buttons
   for (let element of voteDownElements) {
+    // Update vote buttons on page load
     // Get thread ID from element's HTML ID
     let threadId = (element.id.replace(/^down-+/i, ''));
     // Check if user has an existing vote on this thread
@@ -73,6 +63,7 @@ window.addEventListener('load', async (event) => {
       element.classList.remove("fa-thumbs-o-down");
       element.classList.add("fa-thumbs-down");
     };
+
     // When down-vote button is clicked:
     element.addEventListener("click", async () => {
       // Check if user has an existing vote on this thread

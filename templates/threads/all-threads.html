@@ -2,11 +2,11 @@
 
 {% block javascript %}
     <script src={{ url_for("static", filename="js/sub-categories.js") }} defer></script>
-    <script src={{ url_for("static", filename="js/vote-count.js") }} defer></script>
+    <script src={{ url_for("static", filename="js/threads-all.js") }} defer></script>
     {% if current_user.is_authenticated %}
-        <script src={{ url_for("static", filename="js/threads.js") }} defer></script>
+        <script src={{ url_for("static", filename="js/threads-logged-in.js") }} defer></script>
     {% else %}
-        <script src={{ url_for("static", filename="js/login-request.js") }} defer></script>
+        <script src={{ url_for("static", filename="js/threads-logged-out.js") }} defer></script>
     {% endif %}
 {% endblock %}
 
@@ -47,7 +47,7 @@
                 <div class="row vote-container my-4">
                     <div class="col-6 d-flex justify-content-center">
                         <span><i id="down-{{ thread._id }}" class="vote-btn vote-down fa fa-thumbs-o-down" aria-hidden="true"></i></span>
-                        <span><h5 id="count-{{ thread._id }}" class="vote-count my-0 px-4">0</h5></span>
+                        <span><h5 id="vote-count-{{ thread._id }}" class="vote-count my-0 px-4">0</h5></span>
                         <span><i id="up-{{ thread._id }}" class="vote-btn vote-up fa fa-thumbs-o-up" aria-hidden="true"></i></span>
                     </div>
                     <div class="col-6 d-flex justify-content-center">
