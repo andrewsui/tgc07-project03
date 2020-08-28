@@ -2,16 +2,16 @@ from bson.objectid import ObjectId
 from passlib.hash import pbkdf2_sha256
 import datetime
 import flask_login
-import module_dal
+import m_dal
 
 # Users
-def service_users_get_all(db):
-    return module_dal.dal_collection_get(db.users)
+def users_get_all(db):
+    return m_dal.collection_get(db.users)
 
-def service_users_get_one(db, user_id):
-    return module_dal.dal_document_get(db.users, user_id)
+def users_get_one(db, user_id):
+    return m_dal.document_get(db.users, user_id)
 
-def service_users_create(db, data):
+def users_create(db, data):
     new_record = {
             'username': data.get('username'),
             'email': data.get('email'),
@@ -20,9 +20,9 @@ def service_users_create(db, data):
             'terms_and_conditions': False if data.get('terms_and_conditions')==None else True,
             'marketing': False if data.get('marketing')==None else True
         }
-    return module_dal.dal_users_create(db.users, new_record)
+    return m_dal.users_create(db.users, new_record)
 
-def service_users_update(db, data, user_id):
+def users_update(db, data, user_id):
     updated_record = {
             'username': data.get('username'),
             'email': data.get('email'),
@@ -31,61 +31,61 @@ def service_users_update(db, data, user_id):
             'terms_and_conditions': False if data.get('terms_and_conditions')==None else True,
             'marketing': False if data.get('marketing')==None else True
         }
-    return module_dal.dal_users_update(db.users, updated_record, user_id)
+    return m_dal.users_update(db.users, updated_record, user_id)
 
-def service_users_delete(db, user_id):
-    return module_dal.dal_users_delete(db.users, user_id)
+def users_delete(db, user_id):
+    return m_dal.users_delete(db.users, user_id)
 
 # Categories
-def service_categories_get_all(db):
-    return module_dal.dal_collection_get(db.categories)
+def categories_get_all(db):
+    return m_dal.collection_get(db.categories)
 
-def service_categories_create_0(db, data):
+def categories_create_0(db, data):
     category_value = data.get('category')
-    return module_dal.dal_categories_create_0(db.categories, category_value)
+    return m_dal.categories_create_0(db.categories, category_value)
 
-def service_categories_create_1(db, data, parent_id):
+def categories_create_1(db, data, parent_id):
     category_value = data.get('category')
-    return module_dal.dal_categories_create_1(db.categories, category_value, parent_id)
+    return m_dal.categories_create_1(db.categories, category_value, parent_id)
 
-def service_categories_update_0(db, data, category_id):
+def categories_update_0(db, data, category_id):
     category_value = data.get('category')
-    return module_dal.dal_categories_update_0(db.categories, category_value, category_id)
+    return m_dal.categories_update_0(db.categories, category_value, category_id)
 
-def service_categories_update_1(db, data, category_id):
+def categories_update_1(db, data, category_id):
     category_value = data.get('category')
-    return module_dal.dal_categories_update_1(db.categories, category_value, category_id)
+    return m_dal.categories_update_1(db.categories, category_value, category_id)
 
-def service_categories_delete_0(db, category_id):
-    return module_dal.dal_categories_delete_0(db.categories, category_id)
+def categories_delete_0(db, category_id):
+    return m_dal.categories_delete_0(db.categories, category_id)
 
-def service_categories_delete_1(db, category_id):
-    return module_dal.dal_categories_delete_1(db.categories, category_id)
+def categories_delete_1(db, category_id):
+    return m_dal.categories_delete_1(db.categories, category_id)
 
-def service_sub_categories_get(db, parent_id):
-    return module_dal.dal_sub_categories_get(db.categories, parent_id)
+def sub_categories_get(db, parent_id):
+    return m_dal.sub_categories_get(db.categories, parent_id)
 
 # Threads
-def service_threads_get_all(db):
-    return module_dal.dal_collection_get(db.threads)
+def threads_get_all(db):
+    return m_dal.collection_get(db.threads)
 
-def service_threads_get_one(db, thread_id):
-    return module_dal.dal_document_get(db.threads, thread_id)
+def threads_get_one(db, thread_id):
+    return m_dal.document_get(db.threads, thread_id)
 
-def service_threads_search(db, data):
+def threads_search(db, data):
     user_input = {
         'category_id': data.get('categories'),
         'sub_category_id': data.get('sub_categories'),
         'search_box': data.get('search-box')
     }
-    return module_dal.dal_threads_search(db.threads, user_input)
+    return m_dal.threads_search(db.threads, user_input)
 
-def service_threads_create(db, data):
+def threads_create(db, data):
     category_id = data.get('categories')
-    category_name = module_dal.dal_category_name_get(db.categories, category_id)
+    category_name = m_dal.category_name_get(db.categories, category_id)
     if data.get('sub_categories'):
         sub_category_id = ObjectId(data.get('sub_categories'))
-        sub_category_name = module_dal.dal_sub_category_name_get(db.categories, data.get('sub_categories'))
+        sub_category_name = m_dal.sub_category_name_get(db.categories, data.get('sub_categories'))
     else:
         sub_category_id = ""
         sub_category_name = ""
@@ -113,14 +113,14 @@ def service_threads_create(db, data):
         'sub_posts': []
     }
     # print(new_record)
-    return module_dal.dal_threads_create(db.threads, new_record)
+    return m_dal.threads_create(db.threads, new_record)
 
-def service_threads_update(db, data, thread_id):
+def threads_update(db, data, thread_id):
     category_id = data.get('categories')
-    category_name = module_dal.dal_category_name_get(db.categories, category_id)
+    category_name = m_dal.category_name_get(db.categories, category_id)
     if data.get('sub_categories'):
         sub_category_id = ObjectId(data.get('sub_categories'))
-        sub_category_name = module_dal.dal_sub_category_name_get(db.categories, data.get('sub_categories'))
+        sub_category_name = m_dal.sub_category_name_get(db.categories, data.get('sub_categories'))
     else:
         sub_category_id = ""
         sub_category_name = ""
@@ -151,13 +151,13 @@ def service_threads_update(db, data, thread_id):
         'sub_posts': []
     }
     # print(updated_record)
-    return module_dal.dal_threads_update(db.threads, updated_record, thread_id)
+    return m_dal.threads_update(db.threads, updated_record, thread_id)
 
-def service_threads_delete(db, thread_id):
-    return module_dal.dal_threads_delete(db.threads, thread_id)
+def threads_delete(db, thread_id):
+    return m_dal.threads_delete(db.threads, thread_id)
 
 # Thread comments
-def service_comments_create(db, data, thread_id):
+def comments_create(db, data, thread_id):
     new_record = {
         'datetime': datetime.datetime.utcnow(),
         'user': {
@@ -167,9 +167,9 @@ def service_comments_create(db, data, thread_id):
         'comment': data.get('comment'),
         'quote': None
     }
-    return module_dal.dal_comments_create(db.threads, new_record, thread_id)
+    return m_dal.comments_create(db.threads, new_record, thread_id)
 
-def service_comments_update(db, data, thread_id, comment_id):
+def comments_update(db, data, thread_id, comment_id):
     updated_record = {
         'datetime': datetime.datetime.utcnow(),
         'user': {
@@ -179,33 +179,33 @@ def service_comments_update(db, data, thread_id, comment_id):
         'comment': data.get('comment'),
         'quote': None
     }
-    return module_dal.dal_comments_update(db.threads, updated_record, thread_id, comment_id)
+    return m_dal.comments_update(db.threads, updated_record, thread_id, comment_id)
 
-def service_comments_delete(db, comment_id):
-    return module_dal.dal_comments_delete(db.threads, comment_id)
+def comments_delete(db, comment_id):
+    return m_dal.comments_delete(db.threads, comment_id)
 
-def service_comments_count(db, thread_id):
-    return module_dal.dal_comments_count(db.threads, thread_id)
+def comments_count(db, thread_id):
+    return m_dal.comments_count(db.threads, thread_id)
 
 # Voting
-def service_vote_up(db, thread_id):
-    return module_dal.dal_vote_up(db.threads, thread_id)
+def vote_up(db, thread_id):
+    return m_dal.vote_up(db.threads, thread_id)
 
-def service_vote_down(db, thread_id):
-    return module_dal.dal_vote_down(db.threads, thread_id)
+def vote_down(db, thread_id):
+    return m_dal.vote_down(db.threads, thread_id)
 
-def service_vote_up_check(db, thread_id):
-    return module_dal.dal_vote_up_check(db.threads, thread_id)
+def vote_up_check(db, thread_id):
+    return m_dal.vote_up_check(db.threads, thread_id)
 
-def service_vote_down_check(db, thread_id):
-    return module_dal.dal_vote_down_check(db.threads, thread_id)
+def vote_down_check(db, thread_id):
+    return m_dal.vote_down_check(db.threads, thread_id)
 
-def service_vote_up_remove(db, thread_id):
-    return module_dal.dal_vote_up_remove(db.threads, thread_id)
+def vote_up_remove(db, thread_id):
+    return m_dal.vote_up_remove(db.threads, thread_id)
 
-def service_vote_down_remove(db, thread_id):
-    return module_dal.dal_vote_down_remove(db.threads, thread_id)
+def vote_down_remove(db, thread_id):
+    return m_dal.vote_down_remove(db.threads, thread_id)
 
-def service_vote_count(db, thread_id, up_or_down):
-    return module_dal.dal_vote_count(db.threads, thread_id, up_or_down)
+def vote_count(db, thread_id, up_or_down):
+    return m_dal.vote_count(db.threads, thread_id, up_or_down)
 

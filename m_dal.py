@@ -2,32 +2,32 @@ from bson.objectid import ObjectId
 import flask_login
 
 # Generic database queries
-def dal_collection_get(collection):
+def collection_get(collection):
     return collection.find()
 
-def dal_document_get(collection, document_id):
+def document_get(collection, document_id):
     return collection.find_one({
         '_id': ObjectId(document_id)
     })
 
 # Users
-def dal_users_create(collection, new_record):
+def users_create(collection, new_record):
     return collection.insert_one(new_record)
 
-def dal_users_update(collection, updated_record, user_id):
+def users_update(collection, updated_record, user_id):
     return collection.update_one({
         '_id': ObjectId(user_id)
     }, {
         '$set': updated_record
     })
 
-def dal_users_delete(collection, user_id):
+def users_delete(collection, user_id):
     return collection.remove({
         '_id': ObjectId(user_id)
         })
 
 # Categories
-def dal_category_name_get(collection, category_id):
+def category_name_get(collection, category_id):
     return collection.find_one({
         '_id': ObjectId(category_id)
     },
@@ -35,7 +35,7 @@ def dal_category_name_get(collection, category_id):
         'category': 1
     })['category']
 
-def dal_sub_category_name_get(collection, sub_category_id):
+def sub_category_name_get(collection, sub_category_id):
     return collection.find_one({
         'sub_categories._id': ObjectId(sub_category_id)
     },
@@ -43,7 +43,7 @@ def dal_sub_category_name_get(collection, sub_category_id):
         'sub_categories.$.category': 1
     })['sub_categories'][0]['category']
 
-def dal_categories_create_0(collection, category_value):
+def categories_create_0(collection, category_value):
     new_record = {
         'category': category_value,
         'parent': None,
@@ -51,7 +51,7 @@ def dal_categories_create_0(collection, category_value):
     }
     return collection.insert_one(new_record)
 
-def dal_categories_create_1(collection, category_value, parent_id):
+def categories_create_1(collection, category_value, parent_id):
     return collection.update_one({
         '_id': ObjectId(parent_id)
     }, {
@@ -65,7 +65,7 @@ def dal_categories_create_1(collection, category_value, parent_id):
         }
     })
 
-def dal_categories_update_0(collection, category_value, category_id):
+def categories_update_0(collection, category_value, category_id):
     return collection.update_one({
         '_id': ObjectId(category_id)
     }, {
@@ -74,7 +74,7 @@ def dal_categories_update_0(collection, category_value, category_id):
             }
     })
 
-def dal_categories_update_1(collection, category_value, category_id):
+def categories_update_1(collection, category_value, category_id):
     return collection.update_one({
             'sub_categories._id': ObjectId(category_id)
         }, {
@@ -83,12 +83,12 @@ def dal_categories_update_1(collection, category_value, category_id):
             }
         })
 
-def dal_categories_delete_0(collection, category_id):
+def categories_delete_0(collection, category_id):
     return collection.remove({
         '_id': ObjectId(category_id)
         })
 
-def dal_categories_delete_1(collection, category_id):
+def categories_delete_1(collection, category_id):
     return collection.update_one({
         'sub_categories._id': ObjectId(category_id)
         }, {
@@ -99,7 +99,7 @@ def dal_categories_delete_1(collection, category_id):
             }
         })
 
-def dal_sub_categories_get(collection, parent_id):
+def sub_categories_get(collection, parent_id):
     return collection.find({
         '_id': ObjectId(parent_id)
     }, {
@@ -107,7 +107,7 @@ def dal_sub_categories_get(collection, parent_id):
     })
 
 # Threads
-def dal_threads_search(collection, user_input):
+def threads_search(collection, user_input):
     search_criteria = {}
     # Search by category
     if user_input['category_id']:
@@ -139,10 +139,10 @@ def dal_threads_search(collection, user_input):
         ]
     return collection.find(search_criteria)
 
-def dal_threads_create(collection, new_record):
+def threads_create(collection, new_record):
     return collection.insert_one(new_record)
 
-def dal_threads_update(collection, updated_record, thread_id):
+def threads_update(collection, updated_record, thread_id):
     return collection.update_one({
         '_id': ObjectId(thread_id)
     }, {
@@ -172,13 +172,13 @@ def dal_threads_update(collection, updated_record, thread_id):
         }
     })
 
-def dal_threads_delete(collection, thread_id):
+def threads_delete(collection, thread_id):
     return collection.remove({
         '_id': ObjectId(thread_id)
         })
 
 # Thread comments
-def dal_comments_create(collection, updated_record, thread_id):
+def comments_create(collection, updated_record, thread_id):
     return collection.update_one({
         '_id': ObjectId(thread_id)
     }, {
@@ -197,7 +197,7 @@ def dal_comments_create(collection, updated_record, thread_id):
         }
     })
 
-def dal_comments_update(collection, updated_record, thread_id, comment_id):
+def comments_update(collection, updated_record, thread_id, comment_id):
     return collection.update_one({
             'sub_posts._id': ObjectId(comment_id)
         }, {
@@ -206,7 +206,7 @@ def dal_comments_update(collection, updated_record, thread_id, comment_id):
             }
         })
 
-def dal_comments_delete(collection, comment_id):
+def comments_delete(collection, comment_id):
     return collection.update_one({
         'sub_posts._id': ObjectId(comment_id)
         }, {
@@ -217,7 +217,7 @@ def dal_comments_delete(collection, comment_id):
             }
         })
 
-def dal_comments_count(collection, thread_id):
+def comments_count(collection, thread_id):
     return collection.find_one({
             '_id': ObjectId(thread_id)
         }, {
@@ -225,7 +225,7 @@ def dal_comments_count(collection, thread_id):
         })['sub_posts']
 
 # Voting
-def dal_vote_up(collection, thread_id):
+def vote_up(collection, thread_id):
     return collection.update_one({
             '_id': ObjectId(thread_id)
         }, {
@@ -234,7 +234,7 @@ def dal_vote_up(collection, thread_id):
             }
         })
 
-def dal_vote_down(collection, thread_id):
+def vote_down(collection, thread_id):
     return collection.update_one({
             '_id': ObjectId(thread_id)
         }, {
@@ -243,19 +243,19 @@ def dal_vote_down(collection, thread_id):
             }
         })
 
-def dal_vote_up_check(collection, thread_id):
+def vote_up_check(collection, thread_id):
     return collection.find({
             '_id': ObjectId(thread_id),
             'votes.up_votes': { '$in': [ObjectId(flask_login.current_user._id)] }
         }).count()
 
-def dal_vote_down_check(collection, thread_id):
+def vote_down_check(collection, thread_id):
     return collection.find({
             '_id': ObjectId(thread_id),
             'votes.down_votes': { '$in': [ObjectId(flask_login.current_user._id)] }
         }).count()
 
-def dal_vote_up_remove(collection, thread_id):
+def vote_up_remove(collection, thread_id):
     return collection.update_one({
             '_id': ObjectId(thread_id)
         }, {
@@ -264,7 +264,7 @@ def dal_vote_up_remove(collection, thread_id):
             }
         })
 
-def dal_vote_down_remove(collection, thread_id):
+def vote_down_remove(collection, thread_id):
     return collection.update_one({
             '_id': ObjectId(thread_id)
         }, {
@@ -273,7 +273,7 @@ def dal_vote_down_remove(collection, thread_id):
             }
         })
 
-def dal_vote_count(collection, thread_id, up_or_down):
+def vote_count(collection, thread_id, up_or_down):
     return collection.find_one({
         '_id': ObjectId(thread_id)
     }, {
