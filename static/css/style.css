@@ -27,6 +27,12 @@ body {
     margin-right: auto;
 }
 
+.vote-container, .comment-count-container {
+    width: 100%;
+    border: solid 1px #888888;
+    border-radius: 0.5rem;
+}
+
 .vote-btn {
     font-size: 1.5rem;
 }
@@ -58,4 +64,11 @@ body {
 .thread-description {
     max-height: 120px;
     overflow: hidden;
+}
+
+@media (min-width: 768px) {
+    .thread-description {
+        height: 360px;
+    }
+    
 }
