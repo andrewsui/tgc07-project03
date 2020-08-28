@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}{% endblock %}</title>
+    <title>PC Hardware - {% block title %}{% endblock %}</title>
 
     <!-------- Favicon -------->
     <!-- {# https://favicon.io/emoji-favicons/desktop-computer/ #} -->
@@ -40,20 +40,22 @@
 </head>
 
 <body>
+
+    <!-- Navbar -->
     <nav class="navbar navbar-expand-md navbar-dark bg-dark">
         <a class="navbar-brand" href="{{ url_for('threads') }}">PC Hardware Reviews</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
+            <div class="navbar-nav ml-auto">
                 <a class="nav-link" href="{{ url_for('threads') }}">Reviews</a>
                 {% if not current_user.is_authenticated %}
-                    <a href="{{ url_for('create_user') }}" class="btn btn-success"><i class="fa fa-user-plus" aria-hidden="true"></i> Sign up</a>
+                    <a href="{{ url_for('create_user') }}" class="btn btn-success mx-3"><i class="fa fa-user-plus" aria-hidden="true"></i> Sign up</a>
                     <a href="{{ url_for('login') }}" class="btn btn-primary"><i class="fa fa-user" aria-hidden="true"></i> Log in</a>
                 {% else %}
-                    <a href="{{ url_for('logout') }}" class="btn btn-secondary"><i class="fa fa-user-o" aria-hidden="true"></i> Log out</a>
-                    <a href="{{ url_for('update_user', user_id=current_user._id) }}" class="btn btn-warning"><i class="fa fa-user-circle" aria-hidden="true"></i> {{ current_user.username }}'s profile</a>
+                    <a href="{{ url_for('logout') }}" class="btn btn-secondary mx-3"><i class="fa fa-user-o" aria-hidden="true"></i> Log out</a>
+                    <a href="{{ url_for('update_user', user_id=current_user._id) }}" class="btn btn-warning mr-3"><i class="fa fa-user-circle" aria-hidden="true"></i> {{ current_user.username }}'s profile</a>
                     <a href="{{ url_for('create_thread') }}" class="btn btn-danger"><i class="fa fa-plus-square" aria-hidden="true"></i> New review</a>
                 {% endif %}
             </div>
@@ -69,10 +71,12 @@
     {{ current_user.email }}
     <br>
 
+    <!-- Main section container -->
     <div class="container-fluid">
         {% block content %}
         {% endblock %}
     </div>
+
 </body>
 
 </html>
