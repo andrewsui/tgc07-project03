@@ -210,7 +210,7 @@ def display_thread(thread_id):
         return render_template('threads/single-thread.html', thread=thread)
     elif request.method == 'POST':
         m_services.comments_create(db, request.form, thread_id)
-        return request.form
+        return redirect(url_for('display_thread', thread_id=thread_id))
 
 @app.route('/threads/create', methods=['GET','POST'])
 @flask_login.login_required
@@ -267,7 +267,7 @@ def delete_comment(thread_id, comment_id):
         return render_template('threads/comments/delete-comment.html')
     elif request.method == 'POST':
         m_services.comments_delete(db, comment_id)
-        return redirect(url_for('threads'))
+        return redirect(url_for('display_thread', thread_id=thread_id))
 
 @app.route('/api/threads/<thread_id>/comments/count')
 def count_comments(thread_id):
