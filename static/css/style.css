@@ -7,6 +7,15 @@ body {
     padding: 0 1rem;
 }
 
+.page-header-container {
+    background-color: white;
+}
+
+.page-header {
+    color: #343a40;
+    font-weight: bold;
+}
+
 #search-box {
     min-width: 280px;
     /* border-radius: 0.25rem 0 0 0.25rem; */
