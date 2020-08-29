@@ -148,11 +148,11 @@ def threads_update(collection, updated_record, thread_id):
     }, {
         '$set': {
             # 'datetime': datetime.datetime.utcnow(),
-            'datetime': updated_record['datetime'],
-            'user': {
-                'user_id': ObjectId(updated_record['user']['user_id']),
-                'username': updated_record['user']['username']
-            },
+            # 'datetime': updated_record['datetime'],
+            # 'user': {
+            #     'user_id': ObjectId(updated_record['user']['user_id']),
+            #     'username': updated_record['user']['username']
+            # },
             'category': {
                 'category_id': updated_record['category']['category_id'],
                 'category_name': updated_record['category']['category_name'],
