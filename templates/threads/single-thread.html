@@ -89,4 +89,19 @@
         </div>
         {% endfor %}
     </div>
+
+    <div class="row new-comment">
+        <form action="" method="post">
+            {% with %}
+                {% if not previous_values %}
+                    {% set previous_values = {} %}
+                {% endif %}
+    
+                {% include 'threads/comments/base-comment-form.html' %}
+    
+            {% endwith %}
+            
+            <input type="submit" value="Post comment">
+        </form>
+    </div>
 {% endblock %}
