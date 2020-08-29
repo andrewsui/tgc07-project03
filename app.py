@@ -250,7 +250,7 @@ def create_comment(thread_id):
         return render_template('threads/comments/create-comment.html')
     elif request.method == 'POST':
         m_services.comments_create(db, request.form, thread_id)
-        return request.form
+        return redirect(url_for('display_thread', thread_id=thread_id))
 
 @app.route('/threads/<thread_id>/comments/<comment_id>/update', methods=['GET','POST'])
 @flask_login.login_required
@@ -259,7 +259,7 @@ def update_comment(thread_id, comment_id):
         return render_template('threads/comments/update-comment.html')
     elif request.method == 'POST':
         m_services.comments_update(db, request.form, thread_id, comment_id)
-        return request.form
+        return redirect(url_for('display_thread', thread_id=thread_id))
 
 @app.route('/threads/<thread_id>/comments/<comment_id>/delete', methods=['GET','POST'])
 def delete_comment(thread_id, comment_id):
