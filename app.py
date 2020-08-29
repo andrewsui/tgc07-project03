@@ -76,7 +76,7 @@ def login():
 
             # Redirect to a page that says login is successful
             # flash("Login successful", "success")
-            return redirect(url_for('home'))
+            return redirect(url_for('threads'))
 
         # If login fails, return back to the login page
         else:
