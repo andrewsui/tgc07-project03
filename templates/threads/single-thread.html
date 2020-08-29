@@ -1,0 +1,55 @@
+{% extends 'base-template.html' %}
+
+{% block css %}
+    <link rel="stylesheet" href={{ url_for("static", filename="css/single-thread.css") }}>
+{% endblock %}
+
+{% block javascript %}
+    <script src={{ url_for("static", filename="js/threads-all.js") }} defer></script>
+    {% if current_user.is_authenticated %}
+        <script src={{ url_for("static", filename="js/threads-logged-in.js") }} defer></script>
+    {% else %}
+        <script src={{ url_for("static", filename="js/threads-logged-out.js") }} defer></script>
+    {% endif %}
+{% endblock %}
+
+{% block title %}
+    {{ thread.product_name }}
+{% endblock %}
+
+{% block content %}
+
+    <nav class="row mt-1" aria-label="breadcrumb">
+        <div class="col-12">
+            <ol class="breadcrumb mb-0 p-2 pl-lg-3">
+                <li class="breadcrumb-item"><a href="/threads?categories={{ thread.category.category_id }}">{{ thread.category.category_name }}</a></li>
+                <li class="breadcrumb-item"><a href="/threads?categories={{ thread.category.category_id }}&sub_categories={{ thread.category.sub_category_id }}">{{ thread.category.sub_category_name }}</a></li>
+            </ol>
+        </div>
+    </nav>
+
+    <div class="row">
+        <div class="page-header-container col pt-3">
+            <h3 class="page-header">{{ thread.product_name }}</h3>
+        </div>
+    </div>
+
+    <div class="row review-img-user mt-3 p-3">
+        <div class="col-6">
+            <img src="" alt="">
+        </div>
+        <div class="col-6">
+            <h5>Review by: <a href="{{ url_for('user_threads', user_id=thread.user.user_id) }}">{{ thread.user.username }}</a></h5>
+            <span>
+                <a href="{{ thread.affiliate }}" class="btn btn-danger btn-sm" target="_blank"><i class="fa fa-amazon" aria-hidden="true"></i> Amazon*</a>
+            </span>
+            <!-- Edit and delete review -->
+            <span class="ml-auto">
+                {% if current_user._id == thread.user.user_id %}
+                    <a href="{{ url_for('update_thread', thread_id=thread._id) }}" class="btn btn-primary btn-sm">Edit</a>
+                    <a href="{{ url_for('delete_thread', thread_id=thread._id) }}" class="btn btn-secondary btn-sm">Delete</a>
+                {% endif %}
+            </span>
+        </div>
+    </div>
+{% endblock %}

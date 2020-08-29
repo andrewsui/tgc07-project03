@@ -207,10 +207,11 @@ def threads():
 def display_thread(thread_id):
     if request.method == 'GET':
         thread = m_services.threads_get_one(db, thread_id)
+        return render_template('threads/single-thread.html', thread=thread)
         # RETURN TO BE UPDATED
-        return {
-            'results': json.loads(dumps(thread))
-        }
+        # return {
+        #     'results': json.loads(dumps(thread))
+        # }
     # ADD POST REQUEST TO CREATE NEW COMMENTS
 
 @app.route('/threads/create', methods=['GET','POST'])
