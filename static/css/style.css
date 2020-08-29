@@ -19,12 +19,22 @@ body {
     border-radius: 0.5rem;
 }
 
+.review-thumbnail-container {
+    max-height: 100px;
+}
+
 .review-thumbnail {
     display: block;
-    max-height: 300px;
+    max-height: 200px;
     max-width: 100%;
+    height: auto;
+    width: auto;
     margin-left: auto;
     margin-right: auto;
+}
+
+.vote-container-wrapper {
+    max-height: 50px;
 }
 
 .vote-container, .comment-count-container {
@@ -94,6 +104,13 @@ body {
 @media (min-width: 1200px) {
     .thread-description {
         height: 120px;
+    }
+    
+}
+
+@media (min-width: 1440px) {
+    .thread-description {
+        height: 160px;
     }
     
 }
