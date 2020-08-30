@@ -1,26 +1,34 @@
 <article class="thread row my-3 px-3 py-3">
-    <div class="img-vote-container col-3 p-0 d-flex flex-column justify-content-between">
+    <div class="img-vote-container col-3 p-0">
         <!-- Product image thumbnail -->
-        <div class="col-12 review-thumbnail-container">
+        <div class="review-thumbnail-container col-12 p-0">
             <img src="{{ thread.image }}" alt="review-thumbnail" class="review-thumbnail">
         </div>
-        <!-- Vote buttons -->
-        <div class="vote-container-wrapper col-12 mb-n2 align-self-end">
-            <div class="vote-container col-12 px-3 py-2 d-flex justify-content-around">
-                <span><i id="down-{{ thread._id }}" class="vote-btn vote-down fa fa-thumbs-o-down" aria-hidden="true"></i></span>
-                <span><h5 id="vote-count-{{ thread._id }}" class="vote-count my-0 px-2">0</h5></span>
-                <span><i id="up-{{ thread._id }}" class="vote-btn vote-up fa fa-thumbs-o-up" aria-hidden="true"></i></span>
+        <div class="row m-0">
+            <!-- Comments count -->
+            <div class="comment-count-container col-12 px-0">
+                <a href="{{ url_for('display_thread', thread_id=thread._id) }}" class="comment-count btn btn-secondary btn-sm"><i class="fa fa-comments" aria-hidden="true"></i> 0</a>
+                <!-- <span><i class="fa fa-comments" aria-hidden="true"></i></span>
+                <span><h5 id="comment-count-{{ thread._id }}" class="comment-count my-0 pl-3">0</h5></span> -->
+            </div>
+            <!-- Vote buttons -->
+            <div class="vote-container-wrapper col-12 px-0">
+                <div class="vote-container">
+                    <span><i id="down-{{ thread._id }}" class="vote-btn vote-down fa fa-thumbs-o-down" aria-hidden="true"></i></span>
+                    <span><h5 id="vote-count-{{ thread._id }}" class="vote-count my-0 px-2">0</h5></span>
+                    <span><i id="up-{{ thread._id }}" class="vote-btn vote-up fa fa-thumbs-o-up" aria-hidden="true"></i></span>
+                </div>
             </div>
         </div>
     </div>
     <div class="col-9">
         <div class="row mx-0">
             <!-- Product name -->
-            <span class="col-10 px-0">
-                <h5><a href="{{ url_for('display_thread', thread_id=thread._id) }}">{{ thread.product_name }}</a></h5>
+            <span class="col-12 col-sm-10 px-0">
+                <h5 class="thread-summary-product-name mb-1 mb-md-2"><a href="{{ url_for('display_thread', thread_id=thread._id) }}">{{ thread.product_name }}</a></h5>
             </span>
             <!-- Date posted -->
-            <span class="col-2 ml-auto px-0 text-right">
+            <span class=" col-12 col-sm-2 ml-auto px-0 text-right">
                 <h6>{{ thread.datetime.strftime('%d %b %Y %H:%M') }}</h6>
             </span>
         </div>
@@ -29,20 +37,20 @@
             <h5 class="price">{{ "US$ {:,.2f}".format(thread.price) }}</h5>
         </div>
         <!-- Review description -->
-        <div class="my-3">
-            <p class="thread-description d-none d-md-block">{{ thread.description|truncate(500) }}</p>
+        <div class="my-3 d-none d-md-block">
+            <p class="thread-description">{{ thread.description|truncate(500) }}</p>
         </div>
         <div class="row mx-0">
             <!-- Review poster -->
-            <span>
+            <span class="d-none d-sm-block">
                 <h5 class="mt-1">By <a href="{{ url_for('user_threads', user_id=thread.user.user_id) }}">{{ thread.user.username }}</a></h5>
             </span>
             <!-- Purchase link -->
-            <span>
+            <span class="d-none d-sm-block">
                 <a href="{{ thread.affiliate }}" class="btn btn-danger btn-sm ml-2 ml-md-3 ml-lg-5" target="_blank"><i class="fa fa-amazon" aria-hidden="true"></i> Amazon*</a>
             </span>
             <!-- Edit and delete review -->
-            <span class="ml-auto">
+            <span class="ml-auto d-none d-sm-block">
                 {% if current_user._id == thread.user.user_id %}
                     <a href="{{ url_for('update_thread', thread_id=thread._id) }}" class="btn btn-primary btn-sm">Edit</a>
                     <a href="{{ url_for('delete_thread', thread_id=thread._id) }}" class="btn btn-secondary btn-sm">Delete</a>
@@ -50,17 +58,12 @@
             </span>
         <!-- Links to search by category and sub-category -->
         </div>
-        <nav class="row mt-3" aria-label="breadcrumb">
-            <div class="col-8 col-sm-9 col-md-10">
+        <nav class="row mt-1 mt-md-3" aria-label="breadcrumb">
+            <div class="col-12">
                 <ol class="breadcrumb mb-0 p-2 pl-lg-3">
                     <li class="breadcrumb-item"><a href="/threads?categories={{ thread.category.category_id }}">{{ thread.category.category_name }}</a></li>
                     <li class="breadcrumb-item"><a href="/threads?categories={{ thread.category.category_id }}&sub_categories={{ thread.category.sub_category_id }}">{{ thread.category.sub_category_name }}</a></li>
                 </ol>
-            </div>
-            <!-- Comments count -->
-            <div class="comment-count-container col-4 col-sm-3 col-md-2 d-flex justify-content-center align-items-center">
-                <span><i class="fa fa-comments" aria-hidden="true"></i></span>
-                <span><h5 id="comment-count-{{ thread._id }}" class="comment-count my-0 pl-3">0</h5></span>
             </div>
         </nav>
     </div>
