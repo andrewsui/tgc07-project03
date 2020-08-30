@@ -42,28 +42,30 @@
 <body>
 
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-        <a class="navbar-brand" href="{{ url_for('threads') }}"><img class="logo ml-n2 my-n3" src="{{ url_for('static', filename='img/logo-full-horizontal-white.png') }}" alt="PC Hardware Reviews logo"></a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav ml-auto">
-                <a class="nav-link d-none d-md-block" href="{{ url_for('threads') }}">Reviews</a>
-                {% if not current_user.is_authenticated %}
-                    <a href="{{ url_for('create_user') }}" class="btn btn-success mx-md-3"><i class="fa fa-user-plus" aria-hidden="true"></i> Sign up</a>
-                    <a href="{{ url_for('login') }}" class="btn btn-primary"><i class="fa fa-user" aria-hidden="true"></i> Log in</a>
-                {% else %}
-                    <a href="{{ url_for('logout') }}" class="btn btn-secondary mx-md-3"><i class="fa fa-user-o" aria-hidden="true"></i> Log out</a>
-                    <a href="{{ url_for('update_user', user_id=current_user._id) }}" class="btn btn-warning mr-md-3"><i class="fa fa-user-circle" aria-hidden="true"></i> Profile</a>
-                    <a href="{{ url_for('create_thread') }}" class="btn btn-danger"><i class="fa fa-plus-square" aria-hidden="true"></i> New review</a>
-                {% endif %}
+    <div class="container p-0">
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+            <a class="navbar-brand" href="{{ url_for('threads') }}"><img class="logo ml-n2 my-n3" src="{{ url_for('static', filename='img/logo-full-horizontal-white.png') }}" alt="PC Hardware Reviews logo"></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav ml-auto">
+                    <a class="nav-link d-none d-md-block" href="{{ url_for('threads') }}">Reviews</a>
+                    {% if not current_user.is_authenticated %}
+                        <a href="{{ url_for('create_user') }}" class="btn btn-success mx-md-3"><i class="fa fa-user-plus" aria-hidden="true"></i> Sign up</a>
+                        <a href="{{ url_for('login') }}" class="btn btn-primary"><i class="fa fa-user" aria-hidden="true"></i> Log in</a>
+                    {% else %}
+                        <a href="{{ url_for('logout') }}" class="btn btn-secondary mx-md-3"><i class="fa fa-user-o" aria-hidden="true"></i> Log out</a>
+                        <a href="{{ url_for('update_user', user_id=current_user._id) }}" class="btn btn-warning mr-md-3"><i class="fa fa-user-circle" aria-hidden="true"></i> Profile</a>
+                        <a href="{{ url_for('create_thread') }}" class="btn btn-danger"><i class="fa fa-plus-square" aria-hidden="true"></i> New review</a>
+                    {% endif %}
+                </div>
             </div>
-        </div>
-      </nav>
+        </nav>
+    </div>
 
     <!-- Main section container -->
-    <div class="container-fluid">
+    <div class="container">
         {% block content %}
         {% endblock %}
     </div>
