@@ -1,7 +1,17 @@
 .review-img-user {
     background-color: white;
+    /* max-height: 400px; */
 }
 
 .review-description {
     background-color: white;
+}
+
+.comment-form {
+    width: 100%;
+}
+
+textarea {
+    resize: vertical;
+    overflow: initial;
 }

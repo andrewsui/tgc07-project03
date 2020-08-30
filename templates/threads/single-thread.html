@@ -35,10 +35,10 @@
     </div>
 
     <div class="row review-img-user mt-3 p-3">
-        <div class="col-6">
+        <div class="col-12 mb-n5 col-md-7">
             <img src="{{ thread.image }}" alt="review-thumbnail" class="review-thumbnail">
         </div>
-        <div class="col-6">
+        <div class="col-12 col-md-5 mt-sm-n5 mt-md-0 pt-md-5">
             <!-- Date posted -->
             <h6>{{ thread.datetime.strftime('%d %b %Y %H:%M') }}</h6>
             <!-- User that posted review -->
@@ -49,17 +49,17 @@
             </div>
             <!-- Purchase link -->
             <span>
-                <a href="{{ thread.affiliate }}" class="btn btn-danger btn-sm" target="_blank"><i class="fa fa-amazon" aria-hidden="true"></i> Amazon*</a>
+                <a href="{{ thread.affiliate }}" class="btn btn-danger" target="_blank"><i class="fa fa-amazon" aria-hidden="true"></i> Amazon*</a>
             </span>
             <!-- Edit and delete review -->
             <span class="ml-auto">
                 {% if current_user._id == thread.user.user_id %}
-                    <a href="{{ url_for('update_thread', thread_id=thread._id) }}" class="btn btn-primary btn-sm">Edit</a>
-                    <a href="{{ url_for('delete_thread', thread_id=thread._id) }}" class="btn btn-secondary btn-sm">Delete</a>
+                    <a href="{{ url_for('update_thread', thread_id=thread._id) }}" class="btn btn-primary">Edit</a>
+                    <a href="{{ url_for('delete_thread', thread_id=thread._id) }}" class="btn btn-secondary">Delete</a>
                 {% endif %}
             </span>
             <!-- Vote buttons -->
-            <div class="vote-container btn btn-info btn-sm">
+            <div class="vote-container btn btn-info">
                 <span><i id="down-{{ thread._id }}" class="vote-btn vote-down fa fa-thumbs-o-down" aria-hidden="true"></i></span>
                 <span><h5 id="vote-count-{{ thread._id }}" class="vote-count my-0 px-2">0</h5></span>
                 <span><i id="up-{{ thread._id }}" class="vote-btn vote-up fa fa-thumbs-o-up" aria-hidden="true"></i></span>
@@ -67,7 +67,7 @@
         </div>
     </div>
 
-    <div class="row review-description">
+    <div class="row review-description mt-md-n3 mt-lg-n5 px-3 pt-3">
         <div class="col-12">
             <p>{{ thread.description }}</p>
         </div>
@@ -88,8 +88,8 @@
         {% endfor %}
     </div>
 
-    <div class="row new-comment">
-        <form action="" method="post">
+    <div class="row new-comment mb-5">
+        <form action="" method="post" class="comment-form">
             {% with %}
                 {% if not previous_values %}
                     {% set previous_values = {} %}
