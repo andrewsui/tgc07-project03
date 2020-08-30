@@ -21,11 +21,11 @@
     <div class="col-9">
         <div class="row mx-0">
             <!-- Product name -->
-            <span class="col-12 col-sm-10 px-0">
+            <span class="col-12 col-md-10 px-0">
                 <h5 class="thread-summary-product-name mb-1 mb-md-2"><a href="{{ url_for('display_thread', thread_id=thread._id) }}">{{ thread.product_name }}</a></h5>
             </span>
             <!-- Date posted -->
-            <span class=" col-12 col-sm-2 ml-auto px-0 text-right">
+            <span class=" col-12 col-md-2 ml-auto px-0 text-right">
                 <h6>{{ thread.datetime.strftime('%d %b %Y %H:%M') }}</h6>
             </span>
         </div>
