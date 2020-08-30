@@ -137,11 +137,11 @@ option {
     
 }
 
-@media (min-width: 1440px) {
+/* @media (min-width: 1440px) {
     .thread-description {
-        height: 160px;
+        height: 140px;
     }
     
-}
+} */
 
 
