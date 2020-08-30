@@ -15,9 +15,11 @@ def users_create(db, data):
     new_record = {
             'username': data.get('username'),
             'email': data.get('email'),
-            'gender': None if data.get('gender')=="null" else data.get('gender'),
+            'gender': None if data.get('gender')=="null" else data.get(
+                'gender'),
             'password': pbkdf2_sha256.hash(data.get('password')),
-            'terms_and_conditions': False if data.get('terms_and_conditions')==None else True,
+            'terms_and_conditions': False if data.get(
+                'terms_and_conditions')==None else True,
             'marketing': False if data.get('marketing')==None else True
         }
     return m_dal.users_create(db.users, new_record)
@@ -26,9 +28,11 @@ def users_update(db, data, user_id):
     updated_record = {
             'username': data.get('username'),
             'email': data.get('email'),
-            'gender': None if data.get('gender')=="null" else data.get('gender'),
+            'gender': None if data.get('gender')=="null" else data.get(
+                'gender'),
             'password': pbkdf2_sha256.hash(data.get('password')),
-            'terms_and_conditions': False if data.get('terms_and_conditions')==None else True,
+            'terms_and_conditions': False if data.get(
+                'terms_and_conditions')==None else True,
             'marketing': False if data.get('marketing')==None else True
         }
     return m_dal.users_update(db.users, updated_record, user_id)
@@ -50,11 +54,13 @@ def categories_create_1(db, data, parent_id):
 
 def categories_update_0(db, data, category_id):
     category_value = data.get('category')
-    return m_dal.categories_update_0(db.categories, category_value, category_id)
+    return m_dal.categories_update_0(
+        db.categories, category_value, category_id)
 
 def categories_update_1(db, data, category_id):
     category_value = data.get('category')
-    return m_dal.categories_update_1(db.categories, category_value, category_id)
+    return m_dal.categories_update_1(
+        db.categories, category_value, category_id)
 
 def categories_delete_0(db, category_id):
     return m_dal.categories_delete_0(db.categories, category_id)
@@ -85,7 +91,8 @@ def threads_create(db, data):
     category_name = m_dal.category_name_get(db.categories, category_id)
     if data.get('sub_categories'):
         sub_category_id = ObjectId(data.get('sub_categories'))
-        sub_category_name = m_dal.sub_category_name_get(db.categories, data.get('sub_categories'))
+        sub_category_name = m_dal.sub_category_name_get(
+            db.categories, data.get('sub_categories'))
     else:
         sub_category_id = ""
         sub_category_name = ""
@@ -120,16 +127,14 @@ def threads_update(db, data, thread_id):
     category_name = m_dal.category_name_get(db.categories, category_id)
     if data.get('sub_categories'):
         sub_category_id = ObjectId(data.get('sub_categories'))
-        sub_category_name = m_dal.sub_category_name_get(db.categories, data.get('sub_categories'))
+        sub_category_name = m_dal.sub_category_name_get(
+            db.categories, data.get('sub_categories'))
     else:
         sub_category_id = ""
         sub_category_name = ""
-    # sub_category_id = ObjectId(data.get('sub_categories')) if data.get('sub_categories') else ""
     updated_record = {
         'datetime': datetime.datetime.utcnow(),
         'user': {
-            # 'user_id': data.get('user_id').strip(),
-            # 'username': data.get('username')
             'user_id': ObjectId(flask_login.current_user._id),
             'username': flask_login.current_user.username
         },
@@ -179,7 +184,8 @@ def comments_update(db, data, thread_id, comment_id):
         'comment': data.get('comment'),
         'quote': None
     }
-    return m_dal.comments_update(db.threads, updated_record, thread_id, comment_id)
+    return m_dal.comments_update(
+        db.threads, updated_record, thread_id, comment_id)
 
 def comments_delete(db, comment_id):
     return m_dal.comments_delete(db.threads, comment_id)

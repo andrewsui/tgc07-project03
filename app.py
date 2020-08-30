@@ -68,7 +68,8 @@ def login():
         })
 
         # If user exists, check if password matches
-        if user and pbkdf2_sha256.verify(request.form.get('password'), user['password']):
+        if user and pbkdf2_sha256.verify(
+            request.form.get('password'), user['password']):
             # If password matches, authorise user
             user_object = User()
             user_object.id = user['email']
@@ -106,10 +107,12 @@ def update_user(user_id):
     if request.method == 'GET':
         previous_values = m_services.users_get_one(db, user_id)
         # print(previous_values)
-        return render_template('users/update-user.html', previous_values=previous_values)
+        return render_template(
+            'users/update-user.html', previous_values=previous_values)
     elif request.method == 'POST':
         m_services.users_update(db, request.form, user_id)
-        return redirect(url_for('users'))
+        # ADD flash message
+        return redirect(url_for('update_user', user_id=user_id))
 
 @app.route('/users/<user_id>/delete', methods=['GET','POST'])
 def delete_user(user_id):
@@ -125,14 +128,16 @@ def user_threads(user_id):
         search_criteria = {}
         search_criteria['user.user_id'] = ObjectId(user_id)
         threads_by_user = db.threads.find(search_criteria)
-        return render_template('users/user-threads.html', threads=threads_by_user)
+        return render_template(
+            'users/user-threads.html', threads=threads_by_user)
     # POST REQUESTS NEEDED???
 
 # Categories
 @app.route('/categories')
 def categories():
     all_categories = m_services.categories_get_all(db)
-    return render_template('categories/all-categories.html', categories=all_categories)
+    return render_template(
+        'categories/all-categories.html', categories=all_categories)
 
 @app.route('/api/categories')
 def api_categories():
@@ -202,7 +207,9 @@ def threads():
     all_categories = m_services.categories_get_all(db)
     all_threads = m_services.threads_search(db, request.args)
     previous_values = request.args
-    return render_template('threads/all-threads.html', categories=all_categories, threads=all_threads, previous_values=previous_values)
+    return render_template(
+        'threads/all-threads.html', categories=all_categories,
+        threads=all_threads, previous_values=previous_values)
 
 @app.route('/threads/<thread_id>', methods=['GET','POST'])
 def display_thread(thread_id):
@@ -218,10 +225,11 @@ def display_thread(thread_id):
 def create_thread():
     if request.method == 'GET':
         all_categories = m_services.categories_get_all(db)
-        return render_template('threads/create-thread.html', categories=all_categories)
+        return render_template(
+            'threads/create-thread.html', categories=all_categories)
     elif request.method == 'POST':
         # m_services.threads_create(db, request.form)
-        new_thread_id = m_services.threads_create(db, request.form).inserted_id
+        new_thread_id = m_services.threads_create(db,request.form).inserted_id
         return redirect(url_for('display_thread', thread_id=new_thread_id))
 
 @app.route('/threads/<thread_id>/update', methods=['GET','POST'])
@@ -231,7 +239,9 @@ def update_thread(thread_id):
         all_categories = m_services.categories_get_all(db)
         previous_values = m_services.threads_get_one(db, thread_id)
         # print(previous_values)
-        return render_template('threads/update-thread.html', categories=all_categories, previous_values=previous_values)
+        return render_template(
+            'threads/update-thread.html', categories=all_categories,
+            previous_values=previous_values)
     elif request.method == 'POST':
         m_services.threads_update(db, request.form, thread_id)
         return redirect(url_for('threads'))

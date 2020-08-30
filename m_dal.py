@@ -111,10 +111,12 @@ def threads_search(collection, user_input):
     search_criteria = {}
     # Search by category
     if user_input['category_id']:
-        search_criteria['category.category_id'] = ObjectId(user_input['category_id'])
+        search_criteria['category.category_id'] = ObjectId(
+            user_input['category_id'])
     # Search by sub-category
     if user_input['sub_category_id']:
-        search_criteria['category.sub_category_id'] = ObjectId(user_input['sub_category_id'])
+        search_criteria['category.sub_category_id'] = ObjectId(
+            user_input['sub_category_id'])
     # Search box queries
     if user_input['search_box']:
         search_criteria['$or'] = [
@@ -147,28 +149,19 @@ def threads_update(collection, updated_record, thread_id):
         '_id': ObjectId(thread_id)
     }, {
         '$set': {
-            # 'datetime': datetime.datetime.utcnow(),
-            # 'datetime': updated_record['datetime'],
-            # 'user': {
-            #     'user_id': ObjectId(updated_record['user']['user_id']),
-            #     'username': updated_record['user']['username']
-            # },
             'category': {
                 'category_id': updated_record['category']['category_id'],
                 'category_name': updated_record['category']['category_name'],
-                'sub_category_id': updated_record['category']['sub_category_id'],
-                'sub_category_name': updated_record['category']['sub_category_name']
+                'sub_category_id': updated_record['category'][
+                    'sub_category_id'],
+                'sub_category_name': updated_record['category'][
+                    'sub_category_name']
             },
             'product_name': updated_record['product_name'],
             'price': updated_record['price'],
             'image': updated_record['image'],
             'affiliate': updated_record['affiliate'],
-            'description': updated_record['description'],
-            # 'votes': {
-            #     'up_votes': [],
-            #     'down_votes': []
-            # },
-            # 'sub_posts': []
+            'description': updated_record['description']
         }
     })
 
@@ -246,13 +239,17 @@ def vote_down(collection, thread_id):
 def vote_up_check(collection, thread_id):
     return collection.find({
             '_id': ObjectId(thread_id),
-            'votes.up_votes': { '$in': [ObjectId(flask_login.current_user._id)] }
+            'votes.up_votes': {
+                 '$in': [ObjectId(flask_login.current_user._id)]
+                 }
         }).count()
 
 def vote_down_check(collection, thread_id):
     return collection.find({
             '_id': ObjectId(thread_id),
-            'votes.down_votes': { '$in': [ObjectId(flask_login.current_user._id)] }
+            'votes.down_votes': {
+                '$in': [ObjectId(flask_login.current_user._id)]
+                }
         }).count()
 
 def vote_up_remove(collection, thread_id):
