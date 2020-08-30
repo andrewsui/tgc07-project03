@@ -8,9 +8,7 @@
         <div class="row mt-md-2 mt-lg-4">
             <!-- Comments count -->
             <div class="comment-count-container col-10 col-sm-8 col-lg-4 m-2 ml-sm-3 ml-md-4 my-lg-0 mx-2 pl-0 pr-0">
-                <a href="{{ url_for('display_thread', thread_id=thread._id) }}" class="comment-count pt-2 btn btn-secondary btn-sm"><i class="fa fa-comments" aria-hidden="true"></i> 0</a>
-                <!-- <span><i class="fa fa-comments" aria-hidden="true"></i></span>
-                <span><h5 id="comment-count-{{ thread._id }}" class="comment-count my-0 pl-3">0</h5></span> -->
+                <a href="{{ url_for('display_thread', thread_id=thread._id) }}" id="comment-count-{{ thread._id }}" class="comment-count pt-2 btn btn-secondary btn-sm"><i class="fa fa-comments" aria-hidden="true"></i> 0</a>
             </div>
             <!-- Vote buttons -->
             <div class="vote-container col-10 col-sm-8 col-lg-5 ml-2 ml-sm-3 ml-md-4 ml-lg-0 pl-2 pt-2 px-sm-0 btn btn-info btn-sm">

@@ -20,7 +20,7 @@ async function updateCommentCount() {
         let threadId = (element.id.replace(/^comment-count-+/i, ''));
         // Get comments count from API endpoint
         let commentsCountResponse = await axios.get("/api/threads/" + threadId + "/comments/count");
-        element.innerText =  commentsCountResponse.data.comments;
+        element.innerHTML =  String.raw`<i class="fa fa-comments" aria-hidden="true"></i> ` + commentsCountResponse.data.comments;
     }
 }
 
