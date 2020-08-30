@@ -50,11 +50,12 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav ml-auto">
-                    <a class="nav-link d-none d-md-block" href="{{ url_for('threads') }}">Reviews</a>
                     {% if not current_user.is_authenticated %}
+                        <a class="nav-link d-none d-md-block" href="{{ url_for('threads') }}">Reviews</a>
                         <a href="{{ url_for('create_user') }}" class="btn btn-success mx-md-3"><i class="fa fa-user-plus" aria-hidden="true"></i> Sign up</a>
                         <a href="{{ url_for('login') }}" class="btn btn-primary"><i class="fa fa-user" aria-hidden="true"></i> Log in</a>
                     {% else %}
+                        <a class="nav-link d-none d-md-block" href="{{ url_for('user_threads', user_id=current_user._id) }}">My reviews</a>
                         <a href="{{ url_for('logout') }}" class="btn btn-secondary mx-md-3"><i class="fa fa-user-o" aria-hidden="true"></i> Log out</a>
                         <a href="{{ url_for('update_user', user_id=current_user._id) }}" class="btn btn-info mr-md-3"><i class="fa fa-user-circle" aria-hidden="true"></i> Profile</a>
                         <a href="{{ url_for('create_thread') }}" class="btn btn-danger"><i class="fa fa-plus-square" aria-hidden="true"></i> New review</a>
