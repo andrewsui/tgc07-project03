@@ -5,24 +5,32 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Create new review</h1>
+    <div class="row px-3">
+        <div class="contact-form col-12 py-5 d-flex justify-content-center">
+            <div class="col-12 col-md-10 col-lg-8">
 
-    <form action="" method="post">
-        {% with %}
-            {% if not previous_values %}
-                {% set previous_values = {
-                    "category": {
-                        "category_id": "",
-                        "sub_category_id": ""
-                        }
-                    }
-                %}
-            {% endif %}
+                <h1>Create new review</h1>
 
-            {% include 'threads/base-thread-form.html' %}
-
-        {% endwith %}
-        
-        <input type="submit" value="Create">
-    </form>
+                <form action="" method="post">
+                    {% with %}
+                        {% if not previous_values %}
+                            {% set previous_values = {
+                                "category": {
+                                    "category_id": "",
+                                    "sub_category_id": ""
+                                    }
+                                }
+                            %}
+                        {% endif %}
+            
+                        {% include 'threads/base-thread-form.html' %}
+            
+                    {% endwith %}
+                    
+                    <input type="submit" value="Create">
+                </form>
+                
+            </div>
+        </div>
+    </div>
 {% endblock %}

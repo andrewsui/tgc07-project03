@@ -5,10 +5,18 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Update review</h1>
+    <div class="row px-3">
+        <div class="contact-form col-12 py-5 d-flex justify-content-center">
+            <div class="col-12 col-md-10 col-lg-8">
 
-    <form action="" method="post">
-        {% include 'threads/base-thread-form.html' %}
-        <input type="submit" value="Update">
-    </form>
+                <h1>Update review</h1>
+
+                <form action="" method="post">
+                    {% include 'threads/base-thread-form.html' %}
+                    <input type="submit" value="Update review">
+                </form>
+
+            </div>
+        </div>
+    </div>
 {% endblock %}

@@ -2,38 +2,38 @@
     <script src={{ url_for("static", filename="js/sub-categories.js") }} defer></script>
 {% endblock %}
 
-<div>
+<div class="form-group">
     <label for="categories">Category</label>
-    <select name="categories" id="categories">
+    <select name="categories" id="categories" class="form-control">
         <option value="">Categories</option>
         {% for category in categories %}
         <option id="{{ category._id }}" class="category-0" value="{{ category._id }}" {% if previous_values.category.category_id==category._id %}selected{% endif %}>{{ category.category }}</option>
         {% endfor %}
     </select>
 </div>
-<div>
+<div class="form-group">
     <label for="sub_categories">Sub-category</label>
-    <select name="sub_categories" id="sub_categories">
+    <select name="sub_categories" id="sub_categories" class="form-control">
         <option value="">Sub-categories</option>
     </select>
     <input type="hidden" id="previous_sub_categories" name="previous_sub_categories" value="{{previous_values.category.sub_category_id}}">
 </div>
-<div>
+<div class="form-group">
     <label for="product_name">Product name</label>
-    <input type="text" name="product_name" id="product_name" placeholder="e.g. AMD Ryzen 3700X" value="{{ previous_values.product_name }}">
+    <input type="text" name="product_name" id="product_name" class="form-control" placeholder="e.g. AMD Ryzen 3700X" value="{{ previous_values.product_name }}">
 </div>
-<div>
+<div class="form-group">
     <label for="price">RRP (USD)</label>
-    <input type="text" name="price" id="price" placeholder="e.g. 350.00" value="{{ previous_values.price }}">
+    <input type="text" name="price" id="price" class="form-control" placeholder="e.g. 350.00" value="{{ previous_values.price }}">
 </div>
-<div>
+<div class="form-group">
     <label for="image">Image URL</label>
-    <input type="text" name="image" id="image" placeholder="e.g. https://images-na.ssl-images-amazon.com/images/I/717Di3DGIbL._AC_SL1092_.jpg" value="{{ previous_values.image }}">
+    <input type="text" name="image" id="image" class="form-control" placeholder="e.g. https://images-na.ssl-images-amazon.com/images/I/717Di3DGIbL._AC_SL1092_.jpg" value="{{ previous_values.image }}">
 </div>
-<div>
-    <label for="affiliate">Affiliate link</label>
-    <input type="text" name="affiliate" id="affiliate" placeholder="e.g. https://www.amazon.com/AMD-Ryzen-3700X-16-Thread-Processor/dp/B07SXMZLPK/" value="{{ previous_values.affiliate }}">
+<div class="form-group">
+    <label for="affiliate">Purchase link</label>
+    <input type="text" name="affiliate" id="affiliate" class="form-control" placeholder="e.g. https://www.amazon.com/AMD-Ryzen-3700X-16-Thread-Processor/dp/B07SXMZLPK/" value="{{ previous_values.affiliate }}">
 </div>
-<div>
-    <textarea name="description" id="description" cols="30" rows="10" placeholder="Enter your review here">{{ previous_values.description }}</textarea>
+<div class="form-group">
+    <textarea name="description" id="description" class="form-control" rows="10" placeholder="Enter your review here">{{ previous_values.description }}</textarea>
 </div>
