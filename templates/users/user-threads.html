@@ -1,7 +1,50 @@
-<h1>My threads</h1>
+{% extends 'base-template.html' %}
 
-{% for thread in threads %}
-    {{ thread }}
-    <br>
-    <br>
-{% endfor %}
+{% block javascript %}
+    <script src={{ url_for("static", filename="js/sub-categories.js") }} defer></script>
+    <script src={{ url_for("static", filename="js/threads-all.js") }} defer></script>
+    {% if current_user.is_authenticated %}
+        <script src={{ url_for("static", filename="js/threads-logged-in.js") }} defer></script>
+    {% else %}
+        <script src={{ url_for("static", filename="js/threads-logged-out.js") }} defer></script>
+    {% endif %}
+{% endblock %}
+
+{% block title %}
+    My Reviews
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="page-header-container col pt-3">
+            <h3 class="page-header">My Reviews</h3>
+        </div>
+    </div>    
+
+    <!-- {# -->
+    <div class="search-container pt-4">
+        <form action="" method="get">
+            <div class="form-row">
+                <div class="form-group">
+                    <select name="categories" id="categories">
+                        <option value="">Categories</option>
+                        {% for category in categories %}
+                        <!-- {{category._id}} {{previous_values.categories}} -->
+                            <option id="{{ category._id }}" class="category-0" value="{{ category._id }}" {% if category._id==previous_values.categories %}selected="selected"{% endif %}>{{ category.category }}</option>
+                        {% endfor %}
+                    </select>
+                    <select name="sub_categories" id="sub_categories">
+                        <option value="">Sub-categories</option>
+                    </select>
+                    <input class="mb-n1" type="text" name="search-box" id="search-box" placeholder="Search reviews">
+                    <button id="search-btn" class="btn btn-primary px-2 py-1" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <!-- #} -->
+
+    {% for thread in threads %}
+        {% include 'threads/base-thread-summary.html' %}
+    {% endfor %}
+{% endblock %}
