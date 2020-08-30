@@ -1,14 +1,20 @@
 {% extends 'base-template.html' %}
 
 {% block title %}
-    Update User
+    Update Profile
 {% endblock %}
 
 {% block content %}
-    <h1>Update user</h1>
+    <div class="row px-3">
+        <div class="contact-form col-12 py-5 d-flex justify-content-center">
+            <div class="col-12 col-md-10 col-lg-8">
+                <h1>Update My Profile</h1>
 
-    <form action="" method="post">
-        {%include 'users/base-user-form.html' %}
-        <input type="submit" value="Update">
-    </form>
+                <form action="" method="post">
+                    {%include 'users/base-user-form.html' %}
+                    <input type="submit" value="Update">
+                </form>
+            </div>
+        </div>
+    </div>
 {% endblock %}
