@@ -73,6 +73,11 @@ option {
     max-height: 42px;
 }
 
+.comment-count {
+    width: 100%;
+    font-weight: bold;
+}
+
 .vote-btn {
     font-size: 1rem;
 }
@@ -88,7 +93,7 @@ option {
 
 .vote-count {
     display: inline-block;
-    color: darkred;
+    color: white;
     font-weight: bold;
 }
 
@@ -119,9 +124,21 @@ option {
 }
 
 @media (min-width: 768px) {
+    select {
+        font-size: 1rem;
+    }
+    #search-box {
+        min-width: 320px;
+    }
+    #search-box::placeholder {
+        font-size: 1rem;
+    }
     .review-thumbnail-container {
         max-height: 240px;
         max-width: 240px;
+    }
+    .thread-summary-product-name {
+        max-height: 48px;
     }
     h5 {
         font-size: 1.2rem;
@@ -130,6 +147,9 @@ option {
         font-size: 1rem;
     }
     .vote-btn {
+        font-size: 1.2rem;
+    }
+    .comment-count{
         font-size: 1.2rem;
     }
 }

@@ -1,23 +1,22 @@
+<!-- Each review thread summary -->
 <article class="thread row my-3 px-3 py-3">
     <div class="img-vote-container col-3 p-0">
         <!-- Product image thumbnail -->
         <div class="review-thumbnail-container col-12 p-0">
             <img src="{{ thread.image }}" alt="review-thumbnail" class="review-thumbnail">
         </div>
-        <div class="row m-0">
+        <div class="row mt-lg-4">
             <!-- Comments count -->
-            <div class="comment-count-container col-12 px-0">
-                <a href="{{ url_for('display_thread', thread_id=thread._id) }}" class="comment-count btn btn-secondary btn-sm"><i class="fa fa-comments" aria-hidden="true"></i> 0</a>
+            <div class="comment-count-container col-10 col-sm-8 col-lg-4 m-2 ml-sm-3 ml-md-4 my-lg-0 mx-2 pl-0 pr-0">
+                <a href="{{ url_for('display_thread', thread_id=thread._id) }}" class="comment-count pt-2 btn btn-secondary btn-sm"><i class="fa fa-comments" aria-hidden="true"></i> 0</a>
                 <!-- <span><i class="fa fa-comments" aria-hidden="true"></i></span>
                 <span><h5 id="comment-count-{{ thread._id }}" class="comment-count my-0 pl-3">0</h5></span> -->
             </div>
             <!-- Vote buttons -->
-            <div class="vote-container-wrapper col-12 px-0">
-                <div class="vote-container">
-                    <span><i id="down-{{ thread._id }}" class="vote-btn vote-down fa fa-thumbs-o-down" aria-hidden="true"></i></span>
-                    <span><h5 id="vote-count-{{ thread._id }}" class="vote-count my-0 px-2">0</h5></span>
-                    <span><i id="up-{{ thread._id }}" class="vote-btn vote-up fa fa-thumbs-o-up" aria-hidden="true"></i></span>
-                </div>
+            <div class="vote-container col-10 col-sm-8 col-lg-5 ml-2 ml-sm-3 ml-md-4 ml-lg-0 pl-2 pt-2 px-sm-0 btn btn-info btn-sm">
+                <span><i id="down-{{ thread._id }}" class="vote-btn vote-down fa fa-thumbs-o-down" aria-hidden="true"></i></span>
+                <span><h5 id="vote-count-{{ thread._id }}" class="vote-count my-0 px-2">0</h5></span>
+                <span><i id="up-{{ thread._id }}" class="vote-btn vote-up fa fa-thumbs-o-up" aria-hidden="true"></i></span>
             </div>
         </div>
     </div>
