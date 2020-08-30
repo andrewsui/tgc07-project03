@@ -217,8 +217,13 @@ def display_thread(thread_id):
         thread = m_services.threads_get_one(db, thread_id)
         return render_template('threads/single-thread.html', thread=thread)
     elif request.method == 'POST':
-        m_services.comments_create(db, request.form, thread_id)
-        return redirect(url_for('display_thread', thread_id=thread_id))
+        if flask_login.current_user.is_authenticated:
+            m_services.comments_create(db, request.form, thread_id)
+            return redirect(url_for('display_thread', thread_id=thread_id))
+        else:
+            # ADD flash message
+            return redirect(url_for('display_thread', thread_id=thread_id))
+
 
 @app.route('/threads/create', methods=['GET','POST'])
 @flask_login.login_required
@@ -254,14 +259,14 @@ def delete_thread(thread_id):
         m_services.threads_delete(db, thread_id)
         return redirect(url_for('threads'))
 
-@app.route('/threads/<thread_id>/comments/create', methods=['GET','POST'])
-@flask_login.login_required
-def create_comment(thread_id):
-    if request.method == 'GET':
-        return render_template('threads/comments/create-comment.html')
-    elif request.method == 'POST':
-        m_services.comments_create(db, request.form, thread_id)
-        return redirect(url_for('display_thread', thread_id=thread_id))
+# @app.route('/threads/<thread_id>/comments/create', methods=['GET','POST'])
+# @flask_login.login_required
+# def create_comment(thread_id):
+#     if request.method == 'GET':
+#         return render_template('threads/comments/create-comment.html')
+#     elif request.method == 'POST':
+#         m_services.comments_create(db, request.form, thread_id)
+#         return redirect(url_for('display_thread', thread_id=thread_id))
 
 @app.route('/threads/<thread_id>/comments/<comment_id>/update', methods=['GET','POST'])
 @flask_login.login_required
