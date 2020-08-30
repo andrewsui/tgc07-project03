@@ -28,7 +28,8 @@
                     <select name="categories" id="categories">
                         <option value="">Categories</option>
                         {% for category in categories %}
-                            <option id="{{ category._id }}" class="category-0" value="{{ category._id }}">{{ category.category }}</option>
+                        <!-- {{category._id}} {{previous_values.categories}} -->
+                            <option id="{{ category._id }}" class="category-0" value="{{ category._id }}" {% if category._id==previous_values.categories %}selected="selected"{% endif %}>{{ category.category }}</option>
                         {% endfor %}
                     </select>
                     <select name="sub_categories" id="sub_categories">

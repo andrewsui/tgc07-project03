@@ -201,7 +201,8 @@ def get_sub_categories(parent_id):
 def threads():
     all_categories = m_services.categories_get_all(db)
     all_threads = m_services.threads_search(db, request.args)
-    return render_template('threads/all-threads.html', categories=all_categories, threads=all_threads)
+    previous_values = request.args
+    return render_template('threads/all-threads.html', categories=all_categories, threads=all_threads, previous_values=previous_values)
 
 @app.route('/threads/<thread_id>', methods=['GET','POST'])
 def display_thread(thread_id):
