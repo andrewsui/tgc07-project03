@@ -249,7 +249,7 @@ def update_thread(thread_id):
             previous_values=previous_values)
     elif request.method == 'POST':
         m_services.threads_update(db, request.form, thread_id)
-        return redirect(url_for('threads'))
+        return redirect(url_for('display_thread', thread_id=thread_id))
 
 @app.route('/threads/<thread_id>/delete', methods=['GET','POST'])
 def delete_thread(thread_id):
