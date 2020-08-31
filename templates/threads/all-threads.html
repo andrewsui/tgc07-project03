@@ -28,13 +28,13 @@
                     <select name="categories" id="categories">
                         <option value="">Categories</option>
                         {% for category in categories %}
-                        <!-- {{category._id}} {{previous_values.categories}} -->
-                            <option id="{{ category._id }}" class="category-0" value="{{ category._id }}" {% if category._id==previous_values.categories %}selected="selected"{% endif %}>{{ category.category }}</option>
+                            <option id="{{ category._id }}" class="category-0" value="{{ category._id }}" {% if category._id|string==previous_values.categories %}selected{% endif %}>{{ category.category }}</option>
                         {% endfor %}
                     </select>
                     <select name="sub_categories" id="sub_categories">
                         <option value="">Sub-categories</option>
                     </select>
+                    <input type="hidden" id="previous_sub_categories" name="previous_sub_categories" value="{{previous_values.sub_categories}}">
                     <input class="mb-n1" type="text" name="search-box" id="search-box" placeholder="Search reviews">
                     <button id="search-btn" class="btn btn-primary px-2 py-1" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
                 </div>
