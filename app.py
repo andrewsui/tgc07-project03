@@ -254,7 +254,8 @@ def update_thread(thread_id):
 @app.route('/threads/<thread_id>/delete', methods=['GET','POST'])
 def delete_thread(thread_id):
     if request.method == 'GET':
-        return render_template('threads/delete-thread.html')
+        thread = m_services.threads_get_one(db, thread_id)
+        return render_template('threads/delete-thread.html', thread=thread)
     elif request.method == 'POST':
         m_services.threads_delete(db, thread_id)
         return redirect(url_for('threads'))
