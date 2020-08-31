@@ -162,6 +162,9 @@ def threads_delete(db, thread_id):
     return m_dal.threads_delete(db.threads, thread_id)
 
 # Thread comments
+def comments_get_one(db, comment_id):
+    return m_dal.comments_get_one(db.threads, comment_id)
+
 def comments_create(db, data, thread_id):
     new_record = {
         'datetime': datetime.datetime.utcnow(),

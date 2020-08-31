@@ -171,6 +171,11 @@ def threads_delete(collection, thread_id):
         })
 
 # Thread comments
+def comments_get_one(collection, comment_id):
+    return collection.find_one({
+        'sub_posts._id': ObjectId(comment_id)
+    })
+
 def comments_create(collection, updated_record, thread_id):
     return collection.update_one({
         '_id': ObjectId(thread_id)
