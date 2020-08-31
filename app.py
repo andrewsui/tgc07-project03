@@ -121,7 +121,7 @@ def delete_user(user_id):
         return render_template('users/delete-user.html', previous_values=previous_values)
     elif request.method == 'POST':
         m_services.users_delete(db, user_id)
-        return redirect(url_for('users'))
+        return redirect(url_for('threads'))
 
 @app.route('/users/<user_id>/threads', methods=['GET','POST'])
 def user_threads(user_id):
