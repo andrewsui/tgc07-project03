@@ -117,7 +117,8 @@ def update_user(user_id):
 @app.route('/users/<user_id>/delete', methods=['GET','POST'])
 def delete_user(user_id):
     if request.method == 'GET':
-        return render_template('users/delete-user.html')
+        previous_values = m_services.users_get_one(db, user_id)
+        return render_template('users/delete-user.html', previous_values=previous_values)
     elif request.method == 'POST':
         m_services.users_delete(db, user_id)
         return redirect(url_for('users'))

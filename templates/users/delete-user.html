@@ -5,10 +5,22 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Delete user</h1>
 
-    <form action="" method="post">
-        <h3>Are you sure you want to delete?</h3>
-        <input type="submit" value="Delete">
-    </form>
+    <div class="row page-header-container">
+        <h3 class="page-header col-12 pt-3">Delete User Account</h3>
+    </div>
+
+    <div class="row px-3">
+        <div class="col-12 py-4">
+
+            <a href="{{ url_for('update_user', user_id=current_user._id) }}" class="btn btn-secondary">Back to my profile</a>
+
+            <h4 class="mt-4">Are you sure you want to delete your account <strong>{{ previous_values.username }}</strong>?</h4>
+            <h5 class="mb-4">Once deleted, your account will be gone forever!</h5>
+            <form action="" method="post">
+                <input type="submit" value="Delete account" class="btn btn-warning">
+            </form>
+        </div>
+    </div>
+
 {% endblock %}
