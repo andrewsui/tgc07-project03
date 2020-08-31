@@ -25,7 +25,7 @@
                     <span>{{ user._id }}</span>
                     <span><a href="{{ url_for('update_user', user_id=user._id) }}">Update</a></span>
                     <span><a href="{{ url_for('delete_user', user_id=user._id) }}">Delete</a></th></span>
-                <td>{{ user.username }}</td>
+                <td><a href="{{ url_for('user_threads', user_id=user._id) }}">{{ user.username }}</a></td>
                 <td>{{ user.email }}</td>
                 <td>{{ user.gender }}</td>
                 <td>{{ user.terms_and_conditions }}</td>
