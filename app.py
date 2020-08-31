@@ -133,8 +133,7 @@ def user_threads(user_id):
         return render_template(
             'users/user-threads.html', threads=threads_by_user,
             num_of_threads=num_of_threads, categories=all_categories)
-    elif request.method == 'POST':
-        return redirect(url_for('user_threads'))
+    # POST not used, action of form points to create_thread() route
 
 # Categories
 @app.route('/categories')
