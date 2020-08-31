@@ -133,6 +133,9 @@ def user_threads(user_id):
     if request.method == 'GET':
         threads_by_user = m_services.users_threads_by_user(db, user_id)
         num_of_threads = threads_by_user.count()
+        # num_of_threads = len(list(threads_by_user))
+        # print("Number of threads: "+ str(num_of_threads))
+        # print(threads_by_user)
         all_categories = m_services.categories_get_all(db)
         return render_template(
             'users/user-threads.html', user_id=user_id,
