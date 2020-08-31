@@ -278,7 +278,9 @@ def delete_thread(thread_id):
 @flask_login.login_required
 def update_comment(thread_id, comment_id):
     if request.method == 'GET':
-        return render_template('threads/comments/update-comment.html')
+        comment = m_services.comments_get_one(db, comment_id)
+        return render_template(
+            'threads/comments/update-comment.html', previous_values=comment)
     elif request.method == 'POST':
         m_services.comments_update(db, request.form, thread_id, comment_id)
         return redirect(url_for('display_thread', thread_id=thread_id))
