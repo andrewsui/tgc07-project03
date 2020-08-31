@@ -168,6 +168,15 @@ def threads_update(collection, updated_record, thread_id):
         }
     })
 
+def threads_update_username(collection, username, user_id):
+    return collection.update_many({
+            'user.user_id': ObjectId(user_id)
+        },{
+            '$set': {
+                'user.username': username
+            }
+        })
+
 def threads_delete(collection, thread_id):
     return collection.remove({
         '_id': ObjectId(thread_id)

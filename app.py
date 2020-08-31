@@ -110,15 +110,12 @@ def update_user(user_id):
         return render_template(
             'users/update-user.html', previous_values=previous_values)
     elif request.method == 'POST':
+        # Update user details
         m_services.users_update(db, request.form, user_id)
+        # Update username in review threads
+        m_services.threads_update_username(
+            db, request.form.get('username'), user_id)
         # ADD flash message
-        return redirect(url_for('update_user', user_id=user_id))
-
-@app.route('/test/<user_id>', methods=['GET','POST'])
-def test(user_id):
-    if request.method == 'GET':
-        return "Test"
-    elif request.method == 'POST':
         return redirect(url_for('update_user', user_id=user_id))
 
 @app.route('/users/<user_id>/delete', methods=['GET','POST'])

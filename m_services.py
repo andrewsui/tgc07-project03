@@ -138,11 +138,11 @@ def threads_update(db, data, thread_id):
         sub_category_id = ""
         sub_category_name = ""
     updated_record = {
-        'datetime': datetime.datetime.utcnow(),
-        'user': {
-            'user_id': ObjectId(flask_login.current_user._id),
-            'username': flask_login.current_user.username
-        },
+        # 'datetime': datetime.datetime.utcnow(),
+        # 'user': {
+        #     'user_id': ObjectId(flask_login.current_user._id),
+        #     'username': flask_login.current_user.username
+        # },
         'category': {
             'category_id': ObjectId(data.get('categories')),
             'category_name': category_name,
@@ -162,6 +162,9 @@ def threads_update(db, data, thread_id):
     }
     # print(updated_record)
     return m_dal.threads_update(db.threads, updated_record, thread_id)
+
+def threads_update_username(db, username, user_id):
+    return m_dal.threads_update_username(db.threads, username, user_id)
 
 def threads_delete(db, thread_id):
     return m_dal.threads_delete(db.threads, thread_id)
