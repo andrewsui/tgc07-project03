@@ -163,7 +163,7 @@ def threads_delete(db, thread_id):
 
 # Thread comments
 def comments_get_one(db, comment_id):
-    return m_dal.comments_get_one(db.threads, comment_id)
+    return m_dal.comments_get_one(db.threads, comment_id)['sub_posts'][0]
 
 def comments_create(db, data, thread_id):
     new_record = {

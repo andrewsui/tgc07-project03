@@ -281,7 +281,9 @@ def update_comment(thread_id, comment_id):
 @app.route('/threads/<thread_id>/comments/<comment_id>/delete', methods=['GET','POST'])
 def delete_comment(thread_id, comment_id):
     if request.method == 'GET':
-        return render_template('threads/comments/delete-comment.html')
+        comment = m_services.comments_get_one(db, comment_id)
+        return render_template(
+            'threads/comments/delete-comment.html', comment=comment)
     elif request.method == 'POST':
         m_services.comments_delete(db, comment_id)
         return redirect(url_for('display_thread', thread_id=thread_id))
