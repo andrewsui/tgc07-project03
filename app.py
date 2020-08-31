@@ -114,6 +114,13 @@ def update_user(user_id):
         # ADD flash message
         return redirect(url_for('update_user', user_id=user_id))
 
+@app.route('/test/<user_id>', methods=['GET','POST'])
+def test(user_id):
+    if request.method == 'GET':
+        return "Test"
+    elif request.method == 'POST':
+        return redirect(url_for('update_user', user_id=user_id))
+
 @app.route('/users/<user_id>/delete', methods=['GET','POST'])
 def delete_user(user_id):
     if request.method == 'GET':
@@ -348,7 +355,7 @@ def vote_down_check_remove(thread_id):
         return { "response": False }
 
 @app.route('/api/threads/<thread_id>/vote-count/<up_or_down>')
-def test(thread_id, up_or_down):
+def vote_count(thread_id, up_or_down):
     votes = m_services.vote_count(db, thread_id, up_or_down)
     return {
         f'number_of_{up_or_down}_votes': json.loads(dumps(len(votes)))
