@@ -118,7 +118,8 @@ def update_user(user_id):
 def delete_user(user_id):
     if request.method == 'GET':
         previous_values = m_services.users_get_one(db, user_id)
-        return render_template('users/delete-user.html', previous_values=previous_values)
+        return render_template(
+            'users/delete-user.html', previous_values=previous_values)
     elif request.method == 'POST':
         m_services.users_delete(db, user_id)
         return redirect(url_for('threads'))
@@ -132,8 +133,9 @@ def user_threads(user_id):
         num_of_threads = threads_by_user.count()
         all_categories = m_services.categories_get_all(db)
         return render_template(
-            'users/user-threads.html', threads=threads_by_user,
-            num_of_threads=num_of_threads, categories=all_categories)
+            'users/user-threads.html', user_id=user_id,
+            threads=threads_by_user, num_of_threads=num_of_threads,
+            categories=all_categories)
     # POST not used, action of form points to create_thread() route
 
 # Categories
