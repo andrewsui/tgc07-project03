@@ -26,6 +26,9 @@ def users_delete(collection, user_id):
         '_id': ObjectId(user_id)
         })
 
+def users_threads_by_user(collection, search_criteria):
+    return collection.find(search_criteria)
+
 # Categories
 def category_name_get(collection, category_id):
     return collection.find_one({

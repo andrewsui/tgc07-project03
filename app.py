@@ -127,9 +127,7 @@ def delete_user(user_id):
 @app.route('/users/<user_id>/threads', methods=['GET','POST'])
 def user_threads(user_id):
     if request.method == 'GET':
-        search_criteria = {}
-        search_criteria['user.user_id'] = ObjectId(user_id)
-        threads_by_user = db.threads.find(search_criteria)
+        threads_by_user = m_services.users_threads_by_user(db, user_id)
         num_of_threads = threads_by_user.count()
         all_categories = m_services.categories_get_all(db)
         return render_template(

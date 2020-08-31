@@ -40,6 +40,11 @@ def users_update(db, data, user_id):
 def users_delete(db, user_id):
     return m_dal.users_delete(db.users, user_id)
 
+def users_threads_by_user(db, user_id):
+    search_criteria = {}
+    search_criteria['user.user_id'] = ObjectId(user_id)
+    return m_dal.users_threads_by_user(db.threads, search_criteria)
+
 # Categories
 def categories_get_all(db):
     return m_dal.collection_get(db.categories)
