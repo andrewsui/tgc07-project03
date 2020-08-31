@@ -128,9 +128,13 @@ def user_threads(user_id):
         search_criteria = {}
         search_criteria['user.user_id'] = ObjectId(user_id)
         threads_by_user = db.threads.find(search_criteria)
+        num_of_threads = threads_by_user.count()
+        all_categories = m_services.categories_get_all(db)
         return render_template(
-            'users/user-threads.html', threads=threads_by_user)
-    # POST REQUESTS NEEDED???
+            'users/user-threads.html', threads=threads_by_user,
+            num_of_threads=num_of_threads, categories=all_categories)
+    elif request.method == 'POST':
+        return redirect(url_for('user_threads'))
 
 # Categories
 @app.route('/categories')
@@ -223,7 +227,6 @@ def display_thread(thread_id):
         else:
             # ADD flash message
             return redirect(url_for('display_thread', thread_id=thread_id))
-
 
 @app.route('/threads/create', methods=['GET','POST'])
 @flask_login.login_required

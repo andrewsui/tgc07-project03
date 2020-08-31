@@ -21,28 +21,36 @@
         </div>
     </div>    
 
-    <!-- {# -->
-    <div class="search-container pt-4">
-        <form action="" method="get">
-            <div class="form-row">
-                <div class="form-group">
-                    <select name="categories" id="categories">
-                        <option value="">Categories</option>
-                        {% for category in categories %}
-                        <!-- {{category._id}} {{previous_values.categories}} -->
-                            <option id="{{ category._id }}" class="category-0" value="{{ category._id }}" {% if category._id==previous_values.categories %}selected="selected"{% endif %}>{{ category.category }}</option>
-                        {% endfor %}
-                    </select>
-                    <select name="sub_categories" id="sub_categories">
-                        <option value="">Sub-categories</option>
-                    </select>
-                    <input class="mb-n1" type="text" name="search-box" id="search-box" placeholder="Search reviews">
-                    <button id="search-btn" class="btn btn-primary px-2 py-1" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+    {% if num_of_threads==0 %}
+        <h3 class="mt-3">You haven't posted any reviews yet! Let's change that...</h3>
+
+        <div class="row px-3">
+            <div class="contact-form col-12 py-5 d-flex justify-content-center">
+                <div class="col-12 col-md-10 col-lg-8">
+    
+                    <h1>Create new review</h1>
+    
+                    <form action="{{ url_for('create_thread') }}" method="post">
+                        {% with %}
+                            {% if not previous_values %}
+                                {% set previous_values = {
+                                    "category": {
+                                        "category_id": "",
+                                        "sub_category_id": ""
+                                        }
+                                    }
+                                %}
+                            {% endif %}
+                
+                            {% include 'threads/base-thread-form.html' %}
+                
+                        {% endwith %}
+                        <input type="submit" value="Create" class="btn btn-info">
+                    </form>
                 </div>
             </div>
-        </form>
-    </div>
-    <!-- #} -->
+        </div>
+    {% endif %}
 
     {% for thread in threads %}
         {% include 'threads/base-thread-summary.html' %}
