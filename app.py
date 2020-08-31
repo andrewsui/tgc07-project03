@@ -136,6 +136,7 @@ def user_threads(user_id):
         # num_of_threads = len(list(threads_by_user))
         # print("Number of threads: "+ str(num_of_threads))
         # print(threads_by_user)
+        flash("All OK", 'success') #################################################################### To be updated
         all_categories = m_services.categories_get_all(db)
         return render_template(
             'users/user-threads.html', user_id=user_id,
