@@ -1,5 +1,14 @@
 {% extends 'base-template.html' %}
 
+{% block javascript %}
+    <script src={{ url_for("static", filename="js/threads-all.js") }} defer></script>
+    {% if current_user.is_authenticated %}
+        <script src={{ url_for("static", filename="js/threads-logged-in.js") }} defer></script>
+    {% else %}
+        <script src={{ url_for("static", filename="js/threads-logged-out.js") }} defer></script>
+    {% endif %}
+{% endblock %}
+
 {% block title %}
     Delete Review
 {% endblock %}
@@ -12,13 +21,17 @@
 
     <div class="row px-3">
         <div class="col-12 py-4">
-            <h4>Are you sure you want to delete review of {{ thread.product_name }}?</h4>
-            <h5>Once deleted, the review will be gone forever!</h5>
+
+            <a href="{{ url_for('display_thread', thread_id=thread._id) }}" class="btn btn-secondary">Back to review thread</a>
+
+            <h4 class="mt-4">Are you sure you want to delete review of {{ thread.product_name }}?</h4>
+            <h5 class="mb-4">Once deleted, the review will be gone forever!</h5>
             <form action="" method="post">
                 <input type="submit" value="Delete review" class="btn btn-warning">
             </form>
         </div>
     </div>
+    
     {% include 'threads/base-thread-summary.html' %}
 
 {% endblock %}
