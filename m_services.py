@@ -66,10 +66,35 @@ def users_check_username(username):
         return True
 
 def users_check_password(password):
-    if not re.search('^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$', password):
-        return False
-    else:
-        return True
+    # https://stackoverflow.com/questions/19605150/regex-for-password-must-contain-at-least-eight-characters-at-least-one-number-a
+    return re.search('^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$', password)
+
+def users_validate_form(data):
+    errors = {}
+
+    # If username not valid, add error
+    if not users_check_username(data.get('username')):
+        errors.update(invalid_username = "Username must start with a \
+            letter, be alphanumeric and be between 4 and 20 characters \
+                long")
+
+    # If email not valid, add error
+    if not users_check_email(data.get('email')):
+        errors.update(invalid_email = "Please enter a valid email")
+
+    # If password not valid, add error
+    if not users_check_password(data.get('password')):
+        errors.update(invalid_password = "Password must be a minimum of \
+            eight characters, and have at least one letter and one \
+                number")
+
+    # If T&Cs not agreed to, add error
+    if not data.get('terms_and_conditions'):
+        errors.update(invalid_terms_and_conditions = "You must agree to \
+            our terms and conditions to create a user account")
+    
+    return errors
+
 
 # Categories
 def categories_get_all(db):

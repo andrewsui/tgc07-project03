@@ -105,33 +105,8 @@ def create_user():
     if request.method == 'GET':
         return render_template('users/create-user.html', errors=errors)
     elif request.method == 'POST':
-        # Fields to validate
-        username = request.form.get('username')
-        email = request.form.get('email')
-        password = request.form.get('password')
-        gender = request.form.get('gender')
-        terms_and_conditions = request.form.get('terms_and_conditions')
-
-        # If username not valid, add error
-        if not m_services.users_check_username(username):
-            errors.update(invalid_username = "Username must start with a \
-                letter, be alphanumeric and be between 4 and 20 characters \
-                    long")
-
-        # If email not valid, add error
-        if not m_services.users_check_email(email):
-            errors.update(invalid_email = "Please enter a valid email")
-
-        print(password)
-        if not m_services.users_check_password(password):
-            errors.update(invalid_password = "Password must be a minimum of \
-                eight characters, and have at least one letter and one \
-                    number")
-
-        # If T&Cs not agreed to, add error
-        if not terms_and_conditions:
-            errors.update(invalid_terms_and_conditions = "You must agree to \
-                our terms and conditions to create a user account")
+        # Validate user input
+        errors = m_services.users_validate_form(request.form)
 
         if len(errors) > 0:
             return render_template('users/create-user.html', errors=errors)
@@ -141,24 +116,33 @@ def create_user():
             user_object = User()
             user_object.id = email
             flask_login.login_user(user_object)
+            flash("Sign up successful", "success")
             return redirect(url_for('users'))
 
 @app.route('/users/<user_id>/update', methods=['GET','POST'])
 def update_user(user_id):
     errors = {}
+    previous_values = m_services.users_get_one(db, user_id)
     if request.method == 'GET':
-        previous_values = m_services.users_get_one(db, user_id)
         return render_template(
             'users/update-user.html', previous_values=previous_values,
             errors=errors)
     elif request.method == 'POST':
-        # Update user details
-        m_services.users_update(db, request.form, user_id)
-        # Update username in review threads
-        m_services.threads_update_username(
-            db, request.form.get('username'), user_id)
-        # ADD flash message
-        return redirect(url_for('update_user', user_id=user_id))
+        # Validate user input
+        errors = m_services.users_validate_form(request.form)
+
+        if len(errors) > 0:
+            return render_template(
+                'users/update-user.html', previous_values=previous_values,
+                errors=errors)
+        else:
+            # Update user details
+            m_services.users_update(db, request.form, user_id)
+            # Update username in review threads
+            m_services.threads_update_username(
+                db, request.form.get('username'), user_id)
+            flash("Update account details successful", "success")
+            return redirect(url_for('update_user', user_id=user_id))
 
 @app.route('/users/<user_id>/delete', methods=['GET','POST'])
 def delete_user(user_id):
