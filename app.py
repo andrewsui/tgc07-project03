@@ -58,34 +58,45 @@ def users():
 
 @app.route('/users/login', methods=['GET','POST'])
 def login():
+    errors = {}
     if request.method == 'GET':
-        return render_template('users/login-user.html')
+        return render_template('users/login-user.html', errors=errors)
     elif request.method == 'POST':
-        user = db.users.find_one({
-            'email': request.form.get('email')
-        })
+        email = request.form.get('email')
 
-        # If user exists, check if password matches
-        if user and pbkdf2_sha256.verify(
-            request.form.get('password'), user['password']):
-            # If password matches, authorise user
-            user_object = User()
-            user_object.id = user['email']
-            flask_login.login_user(user_object)
-
-            # Redirect to a page and flash log in successful message
-            flash("Log in successful", "success")
-            return redirect(url_for('threads'))
-
-        # If log in fails, return back to the log in page
+        # Check if format of email is valid
+        # If not valid format, don't bother checking database
+        if not m_services.users_check_email(email):
+            errors.update(invalid_email = "Please enter a valid email")
+            return render_template('users/login-user.html', errors=errors)
+        
+        # If email format is valid
         else:
-            flash("User credentials do not match or do not exist", "error")
-            return redirect(url_for('login'))
+            user_db = db.users.find_one({ 'email': email })
+
+            # If user exists, check if password matches
+            if user_db and pbkdf2_sha256.verify(
+                request.form.get('password'), user_db['password']):
+                # If password matches, authorise user
+                user_object = User()
+                user_object.id = user_db['email']
+                flask_login.login_user(user_object)
+
+                # Redirect to a page and flash log in successful message
+                flash("Log in successful", "success")
+                return redirect(url_for('threads'))
+
+            # If log in fails, return back to the log in page
+            else:
+                errors.update(invalid_email = "Either email or password was incorrect")
+                errors.update(invalid_password = "Either email or password was incorrect")
+                flash("Either user credentials do not match or do not exist", "error")
+                return render_template('users/login-user.html', errors=errors)
 
 @app.route('/users/logout')
 def logout():
     flask_login.logout_user()
-    flash('Logged out', 'warning')
+    flash('Logged out', 'error')
     return redirect(url_for('login'))
 
 @app.route('/users/signup', methods=['GET','POST'])

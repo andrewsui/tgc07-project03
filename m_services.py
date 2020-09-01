@@ -2,6 +2,7 @@ from bson.objectid import ObjectId
 from passlib.hash import pbkdf2_sha256
 import datetime
 import flask_login
+import re
 import m_dal
 
 # Users
@@ -44,6 +45,11 @@ def users_threads_by_user(db, user_id):
     search_criteria = {}
     search_criteria['user.user_id'] = ObjectId(user_id)
     return m_dal.users_threads_by_user(db.threads, search_criteria)
+
+def users_check_email(email):
+    # https://www.geeksforgeeks.org/check-if-email-address-valid-or-not-in-python/
+    regex = '^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$'
+    return re.search(regex, email)
 
 # Categories
 def categories_get_all(db):
