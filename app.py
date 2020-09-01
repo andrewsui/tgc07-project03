@@ -269,11 +269,61 @@ def admin_update_user(user_id):
             return redirect(url_for('users'))
 
 # Categories
-@app.route('/categories')
+@app.route('/categories', methods=['GET','POST'])
+@flask_login.login_required
 def categories():
+    errors = {}
     all_categories = m_services.categories_get_all(db)
-    return render_template(
-        'categories/all-categories.html', categories=all_categories)
+    if request.method == 'GET':
+        if flask_login.current_user.is_admin:
+            return render_template(
+                'categories/all-categories.html', categories=all_categories,
+                errors=errors)
+        else:
+            flash("You do not have the required user privileges", "error")
+            return redirect(url_for('login'))
+    elif request.method == 'POST':
+        print(request.form)
+        print(request.form.get('categories'))
+        if request.form.get('update_category'):
+            if request.form.get('categories'):
+                return redirect(url_for('update_category_0',
+                category_id=request.form.get('categories')))
+            else:
+                errors.update(select_category="Please select a category")
+        elif request.form.get('delete_category'):
+            if request.form.get('categories'):
+                return redirect(url_for('delete_category_0',
+                category_id=request.form.get('categories')))
+            else:
+                errors.update(select_category="Please select a category")
+        elif request.form.get('create_sub_category'):
+            if request.form.get('categories'):
+                return redirect(url_for('create_category_1',
+                parent_id=request.form.get('categories')))
+            else:
+                errors.update(
+                    select_category="Please select a parent category")
+        elif request.form.get('update_sub_category'):
+            if request.form.get('sub_categories'):
+                return redirect(url_for('update_category_1',
+                category_id=request.form.get('categories')))
+            else:
+                errors.update(
+                    select_sub_category="Please select a sub-category")
+        elif request.form.get('delete_sub_category'):
+            if request.form.get('sub_categories'):
+                return redirect(url_for('delete_category_1',
+                category_id=request.form.get('categories')))
+            else:
+                errors.update(
+                    select_sub_category="Please select a sub-category")
+        if len(errors) > 0:
+            return render_template(
+                'categories/all-categories.html', categories=all_categories,
+                errors=errors)
+        else:
+            return redirect(url_for('categories'))
 
 @app.route('/api/categories')
 def api_categories():

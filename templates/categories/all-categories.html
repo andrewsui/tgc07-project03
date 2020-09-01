@@ -1,7 +1,7 @@
 {% extends 'base-template.html' %}
 
 {% block title %}
-    All Categories
+    Categories
 {% endblock %}
 
 {% block css %}
@@ -9,26 +9,51 @@
 {% endblock %}
 
 {% block javascript %}
-    <script src={{ url_for("static", filename="js/categories.js") }} defer></script>
+    <script src={{ url_for("static", filename="js/sub-categories.js") }} defer></script>
 {% endblock %}
 
 {% block content %}
-    <!-- {# -->
-    <select name="categories" id="categories" size="8">
-        {% for category in categories %}
-            <option value="{{category._id}}" id="{{category.category}}" class="category-0">{{category.category}}</option>
-        {% endfor %}
-    </select>
-    <select name="categories" id="categories" size="8">
-        {% for category in categories %}
-            {% for sub_category in category.sub_categories %}
-            <option value="{{sub_category._id}}" id="{{sub_category.category}}" class="category-0">{{sub_category.category}}</option>
-            {% endfor %}
-        {% endfor %}
-    </select>
-    <!-- #} -->
 
-    <div class="categories-menu">
+<div class="row px-3">
+    <div class="col-12 py-5 d-flex justify-content-center">
+        <div class="col-12 col-md-10 col-lg-8">
+            <h1 class="mb-4">Admin Panel - Categories</h1>
+
+            <form action="" method="POST">
+                <div class="form-group">
+                    <label for="categories">Categories</label><br>
+                    <select name="categories" id="categories" size="8" class="mb-5">
+                        {% for category in categories %}
+                            <option value="{{category._id}}" id="{{category._id}}" class="form-control category-0">{{category.category}}</option>
+                        {% endfor %}
+                    </select>
+                    <input type="hidden" class="{% if 'select_category' in errors %} is-invalid {% endif %}">
+                    <div class="invalid-feedback">{{ errors.select_category }}</div>
+                    <br>
+                    <a href="{{ url_for('create_category_0') }}" class="btn btn-danger">Add new category</a>
+                    <input type="submit" value="Update category" name="update_category" class="btn btn-info">
+                    <input type="submit" value="Delete category" name="delete_category" class="btn btn-warning">
+                    <br>
+                    <label for="sub_categories" class="mt-5">Current sub-categories</label><br>
+                    <select name="sub_categories" id="sub_categories" size="8" class="mb-5">
+                        <option value="" id="" class="form-control">Sub-categories</option>
+                    </select>
+                    <input type="hidden" class="{% if 'select_sub_category' in errors %} is-invalid {% endif %}">
+                    <div class="invalid-feedback">{{ errors.select_sub_category }}</div>
+                    <br>
+                    <input type="submit" value="Add new sub-category" name="create_sub_category" class="btn btn-danger">
+                    <input type="submit" value="Update sub-category" name="update_sub_category" class="btn btn-info">
+                    <input type="submit" value="Delete sub-category" name="delete_sub_category" class="btn btn-warning">
+                </div>
+            </form>
+
+            
+        </div>
+    </div>
+</div>
+
+    <!-- {# -->
+    <!-- <div class="categories-menu">
         <input type="checkbox" name="categories-menu" id="categories-menu" class="category-checkbox">
         <label for="categories-menu">&#9776;</label>
 
@@ -48,5 +73,6 @@
             </div>
             {% endfor %}
         </div>
-    </div>
+    </div> -->
+    <!-- #} -->
 {% endblock %}

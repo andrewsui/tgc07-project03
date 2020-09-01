@@ -1,13 +1,18 @@
-* {
-    margin: 0;
+/* * {
+    margin: 0; */
     /* padding: 0; */
-}
+/* } */
 
-.multi-level, .categories-container ul, input[type="checkbox"].category-checkbox {
+/* .multi-level, .categories-container ul, input[type="checkbox"].category-checkbox {
     display: none;
 }
 
 #categories-menu:checked ~ .multi-level, .categories-container input:checked ~ ul {
     display: block;
-}
+} */
 
+
+
+#categories, #sub_categories {
+    min-height: 240px;
+}

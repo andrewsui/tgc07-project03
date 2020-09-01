@@ -9,7 +9,7 @@ async function displaySubCategories(subCategoriesUrl) {
     let wildCardSubCategory = document.createElement("option");
         wildCardSubCategory.value = "";
         wildCardSubCategory.id = "";
-        wildCardSubCategory.className = "category-1";
+        wildCardSubCategory.className = "form-control category-1";
         wildCardSubCategory.innerText = "Sub-categories";
         parentElement.appendChild(wildCardSubCategory);
     // Iterate over sub-category results and add option elements to select tag parent
@@ -17,7 +17,7 @@ async function displaySubCategories(subCategoriesUrl) {
         let newElement = document.createElement("option");
         newElement.value = subCategory._id.$oid;
         newElement.id = subCategory._id.$oid;
-        newElement.className = "category-1";
+        newElement.className = "form-control category-1";
         newElement.innerText = subCategory.category;
         parentElement.appendChild(newElement);
     }
