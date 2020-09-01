@@ -42,13 +42,11 @@ def user_loader(email):
          # Return User object
         return user_object
     else:
-        # If email does not exist in database, report an error
         return None
 
-# Home
+# Home ######################################################### Add home page
 @app.route('/')
 def home():
-    # print(flask_login.current_user.is_authenticated)
     return redirect(url_for('threads'))
     # return render_template('index.html')
 
@@ -75,19 +73,19 @@ def login():
             user_object.id = user['email']
             flask_login.login_user(user_object)
 
-            # Redirect to a page and flash log in successful
+            # Redirect to a page and flash log in successful message
             flash("Log in successful", "success")
             return redirect(url_for('threads'))
 
-        # If login fails, return back to the login page
+        # If log in fails, return back to the log in page
         else:
-            # flash("Wrong email or password", "danger")
+            flash("User credentials do not match or do not exist", "error")
             return redirect(url_for('login'))
 
 @app.route('/users/logout')
 def logout():
     flask_login.logout_user()
-    # flash('Logged out', 'success')
+    flash('Logged out', 'warning')
     return redirect(url_for('login'))
 
 @app.route('/users/signup', methods=['GET','POST'])
