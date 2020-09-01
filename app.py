@@ -401,13 +401,17 @@ def update_category_0(category_id):
 def update_category_1(category_id):
     errors = {}
     previous_values = m_services.sub_categories_get_one(db, category_id)
-    # category = m_services.categories_get_one(db, parent_id)
     if request.method == 'GET':
-        return render_template('categories/update-category-1.html',
-        previous_values=previous_values, errors=errors)
+        if flask_login.current_user.is_admin:
+            return render_template('categories/update-category-1.html',
+            previous_values=previous_values, errors=errors)
+        else:
+            flash("You do not have the required user privileges", "error")
+            return redirect(url_for('login'))
     elif request.method == 'POST':
         if len(request.form.get('sub_category'))<3:
-            errors.update(invalid_category="Please enter a valid sub_category")
+            errors.update(
+                invalid_sub_category="Please enter a valid sub_category")
         if len(errors)>0:
             return render_template('categories/update-category-1.html',
             previous_values=previous_values, errors=errors)
