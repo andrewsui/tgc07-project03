@@ -64,13 +64,21 @@ def login():
     elif request.method == 'POST':
         email = request.form.get('email')
 
-        # Check if format of email is valid
-        # If not valid format, don't bother checking database
+        # If email not valid format, add error
         if not m_services.users_check_email(email):
             errors.update(invalid_email = "Please enter a valid email")
+
+        # If password not valid, add error
+        if not m_services.users_check_password(request.form.get('password')):
+            errors.update(invalid_password = "Password must be a minimum of \
+                eight characters, and have at least one letter and one \
+                    number")
+
+        # If email and/or password format invalid, show error messages
+        if len(errors) > 0:
             return render_template('users/login-user.html', errors=errors)
         
-        # If email format is valid
+        # If email and password formats are valid, check database
         else:
             user_db = db.users.find_one({ 'email': email })
 
@@ -90,7 +98,6 @@ def login():
             else:
                 errors.update(invalid_email = "Either email or password was incorrect")
                 errors.update(invalid_password = "Either email or password was incorrect")
-                flash("Either user credentials do not match or do not exist", "error")
                 return render_template('users/login-user.html', errors=errors)
 
 @app.route('/users/logout')
