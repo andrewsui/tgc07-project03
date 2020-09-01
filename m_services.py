@@ -76,33 +76,43 @@ def users_check_password_same(password_1, password_2):
 
 def users_validate_form(data):
     errors = {}
-
     # If username not valid, add error
     if not users_check_username(data.get('username')):
         errors.update(invalid_username = "Username must start with a \
             letter, be alphanumeric and be between 4 and 20 characters \
                 long")
-
     # If email not valid, add error
     if not users_check_email(data.get('email')):
         errors.update(invalid_email = "Please enter a valid email")
-
     # If password not valid, add error
     if not users_check_password(data.get('password')):
         errors.update(invalid_password = "Password must be a minimum of \
             eight characters, and have at least one letter and one \
                 number")
-
+    # If passwords are not same, add error
     if not users_check_password_same(
         data.get('password'), data.get('password_2')):
         errors.update(invalid_password_2 = "Passwords did not match")
-
     # If T&Cs not agreed to, add error
     if not data.get('terms_and_conditions'):
         errors.update(invalid_terms_and_conditions = "You must agree to \
             our terms and conditions to create a user account")
-    
     return errors
+
+# Admin users
+def admin_users_update(db, data, user_id):
+    updated_record = {
+            'username': data.get('username'),
+            'email': data.get('email'),
+            'gender': None if data.get('gender')=="null" else data.get(
+                'gender'),
+            'password': pbkdf2_sha256.hash(data.get('password')),
+            'terms_and_conditions': False if data.get(
+                'terms_and_conditions')==None else True,
+            'marketing': False if data.get('marketing')==None else True,
+            'is_admin': False if data.get('is_admin')==None else True
+        }
+    return m_dal.admin_users_update(db.users, updated_record, user_id)
 
 # Categories
 def categories_get_all(db):

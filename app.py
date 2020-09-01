@@ -264,7 +264,7 @@ def admin_update_user(user_id):
                 previous_values=previous_values, errors=errors)
         else:
             # Update user details
-            m_services.users_update(db, request.form, user_id)
+            m_services.admin_users_update(db, request.form, user_id)
             flash("Update account details successful", "success")
             return redirect(url_for('users'))
 

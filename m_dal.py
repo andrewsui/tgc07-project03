@@ -14,13 +14,6 @@ def document_get(collection, document_id):
 def users_create(collection, new_record):
     return collection.insert_one(new_record)
 
-# def users_update(collection, updated_record, user_id):
-#     return collection.update_one({
-#         '_id': ObjectId(user_id)
-#     }, {
-#         '$set': updated_record
-#     })
-
 def users_update(collection, updated_record, user_id):
     return collection.update_one({
         '_id': ObjectId(user_id)
@@ -41,6 +34,14 @@ def users_delete(collection, user_id):
 
 def users_threads_by_user(collection, search_criteria):
     return collection.find(search_criteria)
+
+# Admin users
+def admin_users_update(collection, updated_record, user_id):
+    return collection.update_one({
+        '_id': ObjectId(user_id)
+    }, {
+        '$set': updated_record
+    })
 
 # Categories
 def category_name_get(collection, category_id):
