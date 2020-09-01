@@ -124,7 +124,7 @@ def create_user():
             user_object.id = request.form.get('email')
             flask_login.login_user(user_object)
             flash("Sign up successful", "success")
-            return redirect(url_for('users'))
+            return redirect(url_for('threads'))
 
 @app.route('/users/<user_id>/update', methods=['GET','POST'])
 def update_user(user_id):
