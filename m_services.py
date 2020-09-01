@@ -118,6 +118,9 @@ def admin_users_update(db, data, user_id):
 def categories_get_all(db):
     return m_dal.collection_get(db.categories)
 
+def categories_get_one(db, category_id):
+    return m_dal.document_get(db.categories, category_id)
+
 def categories_create_0(db, data):
     category_value = data.get('category')
     return m_dal.categories_create_0(db.categories, category_value)

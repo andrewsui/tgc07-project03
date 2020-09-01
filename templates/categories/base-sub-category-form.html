@@ -1,0 +1,5 @@
+<div>
+    <h3 class="my-4">Parent category: <strong>{{ category.category }}</strong></h3>
+</div>
+<input type="text" name="sub_category" id="sub_category" class="form-control {% if 'invalid_sub_category' in errors %} is-invalid {% endif %}" placeholder="New sub-category name" value="{{ previous_values.sub_category }}">
+<div class="invalid-feedback">{{ errors.invalid_sub_category }}</div>

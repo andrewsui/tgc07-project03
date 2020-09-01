@@ -1,14 +1,22 @@
 {% extends 'base-template.html' %}
 
 {% block title %}
-    Create Category 0
+    Add Category
 {% endblock %}
 
 {% block content %}
-    <h1>Create category level 0</h1>
+<div class="row px-3">
+    <div class="col-12 py-5 d-flex justify-content-center">
+        <div class="col-12 col-md-10 col-lg-8">
+            <h1>Add new category</h1>
 
-    <form action="" method="post">
-        <input type="text" name="category" id="category" placeholder="Category Level 0">
-        <input type="submit" value="Create">
-    </form>
+            <form action="" method="post">
+                {% with previous_values={} %}
+                    {% include 'categories/base-category-form.html' %}
+                    <input type="submit" value="Add new category">
+                {% endwith %}
+            </form>
+        </div>
+    </div>
+</div>
 {% endblock %}

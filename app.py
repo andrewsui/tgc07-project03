@@ -283,8 +283,6 @@ def categories():
             flash("You do not have the required user privileges", "error")
             return redirect(url_for('login'))
     elif request.method == 'POST':
-        print(request.form)
-        print(request.form.get('categories'))
         if request.form.get('update_category'):
             if request.form.get('categories'):
                 return redirect(url_for('update_category_0',
@@ -333,22 +331,51 @@ def api_categories():
     }
 
 @app.route('/categories/create-0', methods=['GET','POST'])
+@flask_login.login_required
 def create_category_0():
+    errors = {}
     if request.method == 'GET':
-        return render_template('categories/create-category-0.html')
+        if flask_login.current_user.is_admin:
+            return render_template('categories/create-category-0.html',
+            errors=errors)
+        else:
+            flash("You do not have the required user privileges", "error")
+            return redirect(url_for('login'))
     elif request.method == 'POST':
-        m_services.categories_create_0(db, request.form)
-        return redirect(url_for('categories'))
+        if len(request.form.get('category'))<3:
+            errors.update(invalid_category="Please enter a valid category")
+        if len(errors)>0:
+            return render_template('categories/create-category-0.html',
+            errors=errors)
+        else:
+            m_services.categories_create_0(db, request.form)
+            return redirect(url_for('categories'))
 
 @app.route('/categories/<parent_id>/create-1', methods=['GET','POST'])
+@flask_login.login_required
 def create_category_1(parent_id):
+    errors = {}
+    category = m_services.categories_get_one(db, parent_id)
     if request.method == 'GET':
-        return render_template('categories/create-category-1.html')
+        if flask_login.current_user.is_admin:
+            return render_template('categories/create-category-1.html',
+            category=category, errors=errors)
+        else:
+            flash("You do not have the required user privileges", "error")
+            return redirect(url_for('login'))
     elif request.method == 'POST':
-        m_services.categories_create_1(db, request.form, parent_id)
-        return redirect(url_for('categories'))
+        if len(request.form.get('sub_category'))<3:
+            errors.update(
+                invalid_sub_category = "Please enter a valid sub-category")
+        if len(errors)>0:
+            return render_template('categories/create-category-1.html',
+            category=category, errors=errors)
+        else:
+            m_services.categories_create_1(db, request.form, parent_id)
+            return redirect(url_for('categories'))
 
 @app.route('/categories/<category_id>/update-0', methods=['GET','POST'])
+@flask_login.login_required
 def update_category_0(category_id):
     if request.method == 'GET':
         return render_template('categories/update-category-0.html')
@@ -357,6 +384,7 @@ def update_category_0(category_id):
         return redirect(url_for('categories'))
 
 @app.route('/categories/<category_id>/update-1', methods=['GET','POST'])
+@flask_login.login_required
 def update_category_1(category_id):
     if request.method == 'GET':
         return render_template('categories/update-category-1.html')
@@ -365,6 +393,7 @@ def update_category_1(category_id):
         return redirect(url_for('categories'))
 
 @app.route('/categories/<category_id>/delete-0', methods=['GET','POST'])
+@flask_login.login_required
 def delete_category_0(category_id):
     if request.method == 'GET':
         return render_template('categories/delete-category-0.html')
@@ -373,6 +402,7 @@ def delete_category_0(category_id):
         return redirect(url_for('categories'))
 
 @app.route('/categories/<category_id>/delete-1', methods=['GET','POST'])
+@flask_login.login_required
 def delete_category_1(category_id):
     if request.method == 'GET':
         return render_template('categories/delete-category-1.html')
@@ -381,6 +411,7 @@ def delete_category_1(category_id):
         return redirect(url_for('categories'))
 
 @app.route('/api/sub-categories/<parent_id>')
+@flask_login.login_required
 def get_sub_categories(parent_id):
     sub_categories = m_services.sub_categories_get(db, parent_id)
     return {
@@ -449,6 +480,7 @@ def update_thread(thread_id):
         return redirect(url_for('display_thread', thread_id=thread_id))
 
 @app.route('/threads/<thread_id>/delete', methods=['GET','POST'])
+@flask_login.login_required
 def delete_thread(thread_id):
     if request.method == 'GET':
         thread = m_services.threads_get_one(db, thread_id)
@@ -480,6 +512,7 @@ def update_comment(thread_id, comment_id):
             return redirect(url_for('display_thread', thread_id=thread_id))
 
 @app.route('/threads/<thread_id>/comments/<comment_id>/delete', methods=['GET','POST'])
+@flask_login.login_required
 def delete_comment(thread_id, comment_id):
     if request.method == 'GET':
         comment = m_services.comments_get_one(db, comment_id)
