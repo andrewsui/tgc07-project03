@@ -123,13 +123,19 @@ def create_user():
             return redirect(url_for('threads'))
 
 @app.route('/users/<user_id>/update', methods=['GET','POST'])
+@flask_login.login_required
 def update_user(user_id):
     errors = {}
     previous_values = m_services.users_get_one(db, user_id)
     if request.method == 'GET':
-        return render_template(
-            'users/update-user.html', previous_values=previous_values,
-            errors=errors)
+        if (str(flask_login.current_user._id)==user_id or
+            flask_login.current_user.is_admin):
+            return render_template(
+                'users/update-user.html', previous_values=previous_values,
+                errors=errors)
+        else:
+            flash("You do not have the required user privileges", "error")
+            return redirect(url_for('threads'))
     elif request.method == 'POST':
         # Validate user input
         
