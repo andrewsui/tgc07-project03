@@ -1,13 +1,18 @@
+// Function to populate sub-categories select option elements
 async function displaySubCategories(subCategoriesUrl) {
+    // Get sub-categories of specified category
     let response = await axios.get(subCategoriesUrl);
     let parentElement = document.querySelector("#sub_categories");
+    // Reset all options within select tag element
     parentElement.innerText = "";
+    // Add a wildcard option labelled "Sub-categories" if user doesn't want to select a sub-category
     let wildCardSubCategory = document.createElement("option");
         wildCardSubCategory.value = "";
         wildCardSubCategory.id = "";
         wildCardSubCategory.className = "category-1";
         wildCardSubCategory.innerText = "Sub-categories";
         parentElement.appendChild(wildCardSubCategory);
+    // Iterate over sub-category results and add option elements to select tag parent
     for (let subCategory of response.data.results[0].sub_categories) {
         let newElement = document.createElement("option");
         newElement.value = subCategory._id.$oid;
@@ -18,17 +23,19 @@ async function displaySubCategories(subCategoriesUrl) {
     }
 }
 
-$("#categories").on("click", ".category-0", async function() {
-    let subCategoriesUrl = "/api/sub-categories/" + this.id;
-    await displaySubCategories(subCategoriesUrl);
-})
-
 window.addEventListener('load', async (event) => {
     let subCategoriesElement = document.querySelector("#categories");
+    // After page loads, if a category is selected then populate sub-categories
     if (subCategoriesElement.value) {
         let subCategoriesUrl = "/api/sub-categories/" + subCategoriesElement.value;
         await displaySubCategories(subCategoriesUrl);
         let previousSubCategoryId = document.querySelector("#previous_sub_categories").value;
         previousSubCategoryId ? document.getElementById(previousSubCategoryId).selected = true : null;
     }
+    // Add on-click event listeners to all select category HTML tag's child elements
+    $("#categories").on("click", ".category-0", async function() {
+        // If category option is clicked, populate its sub-categories
+        let subCategoriesUrl = "/api/sub-categories/" + this.id;
+        await displaySubCategories(subCategoriesUrl);
+    })
 })
