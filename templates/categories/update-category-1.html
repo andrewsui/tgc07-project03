@@ -1,14 +1,23 @@
 {% extends 'base-template.html' %}
 
 {% block title %}
-    Update Category 1
+    Update Sub-category
 {% endblock %}
 
 {% block content %}
-    <h1>Update category level 1</h1>
+<div class="row px-3">
+    <div class="col-12 py-5 d-flex justify-content-center">
+        <div class="col-12 col-md-10 col-lg-8">
+            <h1>Update sub-category</h1>
 
-    <form action="" method="post">
-        <input type="text" name="category" id="category" placeholder="Category Level 1">
-        <input type="submit" value="Update">
-    </form>
+            <form action="" method="post">
+                
+                    {% for previous_value in previous_values %}
+                        {% include 'categories/base-sub-category-form.html' %}
+                        <input type="submit" value="Update sub-category">
+                    {% endfor %}
+            </form>
+        </div>
+    </div>
+</div>
 {% endblock %}

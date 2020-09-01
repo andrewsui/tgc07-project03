@@ -12,9 +12,14 @@
                     <h1>Add new sub-category</h1>
         
                     <form action="" method="post">
+                        <div>
+                            <h3 class="my-4">Parent category: <strong>{{ category.category }}</strong></h3>
+                        </div>
                         {% with previous_values={} %}
-                            {% include 'categories/base-sub-category-form.html' %}
-                            <input type="submit" value="Add new sub-category">
+                            {% with previous_value = {'sub_categories': ['category']} %}
+                                {% include 'categories/base-sub-category-form.html' %}
+                                <input type="submit" value="Add new sub-category">
+                            {% endwith %}
                         {% endwith %}
                     </form>
                 </div>

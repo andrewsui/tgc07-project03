@@ -123,6 +123,13 @@ def sub_categories_get(collection, parent_id):
         'sub_categories': 1
     })
 
+def sub_categories_get_one(collection, sub_category_id):
+    return collection.find({
+        'sub_categories._id': ObjectId(sub_category_id)
+    }, {
+        'sub_categories.$': 1
+    })
+
 # Threads
 def threads_search(collection, user_input):
     search_criteria = {}

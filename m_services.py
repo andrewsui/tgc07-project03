@@ -126,7 +126,7 @@ def categories_create_0(db, data):
     return m_dal.categories_create_0(db.categories, category_value)
 
 def categories_create_1(db, data, parent_id):
-    category_value = data.get('category')
+    category_value = data.get('sub_category')
     return m_dal.categories_create_1(db.categories, category_value, parent_id)
 
 def categories_update_0(db, data, category_id):
@@ -135,7 +135,7 @@ def categories_update_0(db, data, category_id):
         db.categories, category_value, category_id)
 
 def categories_update_1(db, data, category_id):
-    category_value = data.get('category')
+    category_value = data.get('sub_category')
     return m_dal.categories_update_1(
         db.categories, category_value, category_id)
 
@@ -147,6 +147,9 @@ def categories_delete_1(db, category_id):
 
 def sub_categories_get(db, parent_id):
     return m_dal.sub_categories_get(db.categories, parent_id)
+
+def sub_categories_get_one(db, sub_category_id):
+    return m_dal.sub_categories_get_one(db.categories, sub_category_id)
 
 # Threads
 def threads_get_all(db):

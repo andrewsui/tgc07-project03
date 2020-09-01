@@ -305,14 +305,14 @@ def categories():
         elif request.form.get('update_sub_category'):
             if request.form.get('sub_categories'):
                 return redirect(url_for('update_category_1',
-                category_id=request.form.get('categories')))
+                category_id=request.form.get('sub_categories')))
             else:
                 errors.update(
                     select_sub_category="Please select a sub-category")
         elif request.form.get('delete_sub_category'):
             if request.form.get('sub_categories'):
                 return redirect(url_for('delete_category_1',
-                category_id=request.form.get('categories')))
+                category_id=request.form.get('sub_categories')))
             else:
                 errors.update(
                     select_sub_category="Please select a sub-category")
@@ -377,20 +377,43 @@ def create_category_1(parent_id):
 @app.route('/categories/<category_id>/update-0', methods=['GET','POST'])
 @flask_login.login_required
 def update_category_0(category_id):
+    errors = {}
+    previous_values = m_services.categories_get_one(db, category_id)
     if request.method == 'GET':
-        return render_template('categories/update-category-0.html')
+        if flask_login.current_user.is_admin:
+            return render_template('categories/update-category-0.html',
+            previous_values=previous_values, errors=errors)
+        else:
+            flash("You do not have the required user privileges", "error")
+            return redirect(url_for('login'))
     elif request.method == 'POST':
-        m_services.categories_update_0(db, request.form, category_id)
-        return redirect(url_for('categories'))
+        if len(request.form.get('category'))<3:
+            errors.update(invalid_category="Please enter a valid category")
+        if len(errors)>0:
+            return render_template('categories/update-category-0.html',
+            previous_values=previous_values, errors=errors)
+        else:
+            m_services.categories_update_0(db, request.form, category_id)
+            return redirect(url_for('categories'))
 
 @app.route('/categories/<category_id>/update-1', methods=['GET','POST'])
 @flask_login.login_required
 def update_category_1(category_id):
+    errors = {}
+    previous_values = m_services.sub_categories_get_one(db, category_id)
+    # category = m_services.categories_get_one(db, parent_id)
     if request.method == 'GET':
-        return render_template('categories/update-category-1.html')
+        return render_template('categories/update-category-1.html',
+        previous_values=previous_values, errors=errors)
     elif request.method == 'POST':
-        m_services.categories_update_1(db, request.form, category_id)
-        return redirect(url_for('categories'))
+        if len(request.form.get('sub_category'))<3:
+            errors.update(invalid_category="Please enter a valid sub_category")
+        if len(errors)>0:
+            return render_template('categories/update-category-1.html',
+            previous_values=previous_values, errors=errors)
+        else:
+            m_services.categories_update_1(db, request.form, category_id)
+            return redirect(url_for('categories'))
 
 @app.route('/categories/<category_id>/delete-0', methods=['GET','POST'])
 @flask_login.login_required
