@@ -75,8 +75,8 @@ def login():
             user_object.id = user['email']
             flask_login.login_user(user_object)
 
-            # Redirect to a page that says login is successful
-            # flash("Login successful", "success")
+            # Redirect to a page and flash log in successful
+            flash("Log in successful", "success")
             return redirect(url_for('threads'))
 
         # If login fails, return back to the login page
@@ -136,7 +136,6 @@ def user_threads(user_id):
         # num_of_threads = len(list(threads_by_user))
         # print("Number of threads: "+ str(num_of_threads))
         # print(threads_by_user)
-        flash("All OK", 'success') #################################################################### To be updated
         all_categories = m_services.categories_get_all(db)
         return render_template(
             'users/user-threads.html', user_id=user_id,
