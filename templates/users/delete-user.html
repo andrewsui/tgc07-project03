@@ -15,8 +15,8 @@
 
             <a href="{{ url_for('update_user', user_id=current_user._id) }}" class="btn btn-secondary">Back to my profile</a>
 
-            <h4 class="mt-4">Are you sure you want to delete your account <strong>{{ previous_values.username }}</strong>?</h4>
-            <h5 class="mb-4">Once deleted, your account will be gone forever!</h5>
+            <h4 class="mt-4">Are you sure you want to delete <strong>{{ previous_values.username }}</strong>'s account?</h4>
+            <h5 class="mb-4">Once deleted, the account will be gone forever!</h5>
             <form action="" method="post">
                 <input type="submit" value="Delete account" class="btn btn-warning">
             </form>

@@ -167,11 +167,17 @@ def update_user(user_id):
             return redirect(url_for('update_user', user_id=user_id))
 
 @app.route('/users/<user_id>/delete', methods=['GET','POST'])
+@flask_login.login_required
 def delete_user(user_id):
     if request.method == 'GET':
-        previous_values = m_services.users_get_one(db, user_id)
-        return render_template(
-            'users/delete-user.html', previous_values=previous_values)
+        if (str(flask_login.current_user._id)==user_id or
+            flask_login.current_user.is_admin):
+            previous_values = m_services.users_get_one(db, user_id)
+            return render_template(
+                'users/delete-user.html', previous_values=previous_values)
+        else:
+            flash("You do not have the required user privileges", "error")
+            return redirect(url_for('threads'))
     elif request.method == 'POST':
         m_services.users_delete(db, user_id)
         return redirect(url_for('threads'))
