@@ -69,6 +69,9 @@ def users_check_password(password):
     # https://stackoverflow.com/questions/19605150/regex-for-password-must-contain-at-least-eight-characters-at-least-one-number-a
     return re.search('^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$', password)
 
+def users_check_password_same(password_1, password_2):
+    return password_1==password_2
+
 def users_validate_form(data):
     errors = {}
 
@@ -87,6 +90,10 @@ def users_validate_form(data):
         errors.update(invalid_password = "Password must be a minimum of \
             eight characters, and have at least one letter and one \
                 number")
+
+    if not users_check_password_same(
+        data.get('password'), data.get('password_2')):
+        errors.update(invalid_password_2 = "Passwords did not match")
 
     # If T&Cs not agreed to, add error
     if not data.get('terms_and_conditions'):

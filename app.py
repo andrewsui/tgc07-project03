@@ -121,7 +121,7 @@ def create_user():
         else:
             m_services.users_create(db, request.form)
             user_object = User()
-            user_object.id = email
+            user_object.id = request.form.get('email')
             flask_login.login_user(user_object)
             flash("Sign up successful", "success")
             return redirect(url_for('users'))
@@ -147,6 +147,11 @@ def update_user(user_id):
                 eight characters, and have at least one letter and one \
                     number")
         
+        # If passwords are not same, add error
+        if not m_services.users_check_password_same(
+            request.form.get('password'), request.form.get('password_2')):
+            errors.update(invalid_password_2 = "Passwords did not match")
+
         # errors = m_services.users_validate_form(request.form)
 
         if len(errors) > 0:
