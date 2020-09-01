@@ -37,6 +37,7 @@ def user_loader(email):
         # Create User object
         user_object = User()
         user_object._id = user['_id']
+        user_object.is_admin = user['is_admin']
         user_object.username = user['username']
         user_object.email = user['email']
          # Return User object
@@ -51,11 +52,6 @@ def home():
     # return render_template('index.html')
 
 # Users
-@app.route('/users')
-def users():
-    all_users = m_services.users_get_all(db)
-    return render_template('users/all-users.html', users=all_users)
-
 @app.route('/users/login', methods=['GET','POST'])
 def login():
     errors = {}
@@ -194,6 +190,71 @@ def user_threads(user_id):
             threads=threads_by_user, num_of_threads=num_of_threads,
             categories=all_categories)
     # POST not used, action of form points to create_thread() route
+
+# Admin users
+@app.route('/admin/users')
+@flask_login.login_required
+def users():
+    if flask_login.current_user.is_admin:
+        all_users = m_services.users_get_all(db)
+        return render_template('admin-users/all-users.html', users=all_users)
+    else:
+        flash("You do not have the required user privileges", "error")
+        return redirect(url_for('threads'))
+
+
+@app.route('/admin/users/create', methods=['GET','POST'])
+@flask_login.login_required
+def admin_create_user():
+    errors = {}
+    if request.method == 'GET':
+        if flask_login.current_user.is_admin:
+            return render_template(
+                'admin-users/admin-create-user.html', errors=errors)
+        else:
+            flash("You do not have the required user privileges", "error")
+            return redirect(url_for('login'))
+    elif request.method == 'POST':
+        # Validate user input
+        errors = m_services.users_validate_form(request.form)
+
+        if len(errors) > 0:
+            return render_template(
+                'admin-users/admin-create-user.html', errors=errors)
+        
+        else:
+            m_services.users_create(db, request.form)
+            user_object = User()
+            user_object.id = request.form.get('email')
+            flash("Sign up successful", "success")
+            return redirect(url_for('users'))
+
+@app.route('/admin/users/<user_id>/update', methods=['GET','POST'])
+@flask_login.login_required
+def admin_update_user(user_id):
+    errors = {}
+    previous_values = m_services.users_get_one(db, user_id)
+    if request.method == 'GET':
+        if flask_login.current_user.is_admin:
+            return render_template(
+                'admin-users/admin-update-user.html',
+                previous_values=previous_values, errors=errors)
+        else:
+            flash("You do not have the required user privileges", "error")
+            return redirect(url_for('login'))
+    elif request.method == 'POST':
+        # Validate user input
+        errors = m_services.users_validate_form(request.form)
+
+        if len(errors) > 0:
+            return render_template(
+                'admin-users/admin-update-user.html',
+                previous_values=previous_values, errors=errors)
+        else:
+            # Update user details
+            m_services.users_update(db, request.form, user_id)
+            flash("Update account details successful", "success")
+            return redirect(url_for('users'))
 
 # Categories
 @app.route('/categories')

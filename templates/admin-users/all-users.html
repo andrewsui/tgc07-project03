@@ -6,12 +6,13 @@
 
 
 {% block content %}
-    <a href="{{ url_for('create_user') }}" class="btn btn-primary">Create user</a>
+    <a href="{{ url_for('create_user') }}" class="btn btn-primary my-4">Create user</a>
     <table class="table">
         <thead>
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Username</th>
+                <th scope="col">Admin</th>
                 <th scope="col">email</th>
                 <th scope="col">gender</th>
                 <th scope="col">T&C</th>
@@ -23,9 +24,10 @@
             <tr>
                 <th scope="row">
                     <span>{{ user._id }}</span>
-                    <span><a href="{{ url_for('update_user', user_id=user._id) }}">Update</a></span>
+                    <span><a href="{{ url_for('admin_update_user', user_id=user._id) }}">Update</a></span>
                     <span><a href="{{ url_for('delete_user', user_id=user._id) }}">Delete</a></th></span>
                 <td><a href="{{ url_for('user_threads', user_id=user._id) }}">{{ user.username }}</a></td>
+                <td>{{ user.is_admin }}</td>
                 <td>{{ user.email }}</td>
                 <td>{{ user.gender }}</td>
                 <td>{{ user.terms_and_conditions }}</td>

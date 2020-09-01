@@ -30,6 +30,7 @@ def users_update(collection, updated_record, user_id):
             'password': updated_record['password'],
             'gender': updated_record['gender'],
             'marketing': updated_record['marketing'],
+            'is_admin': updated_record.get('is_admin', False)
         }
     })
 

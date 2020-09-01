@@ -21,7 +21,8 @@ def users_create(db, data):
             'password': pbkdf2_sha256.hash(data.get('password')),
             'terms_and_conditions': False if data.get(
                 'terms_and_conditions')==None else True,
-            'marketing': False if data.get('marketing')==None else True
+            'marketing': False if data.get('marketing')==None else True,
+            'is_admin': False if data.get('is_admin')==None else True
         }
     return m_dal.users_create(db.users, new_record)
 
@@ -34,7 +35,8 @@ def users_update(db, data, user_id):
             'password': pbkdf2_sha256.hash(data.get('password')),
             # 'terms_and_conditions': False if data.get(
             #     'terms_and_conditions')==None else True,
-            'marketing': False if data.get('marketing')==None else True
+            'marketing': False if data.get('marketing')==None else True,
+            'is_admin': False if data.get('is_admin')==None else True
         }
     return m_dal.users_update(db.users, updated_record, user_id)
 
@@ -101,7 +103,6 @@ def users_validate_form(data):
             our terms and conditions to create a user account")
     
     return errors
-
 
 # Categories
 def categories_get_all(db):
