@@ -18,7 +18,7 @@
                     </div>
                     <div class="form-group">
                         <label for="password">Password</label>
-                        <input type="password" name="password" id="password" class="form-control {% if 'invalid_password' in errors %} is-invalid {% endif %}" required>
+                        <input type="password" name="password" id="password" class="form-control {% if 'invalid_password' in errors %} is-invalid {% endif %}" placeholder="Password" required>
                         <div class="invalid-feedback">{{ errors.invalid_password }}</div>
                     </div>
                     <div class="form-group">
