@@ -45,7 +45,7 @@
             <h5>Review by: <a href="{{ url_for('user_threads', user_id=thread.user.user_id) }}">{{ thread.user.username }}</a></h5>
             <!-- Price -->
             <div class="my-1">
-                <h5 class="price">{{ "US$ {:,.2f}".format(thread.price) }}</h5>
+                <h5 class="price">MSRP: {{ "US$ {:,.2f}".format(thread.price) }}</h5>
             </div>
             <!-- Purchase link -->
             <span>
