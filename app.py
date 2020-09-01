@@ -423,7 +423,13 @@ def update_category_1(category_id):
 @flask_login.login_required
 def delete_category_0(category_id):
     if request.method == 'GET':
-        return render_template('categories/delete-category-0.html')
+        if flask_login.current_user.is_admin:
+            previous_values = m_services.categories_get_one(db, category_id)
+            return render_template('categories/delete-category-0.html',
+            previous_values=previous_values)
+        else:
+            flash("You do not have the required user privileges", "error")
+            return redirect(url_for('login'))
     elif request.method == 'POST':
         m_services.categories_delete_0(db, category_id)
         return redirect(url_for('categories'))
@@ -432,7 +438,14 @@ def delete_category_0(category_id):
 @flask_login.login_required
 def delete_category_1(category_id):
     if request.method == 'GET':
-        return render_template('categories/delete-category-1.html')
+        if flask_login.current_user.is_admin:
+            previous_values = m_services.sub_categories_get_one(
+                db, category_id)
+            return render_template('categories/delete-category-1.html',
+            previous_values=previous_values)
+        else:
+            flash("You do not have the required user privileges", "error")
+            return redirect(url_for('login'))
     elif request.method == 'POST':
         m_services.categories_delete_1(db, category_id)
         return redirect(url_for('categories'))
