@@ -101,23 +101,56 @@ def logout():
 
 @app.route('/users/signup', methods=['GET','POST'])
 def create_user():
+    errors = {}
     if request.method == 'GET':
-        return render_template('users/create-user.html')
+        return render_template('users/create-user.html', errors=errors)
     elif request.method == 'POST':
+        # Fields to validate
+        username = request.form.get('username')
         email = request.form.get('email')
-        m_services.users_create(db, request.form)
-        user_object = User()
-        user_object.id = email
-        flask_login.login_user(user_object)
-        return redirect(url_for('users'))
+        password = request.form.get('password')
+        gender = request.form.get('gender')
+        terms_and_conditions = request.form.get('terms_and_conditions')
+
+        # If username not valid, add error
+        if not m_services.users_check_username(username):
+            errors.update(invalid_username = "Username must start with a \
+                letter, be alphanumeric and be between 4 and 20 characters \
+                    long")
+
+        # If email not valid, add error
+        if not m_services.users_check_email(email):
+            errors.update(invalid_email = "Please enter a valid email")
+
+        print(password)
+        if not m_services.users_check_password(password):
+            errors.update(invalid_password = "Password must be a minimum of \
+                eight characters, and have at least one letter and one \
+                    number")
+
+        # If T&Cs not agreed to, add error
+        if not terms_and_conditions:
+            errors.update(invalid_terms_and_conditions = "You must agree to \
+                our terms and conditions to create a user account")
+
+        if len(errors) > 0:
+            return render_template('users/create-user.html', errors=errors)
+        
+        else:
+            m_services.users_create(db, request.form)
+            user_object = User()
+            user_object.id = email
+            flask_login.login_user(user_object)
+            return redirect(url_for('users'))
 
 @app.route('/users/<user_id>/update', methods=['GET','POST'])
 def update_user(user_id):
+    errors = {}
     if request.method == 'GET':
         previous_values = m_services.users_get_one(db, user_id)
-        # print(previous_values)
         return render_template(
-            'users/update-user.html', previous_values=previous_values)
+            'users/update-user.html', previous_values=previous_values,
+            errors=errors)
     elif request.method == 'POST':
         # Update user details
         m_services.users_update(db, request.form, user_id)
@@ -262,7 +295,6 @@ def update_thread(thread_id):
     if request.method == 'GET':
         all_categories = m_services.categories_get_all(db)
         previous_values = m_services.threads_get_one(db, thread_id)
-        # print(previous_values)
         return render_template(
             'threads/update-thread.html', categories=all_categories,
             previous_values=previous_values)

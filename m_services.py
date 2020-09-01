@@ -48,8 +48,28 @@ def users_threads_by_user(db, user_id):
 
 def users_check_email(email):
     # https://www.geeksforgeeks.org/check-if-email-address-valid-or-not-in-python/
-    regex = '^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$'
+    regex = '^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w+$'
     return re.search(regex, email)
+
+def users_check_username(username):
+    # If doesn't start with letter, followed by 3-20 alphanumeric
+    if not re.search('^[a-z]+[a-z0-9]{3,20}', username):
+        return False
+    # If has whitespace, comma, fullstop, underscore, hyphen
+    elif re.search('[\s,._-]', username):
+        return False
+    # If greater than length 20
+    elif len(username) > 20:
+        return False
+    # If none of the above, then valid username
+    else:
+        return True
+
+def users_check_password(password):
+    if not re.search('^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$', password):
+        return False
+    else:
+        return True
 
 # Categories
 def categories_get_all(db):

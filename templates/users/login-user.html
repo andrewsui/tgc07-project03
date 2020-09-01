@@ -13,12 +13,12 @@
                 <form action="" method="post" class="needs-validation" novalidate>
                     <div class="form-group">
                         <label for="email">Email</label>
-                        <input type="text" name="email" id="email" class="form-control {% if 'invalid_email' in errors or 'age_is_not_positive' in errors %} is-invalid {% endif %}" placeholder="example@email.com" required>
+                        <input type="text" name="email" id="email" class="form-control {% if 'invalid_email' in errors %} is-invalid {% endif %}" placeholder="example@email.com" required>
                         <div class="invalid-feedback">{{ errors.invalid_email }}</div>
                     </div>
                     <div class="form-group">
                         <label for="password">Password</label>
-                        <input type="password" name="password" id="password" class="form-control {% if 'invalid_password' in errors or 'age_is_not_positive' in errors %} is-invalid {% endif %}" required>
+                        <input type="password" name="password" id="password" class="form-control {% if 'invalid_password' in errors %} is-invalid {% endif %}" required>
                         <div class="invalid-feedback">{{ errors.invalid_password }}</div>
                     </div>
                     <div class="form-group">
