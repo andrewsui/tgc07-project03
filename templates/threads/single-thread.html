@@ -53,7 +53,7 @@
             </span>
             <!-- Edit and delete review -->
             <span class="ml-auto">
-                {% if current_user._id == thread.user.user_id %}
+                {% if current_user._id==thread.user.user_id or current_user.is_admin %}
                     <a href="{{ url_for('update_thread', thread_id=thread._id) }}" class="btn btn-primary">Edit</a>
                     <a href="{{ url_for('delete_thread', thread_id=thread._id) }}" class="btn btn-secondary">Delete</a>
                 {% endif %}
@@ -81,8 +81,10 @@
                 <h5 class="card-title">{{ comment.user.username }}</h5>
                 <h6 class="card-subtitle mb-2 text-muted">{{ comment.datetime.strftime('%d %b %Y %H:%M') }}</h6>
                 <p class="card-text">{{ comment.comment }}</p>
-                <a href="{{ url_for('update_comment', thread_id=thread._id, comment_id=comment._id) }}" class="card-link btn btn-primary btn-sm">Update</a>
-                <a href="{{ url_for('delete_comment', thread_id=thread._id, comment_id=comment._id) }}" class="card-link btn btn-secondary btn-sm">Delete</a>
+                {% if current_user._id==comment.user.user_id or current_user.is_admin %}
+                    <a href="{{ url_for('update_comment', thread_id=thread._id, comment_id=comment._id) }}" class="card-link btn btn-primary btn-sm">Update</a>
+                    <a href="{{ url_for('delete_comment', thread_id=thread._id, comment_id=comment._id) }}" class="card-link btn btn-secondary btn-sm">Delete</a>
+                {% endif %}
             </div>
         </div>
         {% endfor %}
