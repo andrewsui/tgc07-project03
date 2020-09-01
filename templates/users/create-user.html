@@ -12,13 +12,26 @@
                 <h1>Sign up</h1>
 
                 <form action="" method="post" class="needs-validation" novalidate>
+                    
                     {% with %}
                         {% if not previous_values %}
                             {% set previous_values = {} %}
                         {% endif %}
 
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input type="text" name="username" id="username" class="form-control {% if 'invalid_username' in errors %} is-invalid {% endif %}" placeholder="username" value="{{ previous_values.username }}" required>
+                            <div class="invalid-feedback">{{ errors.invalid_username }}</div>
+                        </div>
+
                         {% include 'users/base-user-form.html' %}
 
+                        <div class="form-group">
+                            <label for="terms_and_conditions">Terms and conditions</label>
+                            <input type="checkbox" name="terms_and_conditions" value="true" id="terms_and_conditions" class="{% if 'invalid_terms_and_conditions' in errors %} is-invalid {% endif %}" {% if previous_values.terms_and_conditions==True %}checked{% endif %} required>
+                            <div class="invalid-feedback">{{ errors.invalid_terms_and_conditions }}</div>
+                        </div>
+                        
                     {% endwith %}
                     
                     <input type="submit" value="Sign up" class="btn btn-info">

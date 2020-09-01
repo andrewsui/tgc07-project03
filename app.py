@@ -136,7 +136,18 @@ def update_user(user_id):
             errors=errors)
     elif request.method == 'POST':
         # Validate user input
-        errors = m_services.users_validate_form(request.form)
+        
+        # If email not valid format, add error
+        if not m_services.users_check_email(request.form.get('email')):
+            errors.update(invalid_email = "Please enter a valid email")
+
+        # If password not valid, add error
+        if not m_services.users_check_password(request.form.get('password')):
+            errors.update(invalid_password = "Password must be a minimum of \
+                eight characters, and have at least one letter and one \
+                    number")
+        
+        # errors = m_services.users_validate_form(request.form)
 
         if len(errors) > 0:
             return render_template(
@@ -146,8 +157,11 @@ def update_user(user_id):
             # Update user details
             m_services.users_update(db, request.form, user_id)
             # Update username in review threads
-            m_services.threads_update_username(
-                db, request.form.get('username'), user_id)
+            # m_services.threads_update_username(
+            #     db, request.form.get('username'), user_id)
+            # Update username in comments
+            # m_services.comments_update_username(
+            #     db, request.form.get('username'), user_id)
             flash("Update account details successful", "success")
             return redirect(url_for('update_user', user_id=user_id))
 

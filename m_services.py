@@ -27,13 +27,13 @@ def users_create(db, data):
 
 def users_update(db, data, user_id):
     updated_record = {
-            'username': data.get('username'),
+            # 'username': data.get('username'),
             'email': data.get('email'),
             'gender': None if data.get('gender')=="null" else data.get(
                 'gender'),
             'password': pbkdf2_sha256.hash(data.get('password')),
-            'terms_and_conditions': False if data.get(
-                'terms_and_conditions')==None else True,
+            # 'terms_and_conditions': False if data.get(
+            #     'terms_and_conditions')==None else True,
             'marketing': False if data.get('marketing')==None else True
         }
     return m_dal.users_update(db.users, updated_record, user_id)
@@ -175,7 +175,6 @@ def threads_create(db, data):
         },
         'sub_posts': []
     }
-    # print(new_record)
     return m_dal.threads_create(db.threads, new_record)
 
 def threads_update(db, data, thread_id):
@@ -189,11 +188,6 @@ def threads_update(db, data, thread_id):
         sub_category_id = ""
         sub_category_name = ""
     updated_record = {
-        # 'datetime': datetime.datetime.utcnow(),
-        # 'user': {
-        #     'user_id': ObjectId(flask_login.current_user._id),
-        #     'username': flask_login.current_user.username
-        # },
         'category': {
             'category_id': ObjectId(data.get('categories')),
             'category_name': category_name,
@@ -211,11 +205,10 @@ def threads_update(db, data, thread_id):
         },
         'sub_posts': []
     }
-    # print(updated_record)
     return m_dal.threads_update(db.threads, updated_record, thread_id)
 
-def threads_update_username(db, username, user_id):
-    return m_dal.threads_update_username(db.threads, username, user_id)
+# def threads_update_username(db, username, user_id):
+#     return m_dal.threads_update_username(db.threads, username, user_id)
 
 def threads_delete(db, thread_id):
     return m_dal.threads_delete(db.threads, thread_id)
@@ -238,7 +231,7 @@ def comments_create(db, data, thread_id):
 
 def comments_update(db, data, thread_id, comment_id):
     updated_record = {
-        'datetime': datetime.datetime.utcnow(),
+        # 'datetime': datetime.datetime.utcnow(),
         'user': {
             'user_id': ObjectId(flask_login.current_user._id),
             'username': flask_login.current_user.username
@@ -248,6 +241,9 @@ def comments_update(db, data, thread_id, comment_id):
     }
     return m_dal.comments_update(
         db.threads, updated_record, thread_id, comment_id)
+
+# def comments_update_username(db, username, user_id):
+#     return m_dal.comments_update_username(db.threads, username, user_id)
 
 def comments_delete(db, comment_id):
     return m_dal.comments_delete(db.threads, comment_id)

@@ -11,6 +11,9 @@
                 <h1>Update My Profile</h1>
 
                 <form action="" method="post" class="needs-validation" novalidate>
+                    <div class="my-5">
+                        <h4>Username: {{ previous_values.username }}</h4>
+                    </div>
                     {%include 'users/base-user-form.html' %}
                     <input type="submit" value="Update" class="btn btn-info">
                 </form>
