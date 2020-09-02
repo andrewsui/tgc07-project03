@@ -46,6 +46,7 @@
                         <a href="{{ url_for('login') }}" class="btn btn-primary"><i class="fa fa-user" aria-hidden="true"></i> Log in</a>
                     {% else %}
                         {% if current_user.is_admin %}
+                            <a class="nav-link text-center" href="{{ url_for('categories') }}">Categories</a>
                             <a class="nav-link text-center" href="{{ url_for('users') }}">Admin</a>
                         {% endif %}
                         <a class="nav-link text-center" href="{{ url_for('user_threads', user_id=current_user._id) }}">My reviews</a>
