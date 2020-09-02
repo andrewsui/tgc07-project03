@@ -451,7 +451,6 @@ def delete_category_1(category_id):
         return redirect(url_for('categories'))
 
 @app.route('/api/sub-categories/<parent_id>')
-@flask_login.login_required
 def get_sub_categories(parent_id):
     sub_categories = m_services.sub_categories_get(db, parent_id)
     return {
