@@ -47,7 +47,7 @@
                     {% else %}
                         {% if current_user.is_admin %}
                             <a class="nav-link text-center" href="{{ url_for('categories') }}">Categories</a>
-                            <a class="nav-link text-center" href="{{ url_for('users') }}">Admin</a>
+                            <a class="nav-link text-center" href="{{ url_for('users') }}">Users</a>
                         {% endif %}
                         <a class="nav-link text-center" href="{{ url_for('user_threads', user_id=current_user._id) }}">My reviews</a>
                         <a href="{{ url_for('logout') }}" class="btn btn-secondary mx-lg-3"><i class="fa fa-user-o" aria-hidden="true"></i> Log out</a>
