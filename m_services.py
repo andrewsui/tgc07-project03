@@ -181,7 +181,8 @@ def threads_validate_form(data):
     if not re.search('amazon', data.get('image')):
         errors.update(invalid_image = "Image URL must be from Amazon")
     if not re.search(r'/dp/B\w\w\w\w\w\w\w\w\w', data.get('affiliate')):
-        errors.update(invalid_affiliate = "Amazon purchase link must include SKU")
+        errors.update(
+            invalid_affiliate = "Amazon purchase link must include SKU")
     if len(data.get('description')) < 20:
         errors.update(invalid_description = "Review must be at least 20 \
             characters long")
