@@ -6,6 +6,8 @@
         <option id="{{ category._id }}" class="category-0" value="{{ category._id }}" {% if previous_values.category.category_id==category._id %}selected{% endif %}>{{ category.category }}</option>
         {% endfor %}
     </select>
+    <input type="hidden" class="{% if 'invalid_category' in errors %} is-invalid {% endif %}">
+    <div class="invalid-feedback">{{ errors.invalid_category }}</div>
 </div>
 <div class="form-group">
     <label for="sub_categories">Sub-category</label>
@@ -16,20 +18,26 @@
 </div>
 <div class="form-group">
     <label for="product_name">Product name</label>
-    <input type="text" name="product_name" id="product_name" class="form-control" placeholder="e.g. AMD Ryzen 3700X" value="{{ previous_values.product_name }}">
+    <input type="text" name="product_name" id="product_name" class="form-control {% if 'invalid_product_name' in errors %} is-invalid {% endif %}" placeholder="e.g. AMD Ryzen 3700X" value="{{ previous_values.product_name }}">
+    <div class="invalid-feedback">{{ errors.invalid_product_name }}</div>
 </div>
 <div class="form-group">
     <label for="price">MSRP: (US$)</label>
-    <input type="text" name="price" id="price" class="form-control" placeholder="e.g. 350.00" value="{{ previous_values.price }}">
+    <input type="text" name="price" id="price" class="form-control {% if 'invalid_price' in errors %} is-invalid {% endif %}" placeholder="e.g. 350.00" value="{{ previous_values.price }}">
+    <div class="invalid-feedback">{{ errors.invalid_price }}</div>
 </div>
 <div class="form-group">
     <label for="image">Image URL</label>
-    <input type="text" name="image" id="image" class="form-control" placeholder="e.g. https://images-na.ssl-images-amazon.com/images/I/717Di3DGIbL._AC_SL1092_.jpg" value="{{ previous_values.image }}">
+    <input type="text" name="image" id="image" class="form-control {% if 'invalid_image' in errors %} is-invalid {% endif %}" placeholder="e.g. https://images-na.ssl-images-amazon.com/images/I/717Di3DGIbL._AC_SL1092_.jpg" value="{{ previous_values.image }}">
+    <div class="invalid-feedback">{{ errors.invalid_image }}</div>
 </div>
 <div class="form-group">
     <label for="affiliate">Amazon purchase link</label>
-    <input type="text" name="affiliate" id="affiliate" class="form-control" placeholder="e.g. https://www.amazon.com/AMD-Ryzen-3700X-16-Thread-Processor/dp/B07SXMZLPK/" value="{{ previous_values.affiliate }}">
+    <input type="text" name="affiliate" id="affiliate" class="form-control {% if 'invalid_affiliate' in errors %} is-invalid {% endif %}" placeholder="e.g. https://www.amazon.com/AMD-Ryzen-3700X-16-Thread-Processor/dp/B07SXMZLPK/" value="{{ previous_values.affiliate }}">
+    <div class="invalid-feedback">{{ errors.invalid_affiliate }}</div>
 </div>
 <div class="form-group">
     <textarea name="description" id="description" class="form-control" rows="10" placeholder="Enter your review here">{{ previous_values.description }}</textarea>
+    <input type="hidden" class="{% if 'invalid_description' in errors %} is-invalid {% endif %}">
+    <div class="invalid-feedback">{{ errors.invalid_description }}</div>
 </div>

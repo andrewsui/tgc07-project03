@@ -166,6 +166,27 @@ def threads_search(db, data):
     }
     return m_dal.threads_search(db.threads, user_input)
 
+def threads_validate_form(data):
+    errors = {}
+    if not data.get('categories'):
+        errors.update(invalid_category = "Please select a category")
+    if len(data.get('product_name')) < 8:
+        errors.update(invalid_product_name = "Product name must be at least \
+            8 characters long")
+    price = data.get('price').replace('.','',1)
+    if not price.isdigit():
+        errors.update(invalid_price = "Please enter a number")
+    elif float(data.get('price')) <=0 :
+        errors.update(invalid_price = "Must be greater than zero")
+    if (not re.search('^https://images-na.ssl-images-amazon.com/images/', data.get('image'))):
+        errors.update(invalid_image = "Image URL must start with https://images-na.ssl-images-amazon.com/images")
+    if not re.search(r'/dp/B\w\w\w\w\w\w\w\w\w', data.get('affiliate')):
+        errors.update(invalid_affiliate = "Amazon purchase link must include SKU")
+    if len(data.get('description')) < 20:
+        errors.update(invalid_description = "Review must be at least 20 \
+            characters long")
+    return errors
+
 def threads_create(db, data):
     category_id = data.get('categories')
     category_name = m_dal.category_name_get(db.categories, category_id)

@@ -496,27 +496,43 @@ def display_thread(thread_id):
 @app.route('/threads/create', methods=['GET','POST'])
 @flask_login.login_required
 def create_thread():
+    errors = {}
+    all_categories = m_services.categories_get_all(db)
     if request.method == 'GET':
-        all_categories = m_services.categories_get_all(db)
         return render_template(
-            'threads/create-thread.html', categories=all_categories)
+            'threads/create-thread.html', categories=all_categories,
+            errors=errors)
     elif request.method == 'POST':
-        # m_services.threads_create(db, request.form)
-        new_thread_id = m_services.threads_create(db,request.form).inserted_id
-        return redirect(url_for('display_thread', thread_id=new_thread_id))
+        errors = m_services.threads_validate_form(request.form)
+        if len(errors)>0:
+            return render_template(
+                'threads/create-thread.html', categories=all_categories,
+                errors=errors)
+        else:
+            new_thread_id = m_services.threads_create(
+                db,request.form).inserted_id
+            return redirect(
+                url_for('display_thread', thread_id=new_thread_id))
 
 @app.route('/threads/<thread_id>/update', methods=['GET','POST'])
 @flask_login.login_required
 def update_thread(thread_id):
+    errors = {}
+    all_categories = m_services.categories_get_all(db)
+    previous_values = m_services.threads_get_one(db, thread_id)
     if request.method == 'GET':
-        all_categories = m_services.categories_get_all(db)
-        previous_values = m_services.threads_get_one(db, thread_id)
         return render_template(
             'threads/update-thread.html', categories=all_categories,
-            previous_values=previous_values)
+            previous_values=previous_values, errors=errors)
     elif request.method == 'POST':
-        m_services.threads_update(db, request.form, thread_id)
-        return redirect(url_for('display_thread', thread_id=thread_id))
+        errors = m_services.threads_validate_form(request.form)
+        if len(errors)>0:
+            return render_template(
+                'threads/update-thread.html', categories=all_categories,
+                previous_values=previous_values, errors=errors)
+        else:
+            m_services.threads_update(db, request.form, thread_id)
+            return redirect(url_for('display_thread', thread_id=thread_id))
 
 @app.route('/threads/<thread_id>/delete', methods=['GET','POST'])
 @flask_login.login_required
