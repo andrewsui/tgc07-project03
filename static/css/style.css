@@ -29,9 +29,15 @@ h6, li a {
     min-width: 250px;
 }
 
+input {
+    min-height: 34px;
+    border-radius: 4px;
+}
+
 select {
     height: 34px;
     font-size: 0.8rem;
+    border-radius: 4px;
 }
 
 option {
