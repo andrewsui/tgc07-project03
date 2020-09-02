@@ -13,6 +13,11 @@ async function voteRemove(threadId, upOrDown) {
   thumbsBtn.classList.add("fa-thumbs-o-" + upOrDown );
 }
 
+// Function to toggle display of loading spinner icons
+function toggleSpinner(threadId, upOrDown, booleanValue) {
+  document.querySelector("#"+ upOrDown + "-" + threadId + "-spinner").hidden = booleanValue;
+}
+
 window.addEventListener('load', async (event) => {
   let voteUpElements = document.querySelectorAll(".vote-up");
   let voteDownElements = document.querySelectorAll(".vote-down");
@@ -33,6 +38,8 @@ window.addEventListener('load', async (event) => {
     
     // When up-vote button is clicked:
     element.addEventListener("click", async () => {
+      element.hidden = true;
+      toggleSpinner(threadId, "up", false);
       // Check if user has an existing vote on this thread
       let voteCheckResponse = await axios.get(voteCheckUrl);
       if (voteCheckResponse.data.response) {
@@ -47,6 +54,8 @@ window.addEventListener('load', async (event) => {
       }
       // Update vote count tally element
       await updateVoteCount();
+      element.hidden = false;
+      toggleSpinner(threadId, "up", true);
     });
   }
 
@@ -66,6 +75,8 @@ window.addEventListener('load', async (event) => {
 
     // When down-vote button is clicked:
     element.addEventListener("click", async () => {
+      element.hidden = true;
+      toggleSpinner(threadId, "down", false);
       // Check if user has an existing vote on this thread
       let voteCheckResponse = await axios.get(voteCheckUrl);
       if (voteCheckResponse.data.response) {
@@ -80,6 +91,8 @@ window.addEventListener('load', async (event) => {
       }
       // Update vote count tally element
       await updateVoteCount();
+      element.hidden = false;
+      toggleSpinner(threadId, "down", true);
     });
   }
 });

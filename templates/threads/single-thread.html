@@ -60,9 +60,9 @@
             </span>
             <!-- Vote buttons -->
             <div class="vote-container btn btn-info">
-                <span><i id="down-{{ thread._id }}" class="vote-btn vote-down fa fa-thumbs-o-down" aria-hidden="true"></i></span>
+                <span><i id="down-{{ thread._id }}" class="vote-btn vote-down fa fa-thumbs-o-down" aria-hidden="true"></i><i id="down-{{ thread._id }}-spinner" class="fa fa-spinner" aria-hidden="true" hidden></i></span>
                 <span><h5 id="vote-count-{{ thread._id }}" class="vote-count my-0 px-2">0</h5></span>
-                <span><i id="up-{{ thread._id }}" class="vote-btn vote-up fa fa-thumbs-o-up" aria-hidden="true"></i></span>
+                <span><i id="up-{{ thread._id }}" class="vote-btn vote-up fa fa-thumbs-o-up" aria-hidden="true"></i><i id="up-{{ thread._id }}-spinner" class="fa fa-spinner" aria-hidden="true" hidden></i></span>
             </div>
         </div>
     </div>
