@@ -23,24 +23,21 @@ async function displaySubCategories(subCategoriesUrl) {
     }
 }
 
-$( document ).ready(async function() {
-    let subCategoriesElement = document.querySelector("#categories");
-    // After page loads, if a category is selected then populate sub-categories
-    if (subCategoriesElement.value) {
-        let subCategoriesUrl = "/api/sub-categories/" + subCategoriesElement.value;
-        await displaySubCategories(subCategoriesUrl);
-        let previousSubCategoryId = document.querySelector("#previous_sub_categories").value;
-        previousSubCategoryId ? document.getElementById(previousSubCategoryId).selected = true : null;
+$(document).ready(async function() {
+    if ($('#categories').length>0) {
+        let subCategoriesElement = document.querySelector("#categories");
+        // After page loads, if a category is selected then populate sub-categories
+        if (subCategoriesElement.value) {
+            let subCategoriesUrl = "/api/sub-categories/" + subCategoriesElement.value;
+            await displaySubCategories(subCategoriesUrl);
+            let previousSubCategoryId = document.querySelector("#previous_sub_categories").value;
+            previousSubCategoryId ? document.getElementById(previousSubCategoryId).selected = true : null;
+        }
+        // Add on-click event listeners to all select category HTML tag's child elements
+        $('#categories').change(async function(e){
+            // If category option CHANGES, populate its sub-categories (do NOT use on click, because doesn't work on Chrome)
+            let subCategoriesUrl = "/api/sub-categories/" + $(this).val();
+            await displaySubCategories(subCategoriesUrl);
+        })
     }
-    // Add on-click event listeners to all select category HTML tag's child elements
-    $('#categories').change(async function(e){
-        // If category option CHANGES, populate its sub-categories (do NOT use on click, because doesn't work on Chrome)
-        let subCategoriesUrl = "/api/sub-categories/" + $(this).val();
-        await displaySubCategories(subCategoriesUrl);
-    })
-    // $("#categories").on("click", ".category-0", async function() {
-    //     // If category option is clicked, populate its sub-categories
-    //     let subCategoriesUrl = "/api/sub-categories/" + this.id;
-    //     await displaySubCategories(subCategoriesUrl);
-    // })
 })
