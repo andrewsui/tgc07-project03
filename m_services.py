@@ -178,8 +178,8 @@ def threads_validate_form(data):
         errors.update(invalid_price = "Please enter a number")
     elif float(data.get('price')) <=0 :
         errors.update(invalid_price = "Must be greater than zero")
-    if (not re.search('^https://images-na.ssl-images-amazon.com/images/', data.get('image'))):
-        errors.update(invalid_image = "Image URL must start with https://images-na.ssl-images-amazon.com/images")
+    if not re.search('amazon', data.get('image')):
+        errors.update(invalid_image = "Image URL must be from Amazon")
     if not re.search(r'/dp/B\w\w\w\w\w\w\w\w\w', data.get('affiliate')):
         errors.update(invalid_affiliate = "Amazon purchase link must include SKU")
     if len(data.get('description')) < 20:

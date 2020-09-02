@@ -191,6 +191,7 @@ def delete_user(user_id):
 @app.route('/users/<user_id>/threads', methods=['GET','POST'])
 def user_threads(user_id):
     if request.method == 'GET':
+        errors = {}
         threads_by_user = m_services.users_threads_by_user(db, user_id)
         num_of_threads = threads_by_user.count()
         # num_of_threads = len(list(threads_by_user))
@@ -200,7 +201,7 @@ def user_threads(user_id):
         return render_template(
             'users/user-threads.html', user_id=user_id,
             threads=threads_by_user, num_of_threads=num_of_threads,
-            categories=all_categories)
+            categories=all_categories, errors=errors)
     # POST not used, action of form points to create_thread() route
 
 # Admin users
