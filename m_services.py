@@ -3,7 +3,7 @@ from passlib.hash import pbkdf2_sha256
 import datetime
 import flask_login
 import re
-import m_dal
+import m_dal, m_affiliates
 
 # Users
 def users_get_all(db):
@@ -191,7 +191,7 @@ def threads_create(db, data):
         'product_name': data.get('product_name'),
         'price': float(data.get('price')),
         'image': data.get('image'),
-        'affiliate': data.get('affiliate'),
+        'affiliate': m_affiliates.generate_amazon_url(data.get('affiliate')),
         'description': data.get('description'),
         'votes': {
             'up_votes': [],
@@ -221,7 +221,7 @@ def threads_update(db, data, thread_id):
         'product_name': data.get('product_name'),
         'price': float(data.get('price')),
         'image': data.get('image'),
-        'affiliate': data.get('affiliate'),
+        'affiliate': m_affiliates.generate_amazon_url(data.get('affiliate')),
         'description': data.get('description'),
         'votes': {
             'up_votes': [],
