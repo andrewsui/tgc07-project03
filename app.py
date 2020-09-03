@@ -8,6 +8,7 @@ import os
 import pymongo
 import json
 import datetime
+import math
 import m_services
 
 load_dotenv()
@@ -473,11 +474,26 @@ def get_sub_categories(category_id):
 @app.route('/threads')
 def threads():
     all_categories = m_services.categories_get_all(db)
-    all_threads = m_services.threads_search(db, request.args)
     previous_values = request.args
+
+    results_per_page = 10
+    number_of_results = m_services.threads_search(db, previous_values).count()
+    number_of_pages = math.ceil(number_of_results/results_per_page)
+
+    # Get current page number from args. If doesn't exist, set to 1
+    page_number = int(previous_values.get('page') or 1)
+
+    # Calculate how many results to skip depending current page number
+    number_to_skip = (page_number-1) * results_per_page
+
+    all_threads = m_services.threads_search(db, previous_values).skip(
+        number_to_skip).limit(results_per_page)
+
     return render_template(
         'threads/all-threads.html', categories=all_categories,
-        threads=all_threads, previous_values=previous_values)
+        threads=all_threads, previous_values=previous_values,
+                           page_number=page_number,
+                           number_of_pages=number_of_pages,)
 
 @app.route('/threads/<thread_id>', methods=['GET','POST'])
 def display_thread(thread_id):
