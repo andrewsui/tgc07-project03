@@ -451,9 +451,9 @@ def delete_category_1(category_id):
         m_services.categories_delete_1(db, category_id)
         return redirect(url_for('categories'))
 
-@app.route('/api/sub-categories/<parent_id>')
-def get_sub_categories(parent_id):
-    sub_categories = m_services.sub_categories_get(db, parent_id)
+@app.route('/api/categories/<category_id>/sub-categories')
+def get_sub_categories(category_id):
+    sub_categories = m_services.sub_categories_get(db, category_id)
     return {
         'results': json.loads(dumps(sub_categories))
     }
