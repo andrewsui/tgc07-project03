@@ -533,7 +533,8 @@ def threads():
         'threads/all-threads.html', categories=all_categories,
         threads=all_threads, previous_values=previous_values,
                            page_number=page_number,
-                           number_of_pages=number_of_pages,)
+                           number_of_pages=number_of_pages,
+                           number_of_results=number_of_results)
 
 @app.route('/threads/<thread_id>', methods=['GET','POST'])
 def display_thread(thread_id):
