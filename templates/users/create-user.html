@@ -28,7 +28,7 @@
 
                         <div class="form-group">
                             <label for="terms_and_conditions">Terms and conditions</label>
-                            <input type="checkbox" name="terms_and_conditions" value="true" id="terms_and_conditions" class="{% if 'invalid_terms_and_conditions' in errors %} is-invalid {% endif %}" {% if previous_values.terms_and_conditions==True %}checked{% endif %} required>
+                            <input type="checkbox" name="terms_and_conditions" value="true" id="terms_and_conditions" class="{% if 'invalid_terms_and_conditions' in errors %} is-invalid {% endif %}" {% if errors.terms_and_conditions %}checked{% endif %} required>
                             <div class="invalid-feedback">{{ errors.invalid_terms_and_conditions }}</div>
                         </div>
                         
