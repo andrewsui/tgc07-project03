@@ -110,17 +110,25 @@ def create_user():
     elif request.method == 'POST':
         # Validate user input
         errors = m_services.users_validate_form(request.form)
-
         if len(errors) > 0:
+            for key, value in request.form.items():
+                errors[key] = value
             return render_template('users/create-user.html', errors=errors)
         
         else:
             m_services.users_create(db, request.form)
             user_object = User()
             user_object.id = request.form.get('email')
-            flask_login.login_user(user_object)
-            flash("Sign up successful", "success")
-            return redirect(url_for('threads'))
+            if flask_login.current_user.is_admin:
+                # If admin user, redirect to all users template
+                flash("Account created", "success")
+                return redirect(url_for('users'))
+            else:
+                # If not admin user, log new user in
+                # and redirect to all review threads template
+                flask_login.login_user(user_object)
+                flash("Sign up successful", "success")
+                return redirect(url_for('threads'))
 
 @app.route('/users/<user_id>/update', methods=['GET','POST'])
 @flask_login.login_required
@@ -186,7 +194,13 @@ def delete_user(user_id):
             return redirect(url_for('threads'))
     elif request.method == 'POST':
         m_services.users_delete(db, user_id)
-        return redirect(url_for('threads'))
+        flash("Account deleted", "warning")
+        if flask_login.current_user.is_admin:
+            # If admin user, redirect to all users template
+            return redirect(url_for('users'))
+        else:
+            # If not admin user, redirect to all review threads template
+            return redirect(url_for('threads'))
 
 @app.route('/users/<user_id>/threads', methods=['GET','POST'])
 def user_threads(user_id):
