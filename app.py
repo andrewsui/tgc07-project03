@@ -119,7 +119,8 @@ def create_user():
             m_services.users_create(db, request.form)
             user_object = User()
             user_object.id = request.form.get('email')
-            if flask_login.current_user.is_admin:
+            if (flask_login.current_user.is_authenticated and
+            flask_login.current_user.is_admin):
                 # If admin user, redirect to all users template
                 flash("Account created", "success")
                 return redirect(url_for('users'))
@@ -165,18 +166,16 @@ def update_user(user_id):
         # errors = m_services.users_validate_form(request.form)
 
         if len(errors) > 0:
+            for key, value in request.form.items():
+                errors[key] = value
+            if request.form.get('marketing')==None:
+                errors.update(marketing = "opt_out")
             return render_template(
                 'users/update-user.html', previous_values=previous_values,
                 errors=errors)
         else:
             # Update user details
             m_services.users_update(db, request.form, user_id)
-            # Update username in review threads
-            # m_services.threads_update_username(
-            #     db, request.form.get('username'), user_id)
-            # Update username in comments
-            # m_services.comments_update_username(
-            #     db, request.form.get('username'), user_id)
             flash("Update account details successful", "success")
             return redirect(url_for('update_user', user_id=user_id))
 

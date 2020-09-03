@@ -20,7 +20,7 @@
 
                         <div class="form-group">
                             <label for="username">Username</label>
-                            <input type="text" name="username" id="username" class="form-control {% if 'invalid_username' in errors %} is-invalid {% endif %}" placeholder="username" value="{{ previous_values.username }}" required>
+                            <input type="text" name="username" id="username" class="form-control {% if 'invalid_username' in errors %} is-invalid {% endif %}" placeholder="username" value="{% if errors.username %}{{ errors.username }}{% elif previous_values.username %}{{ previous_values.username }}{% endif %}" required>
                             <div class="invalid-feedback">{{ errors.invalid_username }}</div>
                         </div>
 

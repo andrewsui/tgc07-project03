@@ -1,18 +1,17 @@
-
 <div class="form-group">
     <label for="email">Email</label>
-    <input type="text" name="email" id="email" class="form-control {% if 'invalid_email' in errors %} is-invalid {% endif %}" placeholder="example@email.com" value="{{ previous_values.email }}" required>
+    <input type="text" name="email" id="email" class="form-control {% if 'invalid_email' in errors %} is-invalid {% endif %}" placeholder="example@email.com" value="{% if errors.email %}{{ errors.email }}{% elif previous_values.email %}{{ previous_values.email }}{% endif %}" required>
     <div class="invalid-feedback">{{ errors.invalid_email }}</div>
 </div>
 <div class="form-group">
     <label for="male">Male</label>
-    <input type="radio" name="gender" value="male" id="male" {% if previous_values.gender=="male" %}checked{% endif %}>
+    <input type="radio" name="gender" value="male" id="male" {% if errors.gender=="male" %}checked{% elif not errors.gender and previous_values.gender=="male" %}checked{% endif %}>
     <label for="female">Female</label>
-    <input type="radio" name="gender" value="female" id="female" {% if previous_values.gender=="female" %}checked{% endif %}>
+    <input type="radio" name="gender" value="female" id="female" {% if errors.gender=="female" %}checked{% elif not errors.gender and previous_values.gender=="female" %}checked{% endif %}>
     <label for="other">Other</label>
-    <input type="radio" name="gender" value="other" id="other" {% if previous_values.gender=="other" %}checked{% endif %}>
+    <input type="radio" name="gender" value="other" id="other" {% if errors.gender=="other" %}checked{% elif not errors.gender and previous_values.gender=="other" %}checked{% endif %}>
     <label for="null">Prefer not to say</label>
-    <input type="radio" name="gender" value="null" id="null" {% if previous_values.gender==None %}checked{% endif %}>
+    <input type="radio" name="gender" value="null" id="null" {% if errors.gender=="null" %}checked{% elif not errors.gender and previous_values.gender==None %}checked{% endif %}>
 </div>
 <div class="form-group">
     <label for="password">Password</label>
@@ -26,5 +25,5 @@
 </div>
 <div class="form-group">
     <label for="marketing">Marketing list</label>
-    <input type="checkbox" name="marketing" value="true" id="marketing" {% if previous_values.marketing==True %}checked{% endif %}>
+    <input type="checkbox" name="marketing" value="true" id="marketing" {% if errors.marketing=="opt_out" %} "" {% elif errors.marketing or previous_values.marketing %}checked{% endif %}>
 </div>
