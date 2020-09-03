@@ -19,6 +19,7 @@
 
 {% block content %}
 
+    <!-- Category, sub-category nav breadcrumb -->
     <nav class="row mt-1" aria-label="breadcrumb">
         <div class="col-12">
             <ol class="breadcrumb mb-0 p-2 pl-lg-3">
@@ -28,52 +29,57 @@
         </div>
     </nav>
 
-    <div class="row">
-        <div class="page-header-container col pt-3">
-            <h4 class="page-header">{{ thread.product_name }}</h4>
-        </div>
-    </div>
-
-    <div class="row review-img-user mt-3 p-3">
-        <div class="col-12 mb-n3 mb-sm-n2 col-md-7 text-center">
-            <img src="{{ thread.image }}" alt="review-thumbnail" class="review-thumbnail">
-        </div>
-        <div class="col-12 col-md-5 mt-sm-n5 mt-md-0 pt-md-5">
-            <!-- Date posted -->
-            <h6>{{ thread.datetime.strftime('%d %b %Y %H:%M') }}</h6>
-            <!-- User that posted review -->
-            <h5>Review by: <a href="{{ url_for('user_threads', user_id=thread.user.user_id) }}">{{ thread.user.username }}</a></h5>
-            <!-- Price -->
-            <div class="my-1">
-                <h5 class="price">MSRP: {{ "US$ {:,.2f}".format(thread.price) }}</h5>
-            </div>
-            <!-- Purchase link -->
-            <span>
-                <a href="{{ thread.affiliate }}" class="btn btn-danger" target="_blank"><i class="fa fa-amazon" aria-hidden="true"></i> Amazon*</a>
-            </span>
-            <!-- Edit and delete review -->
-            <span class="ml-auto">
-                {% if current_user._id==thread.user.user_id or current_user.is_admin %}
-                    <a href="{{ url_for('update_thread', thread_id=thread._id) }}" class="btn btn-primary">Edit</a>
-                    <a href="{{ url_for('delete_thread', thread_id=thread._id) }}" class="btn btn-secondary">Delete</a>
-                {% endif %}
-            </span>
-            <!-- Vote buttons -->
-            <div class="vote-container btn btn-info">
-                <span><i id="down-{{ thread._id }}" class="vote-btn vote-down fa fa-thumbs-o-down" aria-hidden="true"></i><i id="down-{{ thread._id }}-spinner" class="fa fa-spinner" aria-hidden="true" hidden></i></span>
-                <span><h5 id="vote-count-{{ thread._id }}" class="vote-count my-0 px-2">0</h5></span>
-                <span><i id="up-{{ thread._id }}" class="vote-btn vote-up fa fa-thumbs-o-up" aria-hidden="true"></i><i id="up-{{ thread._id }}-spinner" class="fa fa-spinner" aria-hidden="true" hidden></i></span>
+    <!-- Review article -->
+    <article>
+        <div class="row">
+            <div class="page-header-container col pt-3">
+                <h4 class="page-header">{{ thread.product_name }}</h4>
             </div>
         </div>
-    </div>
 
-    <div class="row review-description px-3 pt-3">
-        <div class="col-12">
-            <p>{{ thread.description }}</p>
+        <div class="row review-img-user mt-3 p-3">
+            <div class="col-12 mb-n3 mb-sm-n2 col-md-7 text-center">
+                <img src="{{ thread.image }}" alt="review-thumbnail" class="review-thumbnail">
+            </div>
+            <div class="col-12 col-md-5 mt-sm-n5 mt-md-0 pt-md-5">
+                <!-- Date posted -->
+                <h6>{{ thread.datetime.strftime('%d %b %Y %H:%M') }}</h6>
+                <!-- User that posted review -->
+                <h5>Review by: <a href="{{ url_for('user_threads', user_id=thread.user.user_id) }}">{{ thread.user.username }}</a></h5>
+                <!-- Price -->
+                <div class="my-1">
+                    <h5 class="price">MSRP: {{ "US$ {:,.2f}".format(thread.price) }}</h5>
+                </div>
+                <!-- Purchase link -->
+                <span>
+                    <a href="{{ thread.affiliate }}" class="btn btn-danger" target="_blank"><i class="fa fa-amazon" aria-hidden="true"></i> Amazon*</a>
+                </span>
+                <!-- Edit and delete review -->
+                <span class="ml-auto">
+                    {% if current_user._id==thread.user.user_id or current_user.is_admin %}
+                        <a href="{{ url_for('update_thread', thread_id=thread._id) }}" class="btn btn-primary">Edit</a>
+                        <a href="{{ url_for('delete_thread', thread_id=thread._id) }}" class="btn btn-secondary">Delete</a>
+                    {% endif %}
+                </span>
+                <!-- Vote buttons -->
+                <div class="vote-container btn btn-info">
+                    <span><i id="down-{{ thread._id }}" class="vote-btn vote-down fa fa-thumbs-o-down" aria-hidden="true"></i><i id="down-{{ thread._id }}-spinner" class="fa fa-spinner" aria-hidden="true" hidden></i></span>
+                    <span><h5 id="vote-count-{{ thread._id }}" class="vote-count my-0 px-2">0</h5></span>
+                    <span><i id="up-{{ thread._id }}" class="vote-btn vote-up fa fa-thumbs-o-up" aria-hidden="true"></i><i id="up-{{ thread._id }}-spinner" class="fa fa-spinner" aria-hidden="true" hidden></i></span>
+                </div>
+            </div>
         </div>
-    </div>
 
-    <div class="row comments-container mt-3">
+        <!-- Review description -->
+        <div class="row review-description px-3 pt-3">
+            <div class="col-12">
+                <p>{{ thread.description }}</p>
+            </div>
+        </div>
+    </article>
+
+    <!-- Comments section -->
+    <section class="row comments-container mt-3">
         <h4 class="pl-3">Comments:</h4>
         {% for comment in thread.sub_posts %}
         <div class="card col-12">
@@ -88,9 +94,10 @@
             </div>
         </div>
         {% endfor %}
-    </div>
+    </section>
 
-    <div class="row new-comment mb-5">
+    <!-- Post new comment form -->
+    <section class="row new-comment mb-5">
         <form action="" method="post" class="comment-form">
             {% with %}
                 {% if not previous_values %}
@@ -103,5 +110,5 @@
             
             <input type="submit" value="Post comment">
         </form>
-    </div>
+    </section>
 {% endblock %}
