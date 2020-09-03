@@ -585,7 +585,16 @@ def update_thread(thread_id):
 def delete_thread(thread_id):
     if request.method == 'GET':
         thread = m_services.threads_get_one(db, thread_id)
-        return render_template('threads/delete-thread.html', thread=thread)
+        # Check current_user is same as reviewer or admin user
+        if thread.get('user').get(
+            'user_id')==flask_login.current_user._id or (
+            flask_login.current_user.is_admin):
+            return render_template('threads/delete-thread.html', thread=thread)
+        # If not the reviewer or admin user, redirect to review page
+        else:
+            flash("You do not have the required user privileges", "error")
+            return redirect(
+                url_for('display_thread', thread_id=thread_id))
     elif request.method == 'POST':
         m_services.threads_delete(db, thread_id)
         return redirect(url_for('threads'))
