@@ -29,10 +29,7 @@ login_manager.login_view = 'login'
 
 @login_manager.user_loader
 def user_loader(email):
-    user = db.users.find_one({
-        'email': email
-    })
-
+    user = db.users.find_one({ 'email': email })
     # Check if user exists based on email
     if user:
         # Create User object
@@ -45,12 +42,6 @@ def user_loader(email):
         return user_object
     else:
         return None
-
-# Home ######################################################### Add home page
-@app.route('/')
-def home():
-    return redirect(url_for('threads'))
-    # return render_template('index.html')
 
 # Users
 @app.route('/users/login', methods=['GET','POST'])
@@ -111,12 +102,14 @@ def create_user():
     elif request.method == 'POST':
         # Validate user input
         errors = m_services.users_validate_form(request.form)
+        # If errors, cature user input to display along with error message
         if len(errors) > 0:
             for key, value in request.form.items():
                 errors[key] = value
             return render_template('users/create-user.html', errors=errors)
         
         else:
+            # If no errors, create user
             m_services.users_create(db, request.form)
             user_object = User()
             user_object.id = request.form.get('email')
@@ -138,6 +131,7 @@ def update_user(user_id):
     errors = {}
     previous_values = m_services.users_get_one(db, user_id)
     if request.method == 'GET':
+        # Check current_user owns user account or admin user
         if (str(flask_login.current_user._id)==user_id or
             flask_login.current_user.is_admin):
             return render_template(
@@ -147,8 +141,6 @@ def update_user(user_id):
             flash("You do not have the required user privileges", "error")
             return redirect(url_for('threads'))
     elif request.method == 'POST':
-        # Validate user input
-        
         # If email not valid format, add error
         if not m_services.users_check_email(request.form.get('email')):
             errors.update(invalid_email = "Please enter a valid email")
@@ -164,7 +156,9 @@ def update_user(user_id):
             request.form.get('password'), request.form.get('password_2')):
             errors.update(invalid_password_2 = "Passwords did not match")
 
+        # If errors, show message
         if len(errors) > 0:
+            # Capture user input
             for key, value in request.form.items():
                 errors[key] = value
             if request.form.get('marketing')==None:
@@ -182,8 +176,10 @@ def update_user(user_id):
 @flask_login.login_required
 def delete_user(user_id):
     if request.method == 'GET':
+        # Check current_user owns user account or admin user
         if (str(flask_login.current_user._id)==user_id or
             flask_login.current_user.is_admin):
+            # Display sumary account info and delete confirmation page
             previous_values = m_services.users_get_one(db, user_id)
             return render_template(
                 'users/delete-user.html', previous_values=previous_values)
@@ -191,6 +187,7 @@ def delete_user(user_id):
             flash("You do not have the required user privileges", "error")
             return redirect(url_for('threads'))
     elif request.method == 'POST':
+        # Delete user account
         m_services.users_delete(db, user_id)
         flash("Account deleted", "warning")
         if flask_login.current_user.is_admin:
@@ -220,7 +217,9 @@ def user_threads(user_id):
 @app.route('/admin/users')
 @flask_login.login_required
 def users():
+    # Check if admin user
     if flask_login.current_user.is_admin:
+        # Display all users
         all_users = m_services.users_get_all(db)
         return render_template('admin-users/all-users.html', users=all_users)
     else:
@@ -233,6 +232,7 @@ def users():
 def admin_create_user():
     errors = {}
     if request.method == 'GET':
+        # Check if admin user
         if flask_login.current_user.is_admin:
             return render_template(
                 'admin-users/admin-create-user.html', errors=errors)
@@ -243,10 +243,12 @@ def admin_create_user():
         # Validate user input
         errors = m_services.users_validate_form(request.form)
 
+        # If errors, show message
         if len(errors) > 0:
             return render_template(
                 'admin-users/admin-create-user.html', errors=errors)
         
+        # If no errors, create user
         else:
             m_services.users_create(db, request.form)
             user_object = User()
@@ -260,6 +262,7 @@ def admin_update_user(user_id):
     errors = {}
     previous_values = m_services.users_get_one(db, user_id)
     if request.method == 'GET':
+        # Check if admin user
         if flask_login.current_user.is_admin:
             return render_template(
                 'admin-users/admin-update-user.html',
@@ -272,6 +275,7 @@ def admin_update_user(user_id):
         errors = m_services.users_validate_form(request.form)
 
         if len(errors) > 0:
+            # If errors, show message
             return render_template(
                 'admin-users/admin-update-user.html',
                 previous_values=previous_values, errors=errors)
@@ -288,6 +292,7 @@ def categories():
     errors = {}
     all_categories = m_services.categories_get_all(db)
     if request.method == 'GET':
+        # Check if admin user
         if flask_login.current_user.is_admin:
             return render_template(
                 'categories/all-categories.html', categories=all_categories,
@@ -296,33 +301,43 @@ def categories():
             flash("You do not have the required user privileges", "error")
             return redirect(url_for('login'))
     elif request.method == 'POST':
+        # If update category button is clicked
         if request.form.get('update_category'):
+            # Get selected category id and redirect
             if request.form.get('categories'):
                 return redirect(url_for('update_category_0',
                 category_id=request.form.get('categories')))
             else:
                 errors.update(select_category="Please select a category")
+        # If delete category button is clicked
         elif request.form.get('delete_category'):
+            # Get selected category id and redirect
             if request.form.get('categories'):
                 return redirect(url_for('delete_category_0',
                 category_id=request.form.get('categories')))
             else:
                 errors.update(select_category="Please select a category")
+        # If create sub-category button is clicked
         elif request.form.get('create_sub_category'):
+            # Get selected category id as parent of new sub-category and redirect
             if request.form.get('categories'):
                 return redirect(url_for('create_category_1',
                 parent_id=request.form.get('categories')))
             else:
                 errors.update(
                     select_category="Please select a parent category")
+        # If update sub-category button is clicked
         elif request.form.get('update_sub_category'):
+            # Get selected sub-category id and redirect
             if request.form.get('sub_categories'):
                 return redirect(url_for('update_category_1',
                 category_id=request.form.get('sub_categories')))
             else:
                 errors.update(
                     select_sub_category="Please select a sub-category")
+        # If delete sub-category button is clicked
         elif request.form.get('delete_sub_category'):
+            # Get selected sub-category id and redirect
             if request.form.get('sub_categories'):
                 return redirect(url_for('delete_category_1',
                 category_id=request.form.get('sub_categories')))
@@ -330,6 +345,7 @@ def categories():
                 errors.update(
                     select_sub_category="Please select a sub-category")
         if len(errors) > 0:
+            # If errors, show message
             return render_template(
                 'categories/all-categories.html', categories=all_categories,
                 errors=errors)
@@ -348,6 +364,7 @@ def api_categories():
 def create_category_0():
     errors = {}
     if request.method == 'GET':
+        # Check if admin user
         if flask_login.current_user.is_admin:
             return render_template('categories/create-category-0.html',
             errors=errors)
@@ -356,11 +373,14 @@ def create_category_0():
             return redirect(url_for('login'))
     elif request.method == 'POST':
         if len(request.form.get('category'))<3:
+            # Ensure inputted value has minimum character length
             errors.update(invalid_category="Please enter a valid category")
         if len(errors)>0:
+            # If errors, show error message
             return render_template('categories/create-category-0.html',
             errors=errors)
         else:
+            # If no errors, create
             m_services.categories_create_0(db, request.form)
             return redirect(url_for('categories'))
 
@@ -370,6 +390,7 @@ def create_category_1(parent_id):
     errors = {}
     category = m_services.categories_get_one(db, parent_id)
     if request.method == 'GET':
+        # Check if admin user
         if flask_login.current_user.is_admin:
             return render_template('categories/create-category-1.html',
             category=category, errors=errors)
@@ -378,12 +399,15 @@ def create_category_1(parent_id):
             return redirect(url_for('login'))
     elif request.method == 'POST':
         if len(request.form.get('sub_category'))<3:
+            # Ensure inputted value has minimum character length
             errors.update(
                 invalid_sub_category = "Please enter a valid sub-category")
         if len(errors)>0:
+            # If errors, show error message
             return render_template('categories/create-category-1.html',
             category=category, errors=errors)
         else:
+            # If no errors, create
             m_services.categories_create_1(db, request.form, parent_id)
             return redirect(url_for('categories'))
 
@@ -393,6 +417,7 @@ def update_category_0(category_id):
     errors = {}
     previous_values = m_services.categories_get_one(db, category_id)
     if request.method == 'GET':
+        # Check if admin user
         if flask_login.current_user.is_admin:
             return render_template('categories/update-category-0.html',
             previous_values=previous_values, errors=errors)
@@ -401,11 +426,14 @@ def update_category_0(category_id):
             return redirect(url_for('login'))
     elif request.method == 'POST':
         if len(request.form.get('category'))<3:
+            # Ensure inputted value has minimum character length
             errors.update(invalid_category="Please enter a valid category")
         if len(errors)>0:
+            # If errors, show error message
             return render_template('categories/update-category-0.html',
             previous_values=previous_values, errors=errors)
         else:
+            # If no errors, update
             m_services.categories_update_0(db, request.form, category_id)
             return redirect(url_for('categories'))
 
@@ -415,6 +443,7 @@ def update_category_1(category_id):
     errors = {}
     previous_values = m_services.sub_categories_get_one(db, category_id)
     if request.method == 'GET':
+        # Check if admin user
         if flask_login.current_user.is_admin:
             return render_template('categories/update-category-1.html',
             previous_values=previous_values, errors=errors)
@@ -423,12 +452,15 @@ def update_category_1(category_id):
             return redirect(url_for('login'))
     elif request.method == 'POST':
         if len(request.form.get('sub_category'))<3:
+            # Ensure inputted value has minimum character length
             errors.update(
                 invalid_sub_category="Please enter a valid sub_category")
         if len(errors)>0:
+            # If errors, show error message
             return render_template('categories/update-category-1.html',
             previous_values=previous_values, errors=errors)
         else:
+            # If no errors, update
             m_services.categories_update_1(db, request.form, category_id)
             return redirect(url_for('categories'))
 
@@ -436,6 +468,7 @@ def update_category_1(category_id):
 @flask_login.login_required
 def delete_category_0(category_id):
     if request.method == 'GET':
+        # Check if admin user
         if flask_login.current_user.is_admin:
             previous_values = m_services.categories_get_one(db, category_id)
             return render_template('categories/delete-category-0.html',
@@ -451,6 +484,7 @@ def delete_category_0(category_id):
 @flask_login.login_required
 def delete_category_1(category_id):
     if request.method == 'GET':
+        # Check if admin user
         if flask_login.current_user.is_admin:
             previous_values = m_services.sub_categories_get_one(
                 db, category_id)
@@ -542,6 +576,7 @@ def create_thread():
                 'threads/create-thread.html', categories=all_categories,
                 errors=errors)
         else:
+            # If no errors, create review thread
             new_thread_id = m_services.threads_create(
                 db,request.form).inserted_id
             return redirect(
@@ -577,6 +612,7 @@ def update_thread(thread_id):
                 'threads/update-thread.html', categories=all_categories,
                 previous_values=previous_values, errors=errors)
         else:
+            # If no errors, update thread
             m_services.threads_update(db, request.form, thread_id)
             return redirect(url_for('display_thread', thread_id=thread_id))
 
@@ -627,6 +663,7 @@ def update_comment(thread_id, comment_id):
                 'threads/comments/update-comment.html',
                 previous_values=comment, errors=errors)
         else:
+            # If no errors, update comment
             m_services.comments_update(db, request.form, thread_id, comment_id)
             return redirect(url_for('display_thread', thread_id=thread_id))
 
@@ -659,46 +696,58 @@ def count_comments(thread_id):
 
 # Voting
 @app.route('/api/threads/<thread_id>/vote-up', methods=['PATCH'])
+@flask_login.login_required
 def vote_up(thread_id):
     if flask_login.current_user.is_authenticated:
+        # Cast vote
         m_services.vote_up(db, thread_id)
         return { "status": 200 }
     else:
         return "0"
 
 @app.route('/api/threads/<thread_id>/vote-down', methods=['PATCH'])
+@flask_login.login_required
 def vote_down(thread_id):
     if flask_login.current_user.is_authenticated:
+        # Cast vote
         m_services.vote_down(db, thread_id)
         return { "status": 200 }
     else:
         return "0"
 
 @app.route('/api/threads/<thread_id>/vote-up-check')
+@flask_login.login_required
 def vote_up_check(thread_id):
     if flask_login.current_user.is_authenticated:
+        # Check if user's id is on the list
         return { "response": m_services.vote_up_check(db, thread_id) }
     else:
         return "0"
 
 @app.route('/api/threads/<thread_id>/vote-down-check')
+@flask_login.login_required
 def vote_down_check(thread_id):
     if flask_login.current_user.is_authenticated:
+        # Check if user's id is on the list
         return { "response": m_services.vote_down_check(db, thread_id) }
     else:
         return "0"
 
 @app.route('/api/threads/<thread_id>/vote-up-remove', methods=['PATCH'])
+@flask_login.login_required
 def vote_up_check_remove(thread_id):
     if flask_login.current_user.is_authenticated:
+        # Remove vote
         m_services.vote_up_remove(db, thread_id)
         return { "status": 200 }
     else:
         return { "response": False }
 
 @app.route('/api/threads/<thread_id>/vote-down-remove', methods=['PATCH'])
+@flask_login.login_required
 def vote_down_check_remove(thread_id):
     if flask_login.current_user.is_authenticated:
+        # Remove vote
         m_services.vote_down_remove(db, thread_id)
         return { "status": 200 }
     else:
@@ -706,6 +755,7 @@ def vote_down_check_remove(thread_id):
 
 @app.route('/api/threads/<thread_id>/vote-count/<up_or_down>')
 def vote_count(thread_id, up_or_down):
+    # Get total number of up or down votes
     votes = m_services.vote_count(db, thread_id, up_or_down)
     return {
         f'number_of_{up_or_down}_votes': json.loads(dumps(len(votes)))
