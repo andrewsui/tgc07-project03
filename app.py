@@ -163,8 +163,6 @@ def update_user(user_id):
             request.form.get('password'), request.form.get('password_2')):
             errors.update(invalid_password_2 = "Passwords did not match")
 
-        # errors = m_services.users_validate_form(request.form)
-
         if len(errors) > 0:
             for key, value in request.form.items():
                 errors[key] = value
@@ -201,16 +199,13 @@ def delete_user(user_id):
             # If not admin user, redirect to all review threads template
             return redirect(url_for('threads'))
 
-@app.route('/users/<user_id>/threads', methods=['GET','POST'])
+@app.route('/users/<user_id>/threads', methods=['GET'])
 def user_threads(user_id):
     if request.method == 'GET':
         errors = {}
         threads_by_user = m_services.users_threads_by_user(db, user_id)
         num_of_threads = threads_by_user.count()
         user_details = m_services.users_get_one(db, user_id)
-        # num_of_threads = len(list(threads_by_user))
-        # print("Number of threads: "+ str(num_of_threads))
-        # print(threads_by_user)
         all_categories = m_services.categories_get_all(db)
         return render_template(
             'users/user-threads.html', user_id=user_id,
@@ -519,8 +514,10 @@ def create_thread():
             'threads/create-thread.html', categories=all_categories,
             errors=errors)
     elif request.method == 'POST':
+        # Check for errors in form and capture relevant error messages
         errors = m_services.threads_validate_form(request.form)
         if len(errors)>0:
+            # Capture user's input
             for key, value in request.form.items():
                 errors[key] = value
             return render_template(
@@ -543,8 +540,10 @@ def update_thread(thread_id):
             'threads/update-thread.html', categories=all_categories,
             previous_values=previous_values, errors=errors)
     elif request.method == 'POST':
+        # Check for errors in form and capture relevant error messages
         errors = m_services.threads_validate_form(request.form)
         if len(errors)>0:
+            # Capture user's input
             for key, value in request.form.items():
                 errors[key] = value
             return render_template(

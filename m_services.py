@@ -166,6 +166,12 @@ def threads_search(db, data):
     }
     return m_dal.threads_search(db.threads, user_input)
 
+def threads_validate_amazon_image_url(url):
+    valid_image_url_1 = 'https://m.media-amazon.com/images/'
+    valid_image_url_2 =  'https://images-na.ssl-images-amazon.com/images/'
+    return (re.search('^'+valid_image_url_1, url) or
+        re.search('^'+valid_image_url_2, url))
+
 def threads_validate_form(data):
     errors = {}
     if not data.get('categories'):
@@ -178,8 +184,11 @@ def threads_validate_form(data):
         errors.update(invalid_price = "Please enter a number")
     elif float(data.get('price')) <=0 :
         errors.update(invalid_price = "Must be greater than zero")
-    if not re.search('amazon', data.get('image')):
-        errors.update(invalid_image = "Image URL must be from Amazon")
+    # if not re.search('amazon', data.get('image')):
+    if not threads_validate_amazon_image_url(data.get('image')):
+        errors.update(invalid_image = "Image URL must start with either \
+            https://m.media-amazon.com/images/ or \
+                https://images-na.ssl-images-amazon.com/images/")
     if not re.search(r'/dp/B\w\w\w\w\w\w\w\w\w', data.get('affiliate')):
         errors.update(
             invalid_affiliate = "Amazon purchase link must include SKU")
