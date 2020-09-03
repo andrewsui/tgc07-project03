@@ -203,7 +203,8 @@ def delete_user(user_id):
 def user_threads(user_id):
     if request.method == 'GET':
         errors = {}
-        threads_by_user = m_services.users_threads_by_user(db, user_id)
+        threads_by_user = m_services.users_threads_by_user(
+            db, user_id, request.args)
         num_of_threads = threads_by_user.count()
         user_details = m_services.users_get_one(db, user_id)
         all_categories = m_services.categories_get_all(db)
@@ -211,7 +212,7 @@ def user_threads(user_id):
             'users/user-threads.html', user_id=user_id,
             threads=threads_by_user, num_of_threads=num_of_threads,
             categories=all_categories, errors=errors,
-            user_details=user_details)
+            user_details=user_details, previous_values = request.args)
     # POST not used, action of form points to create_thread() route
 
 # Admin users

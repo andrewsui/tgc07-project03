@@ -43,10 +43,10 @@ def users_update(db, data, user_id):
 def users_delete(db, user_id):
     return m_dal.users_delete(db.users, user_id)
 
-def users_threads_by_user(db, user_id):
+def users_threads_by_user(db, user_id, sort):
     search_criteria = {}
     search_criteria['user.user_id'] = ObjectId(user_id)
-    return m_dal.users_threads_by_user(db.threads, search_criteria)
+    return m_dal.users_threads_by_user(db.threads, search_criteria, sort)
 
 def users_check_email(email):
     # https://www.geeksforgeeks.org/check-if-email-address-valid-or-not-in-python/

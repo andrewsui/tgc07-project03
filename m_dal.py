@@ -32,8 +32,17 @@ def users_delete(collection, user_id):
         '_id': ObjectId(user_id)
         })
 
-def users_threads_by_user(collection, search_criteria):
-    return collection.find(search_criteria)
+def users_threads_by_user(collection, search_criteria, sort):
+    # Sort results
+    print(sort.get('sort_thread'))
+    if sort.get('sort_thread')=='price_asc':
+        return collection.find(search_criteria).sort('price', 1)
+    elif sort.get('sort_thread')=='price_desc':
+        return collection.find(search_criteria).sort('price', -1)
+    elif sort.get('sort_thread')=='date_asc':
+        return collection.find(search_criteria).sort('datetime', 1)
+    else:
+        return collection.find(search_criteria).sort('datetime', -1)
 
 # Admin users
 def admin_users_update(collection, updated_record, user_id):
