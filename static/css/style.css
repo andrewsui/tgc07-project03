@@ -125,7 +125,7 @@ option {
 
 @media (min-width: 640px) {
     .review-thumbnail-container {
-        max-height: 96px;
+        max-height: 72px;
         max-width: 120px;
     }
 }
@@ -163,7 +163,7 @@ option {
 
 @media (min-width: 992px) {
     .review-thumbnail-container {
-        max-height: 210px;
+        max-height: 200px;
         max-width: 210px;
     }
     .thread-description {
