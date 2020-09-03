@@ -635,8 +635,17 @@ def update_comment(thread_id, comment_id):
 def delete_comment(thread_id, comment_id):
     if request.method == 'GET':
         comment = m_services.comments_get_one(db, comment_id)
-        return render_template(
-            'threads/comments/delete-comment.html', comment=comment)
+        # Check current_user is same as reviewer or admin user
+        if comment.get('user').get(
+            'user_id')==flask_login.current_user._id or (
+            flask_login.current_user.is_admin):
+            return render_template(
+                'threads/comments/delete-comment.html', comment=comment)
+        # If not the reviewer or admin user, redirect to review page
+        else:
+            flash("You do not have the required user privileges", "error")
+            return redirect(
+                url_for('display_thread', thread_id=thread_id))
     elif request.method == 'POST':
         m_services.comments_delete(db, comment_id)
         return redirect(url_for('display_thread', thread_id=thread_id))
