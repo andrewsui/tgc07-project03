@@ -771,4 +771,4 @@ def vote_count(thread_id, up_or_down):
 if __name__ == '__main__':
     app.run(host=os.environ.get('IP'),
             port=int(os.environ.get('PORT')),
-            debug=True)
+            debug=False)
