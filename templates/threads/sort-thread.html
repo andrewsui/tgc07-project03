@@ -1,0 +1,6 @@
+<select name="sort_thread" id="sort-thread" class="form-control">
+    <option value="date_asc" {% if previous_values.sort_thread=='date_asc' %}selected{% endif %}>Date (asc)</option>
+    <option value="date_desc" {% if previous_values.sort_thread=='date_desc' %}selected{% elif not previous_values.sort_thread %}selected{% endif %}>Date (desc)</option>
+    <option value="price_asc" {% if previous_values.sort_thread=='price_asc' %}selected{% endif %}>Price (low to high)</option>
+    <option value="price_desc" {% if previous_values.sort_thread=='price_desc' %}selected{% endif %}>Price (high to low)</option>
+</select>

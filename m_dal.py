@@ -163,7 +163,15 @@ def threads_search(collection, user_input):
                 }
             }
         ]
-    return collection.find(search_criteria)
+    # Sort results
+    if user_input.get('sort')=='price_asc':
+        return collection.find(search_criteria).sort('price', 1)
+    elif user_input.get('sort')=='price_desc':
+        return collection.find(search_criteria).sort('price', -1)
+    elif user_input.get('sort')=='date_asc':
+        return collection.find(search_criteria).sort('datetime', 1)
+    else:
+        return collection.find(search_criteria).sort('datetime', -1)
 
 def threads_create(collection, new_record):
     return collection.insert_one(new_record)

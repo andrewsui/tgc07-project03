@@ -162,7 +162,8 @@ def threads_search(db, data):
     user_input = {
         'category_id': data.get('categories'),
         'sub_category_id': data.get('sub_categories'),
-        'search_box': data.get('search-box')
+        'search_box': data.get('search-box'),
+        'sort': data.get('sort_thread'),
     }
     return m_dal.threads_search(db.threads, user_input)
 
