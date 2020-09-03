@@ -78,7 +78,7 @@
         {% for comment in thread.sub_posts %}
         <div class="card col-12">
             <div class="card-body">
-                <h5 class="card-title">{{ comment.user.username }}</h5>
+                <h5 class="card-title"><a href="{{ url_for('user_threads', user_id=comment.user.user_id) }}">{{ comment.user.username }}</a></h5>
                 <h6 class="card-subtitle mb-2 text-muted">{{ comment.datetime.strftime('%d %b %Y %H:%M') }}</h6>
                 <p class="card-text">{{ comment.comment }}</p>
                 {% if current_user._id==comment.user.user_id or current_user.is_admin %}
