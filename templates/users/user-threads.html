@@ -21,6 +21,7 @@
         </div>
     </div>
 
+    <!-- Post new review -->
     {% if num_of_threads==0 %}
         {% if user_id|string==current_user._id|string %}
             <h3 class="mt-3">You haven't posted any reviews yet! Let's change that...</h3>
@@ -62,16 +63,21 @@
         {% endif %}
     {% endif %}
 
-    <form action="" method="get" class="row">
-        <div class="ml-auto my-3">
-            {% include 'threads/sort-thread.html' %}
-        </div>
-        <div>
-            <input type="submit" value="Sort" class="my-3 ml-2 btn btn-primary">
-        </div>
-    </form>
+    <!-- Sort review threads -->
+    {% if num_of_threads>0 %}
+        <form action="" method="get" class="row">
+            <div class="ml-auto my-3">
+                {% include 'threads/sort-thread.html' %}
+            </div>
+            <div>
+                <input type="submit" value="Sort" class="my-3 ml-2 btn btn-primary">
+            </div>
+        </form>
+    {% endif %}
 
+    <!-- Review threads -->
     {% for thread in threads %}
         {% include 'threads/base-thread-summary.html' %}
     {% endfor %}
+
 {% endblock %}
