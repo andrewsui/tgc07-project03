@@ -43,6 +43,11 @@ def user_loader(email):
     else:
         return None
 
+# Home route
+@app.route('/')
+def home():
+    return redirect(url_for('threads'))
+
 # Users
 @app.route('/users/login', methods=['GET','POST'])
 def login():
