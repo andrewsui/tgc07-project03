@@ -16,6 +16,27 @@ h6, li a {
    font-size: 0.8rem; 
 }
 
+input {
+    min-height: 34px;
+    border-radius: 4px;
+}
+
+select {
+    height: 40px;
+    font-size: 0.8rem;
+    border-radius: 4px;
+}
+
+option {
+    font-size: 0.8rem;
+}
+
+.btn-danger {
+    background-color: darkred;
+    border: darkred;
+    font-weight: bold;
+}
+
 .page-header-container {
     background-color: white;
 }
@@ -27,31 +48,16 @@ h6, li a {
 
 #search-box {
     min-width: 250px;
-}
-
-input {
-    min-height: 34px;
-    border-radius: 4px;
-}
-
-select {
-    height: 34px;
-    font-size: 0.8rem;
-    border-radius: 4px;
-}
-
-option {
-    font-size: 0.8rem;
+    padding: 6px 8px;
 }
 
 #search-box::placeholder {
     font-size: 0.8rem;
 }
 
-.btn-danger {
-    background-color: darkred;
-    border: darkred;
-    font-weight: bold;
+#search-btn {
+    height: 38px;
+    width: 38px;
 }
 
 .thread {
@@ -135,7 +141,7 @@ option {
         font-size: 1rem;
     }
     #search-box {
-        min-width: 320px;
+        min-width: 300px;
     }
     #search-box::placeholder {
         font-size: 1rem;

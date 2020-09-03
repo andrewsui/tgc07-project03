@@ -21,22 +21,30 @@
         </div>
     </div>    
 
-    <div class="search-container pt-4">
+    <div class="search-container pt-2">
         <form action="" method="get">
             <div class="form-row">
-                <div class="form-group">
-                    <select name="categories" id="categories">
-                        <option value="">Categories</option>
-                        {% for category in categories %}
-                            <option id="{{ category._id }}" class="form-control category-0" value="{{ category._id }}" {% if category._id|string==previous_values.categories %}selected{% endif %}>{{ category.category }}</option>
-                        {% endfor %}
-                    </select>
-                    <select name="sub_categories" id="sub_categories">
-                        <option value="" class="form-control">Sub-categories</option>
-                    </select>
-                    <input type="hidden" id="previous_sub_categories" name="previous_sub_categories" value="{{previous_values.sub_categories}}">
-                    <input class="mb-n1" type="text" name="search-box" id="search-box" class="form-control" placeholder="Search reviews" value="{{previous_values['search-box']}}">
-                    <button id="search-btn" class="btn btn-primary px-2 py-1" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+                <div class="form-group mb-0">
+                    <div class="row mx-0">
+                        <div class="my-sm-3">
+                            <select name="categories" id="categories" class="form-control">
+                                <option value="">Categories</option>
+                                {% for category in categories %}
+                                    <option id="{{ category._id }}" class="form-control category-0" value="{{ category._id }}" {% if category._id|string==previous_values.categories %}selected{% endif %}>{{ category.category }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="my-sm-3 px-sm-2">
+                            <select name="sub_categories" id="sub_categories" class="form-control">
+                                <option value="" class="form-control">Sub-categories</option>
+                            </select>
+                            <input type="hidden" id="previous_sub_categories" name="previous_sub_categories" value="{{previous_values.sub_categories}}">
+                        </div>
+                        <div class="my-md-3">
+                            <input class="mb-n1" type="text" name="search-box" id="search-box" class="form-control" placeholder="Search reviews" value="{{previous_values['search-box']}}">
+                            <button id="search-btn" class="btn btn-primary px-2 py-1" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </form>
