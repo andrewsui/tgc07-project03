@@ -19,6 +19,7 @@
                     {% include 'threads/base-thread-form.html' %}
                     <input type="submit" value="Update review" class="btn btn-info">
                 </form>
+                <a href="{{ url_for('update_thread', thread_id=previous_values._id ) }}" class="btn btn-secondary mt-3">Load original values</a>
 
             </div>
         </div>
