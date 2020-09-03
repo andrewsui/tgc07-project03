@@ -11,15 +11,15 @@
 {% endblock %}
 
 {% block title %}
-    My Reviews
+    {{user_details.username}}'s Reviews
 {% endblock %}
 
 {% block content %}
     <div class="row">
         <div class="page-header-container col pt-3">
-            <h3 class="page-header">My Reviews</h3>
+            <h3 class="page-header">{{user_details.username}}'s Reviews</h3>
         </div>
-    </div>    
+    </div>
 
     {% if num_of_threads==0 %}
 

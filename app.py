@@ -208,6 +208,7 @@ def user_threads(user_id):
         errors = {}
         threads_by_user = m_services.users_threads_by_user(db, user_id)
         num_of_threads = threads_by_user.count()
+        user_details = m_services.users_get_one(db, user_id)
         # num_of_threads = len(list(threads_by_user))
         # print("Number of threads: "+ str(num_of_threads))
         # print(threads_by_user)
@@ -215,7 +216,8 @@ def user_threads(user_id):
         return render_template(
             'users/user-threads.html', user_id=user_id,
             threads=threads_by_user, num_of_threads=num_of_threads,
-            categories=all_categories, errors=errors)
+            categories=all_categories, errors=errors,
+            user_details=user_details)
     # POST not used, action of form points to create_thread() route
 
 # Admin users
