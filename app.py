@@ -476,6 +476,7 @@ def threads():
     all_categories = m_services.categories_get_all(db)
     previous_values = request.args
 
+    # Pagination
     results_per_page = 10
     number_of_results = m_services.threads_search(db, previous_values).count()
     number_of_pages = math.ceil(number_of_results/results_per_page)
@@ -553,9 +554,18 @@ def update_thread(thread_id):
     all_categories = m_services.categories_get_all(db)
     previous_values = m_services.threads_get_one(db, thread_id)
     if request.method == 'GET':
-        return render_template(
-            'threads/update-thread.html', categories=all_categories,
-            previous_values=previous_values, errors=errors)
+        # Check current_user is same as reviewer or admin user
+        if previous_values.get('user').get(
+            'user_id')==flask_login.current_user._id or (
+            flask_login.current_user.is_admin):
+            return render_template(
+                'threads/update-thread.html', categories=all_categories,
+                previous_values=previous_values, errors=errors)
+        # If not the reviewer or admin user, redirect to review page
+        else:
+            flash("You do not have the required user privileges", "error")
+            return redirect(
+                url_for('display_thread', thread_id=thread_id))
     elif request.method == 'POST':
         # Check for errors in form and capture relevant error messages
         errors = m_services.threads_validate_form(request.form)
