@@ -506,6 +506,8 @@ def create_thread():
     elif request.method == 'POST':
         errors = m_services.threads_validate_form(request.form)
         if len(errors)>0:
+            for key, value in request.form.items():
+                errors[key] = value
             return render_template(
                 'threads/create-thread.html', categories=all_categories,
                 errors=errors)
@@ -528,6 +530,8 @@ def update_thread(thread_id):
     elif request.method == 'POST':
         errors = m_services.threads_validate_form(request.form)
         if len(errors)>0:
+            for key, value in request.form.items():
+                errors[key] = value
             return render_template(
                 'threads/update-thread.html', categories=all_categories,
                 previous_values=previous_values, errors=errors)
