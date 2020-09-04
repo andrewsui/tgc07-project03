@@ -69,6 +69,7 @@ def login():
 
         # If email and/or password format invalid, show error messages
         if len(errors) > 0:
+            errors.update(email = email)
             return render_template('users/login-user.html', errors=errors)
         
         # If email and password formats are valid, check database
@@ -89,6 +90,7 @@ def login():
 
             # If log in fails, return back to the log in page
             else:
+                errors.update(email = email)
                 errors.update(invalid_email = "Either email or password was incorrect")
                 errors.update(invalid_password = "Either email or password was incorrect")
                 return render_template('users/login-user.html', errors=errors)
