@@ -13,7 +13,7 @@
             <!-- Vote buttons -->
             <div class="vote-container col-10 col-sm-8 col-lg-5 ml-2 ml-sm-3 ml-md-4 ml-lg-0 pl-2 pt-2 px-sm-0 btn btn-info btn-sm">
                 <span><i id="down-{{ thread._id }}" class="vote-btn vote-down fa fa-thumbs-o-down" aria-hidden="true"></i><i id="down-{{ thread._id }}-spinner" class="fa fa-spinner" aria-hidden="true" hidden></i></span>
-                <span><h5 id="vote-count-{{ thread._id }}" class="vote-count my-0 px-2">0</h5></span>
+                <h5 id="vote-count-{{ thread._id }}" class="vote-count my-0 px-2">0</h5>
                 <span><i id="up-{{ thread._id }}" class="vote-btn vote-up fa fa-thumbs-o-up" aria-hidden="true"></i><i id="up-{{ thread._id }}-spinner" class="fa fa-spinner" aria-hidden="true" hidden></i></span>
             </div>
         </div>
@@ -21,13 +21,13 @@
     <div class="col-9">
         <div class="row mx-0">
             <!-- Product name -->
-            <span class="col-12 col-md-10 px-0">
+            <div class="col-12 col-md-10 px-0">
                 <h5 class="thread-summary-product-name mb-1 mb-md-2"><a href="{{ url_for('display_thread', thread_id=thread._id) }}">{{ thread.product_name }}</a></h5>
-            </span>
+            </div>
             <!-- Date posted -->
-            <span class=" col-12 col-md-2 ml-auto px-0 text-right">
+            <div class=" col-12 col-md-2 ml-auto px-0 text-right">
                 <h6>{{ thread.datetime.strftime('%d %b %Y %H:%M') }}</h6>
-            </span>
+            </div>
         </div>
         <!-- Price -->
         <div class="my-1">
@@ -39,9 +39,9 @@
         </div>
         <div class="row mx-0">
             <!-- Review poster -->
-            <span class="d-none d-sm-block">
+            <div class="d-none d-sm-block">
                 <h5 class="mt-1">By <a href="{{ url_for('user_threads', user_id=thread.user.user_id) }}">{{ thread.user.username }}</a></h5>
-            </span>
+            </div>
             <!-- Purchase link -->
             <span class="d-none d-sm-block">
                 <a href="{{ thread.affiliate }}" class="btn btn-danger btn-sm ml-2 ml-md-3 ml-lg-5" target="_blank"><i class="fa fa-amazon" aria-hidden="true"></i> Amazon*</a>
