@@ -69,3 +69,29 @@ The website structure will be presented using the hierarchical model. Main secti
 - Update and delete any user account details if user has admin rights.
 - Create, update, delete categories and sub-categories if user has admin rights.
 - Add or remove admin rights to users if current logged in user has admin rights.
+- User log in and sign up forms include validation steps that must be passed before being able to proceed. If there are errors all fields except for password will be pre-populated on page reload.
+- Review thread forms include validation steps that must be passed before being able to proceed. If there are errors all fields will be pre-populated on page reload.
+
+### Features Left to Implement:
+- Ability to apply simple formatting of the review and comments text by using a library such as [Summernote](https://summernote.org/).
+- Quote other comments previously posted.
+- Sort by most up-voted or down-voted reviews.
+- Stop word filtering to automatically remove pre-determined list of bad words from reviews and comments before they get posted.
+- Check if username and email are unique before allowing user to create or update to them.
+- Check if categories and sub-categories are unique before allowing user to create or update to them.
+
+## Technologies Used
+- Python
+- HTML
+- CSS
+- JavaScript
+- [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) for cloud hosted database
+- [Flask 1.1.2](https://flask.palletsprojects.com/en/1.1.x/) to create the web app
+- [pymongo](https://pymongo.readthedocs.io/) to communicate with MongoDB database using Python
+- [dotenv](https://pypi.org/project/python-dotenv/) to use environment variables
+- [JQuery](https://jquery.com/) for DOM manipulation
+- [Axios](https://github.com/axios/axios) for AJAX calls
+- [Bootstrap 4.5](https://getbootstrap.com/docs/4.5/getting-started/introduction/) for web page styling
+- [Font Awesome v4.7.0](https://fontawesome.com/v4.7.0/) for icons
+- [Heroku](https://www.heroku.com/) to host the web app
+- [GitHub](https://github.com/) for source control
