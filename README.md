@@ -92,6 +92,7 @@ Functionality and clarity was the main focus and reason behind the colour scheme
 - Stop word filtering to automatically remove pre-determined list of bad words from reviews and comments before they get posted.
 - Check if username and email are unique before allowing user to create or update to them.
 - Check if categories and sub-categories are unique before allowing admin user to create or update to them.
+- Improve mobile responsiveness.
 
 ## Technologies Used
 - Python
