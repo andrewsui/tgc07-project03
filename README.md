@@ -81,11 +81,13 @@ The website structure will be presented using the hierarchical model. Main secti
 
 ### Features Left to Implement:
 - Ability to apply simple formatting of the review and comments text by using a library such as [Summernote](https://summernote.org/).
+- Add search and pagination to page displaying reviews by specified user.
+- Separate user profile update fields, so that each field can be updated individually.
 - Quote other comments previously posted.
 - Sort by most up-voted or down-voted reviews.
 - Stop word filtering to automatically remove pre-determined list of bad words from reviews and comments before they get posted.
 - Check if username and email are unique before allowing user to create or update to them.
-- Check if categories and sub-categories are unique before allowing user to create or update to them.
+- Check if categories and sub-categories are unique before allowing admin user to create or update to them.
 
 ## Technologies Used
 - Python
@@ -326,5 +328,36 @@ All testing was done manually, with the following tests performed:
 | 44 | Submit for with invalid product image URL (Image URL must start with either https://m.media-amazon.com/images/ or https://images-na.ssl-images-amazon.com/images/) | Page reloads with error messages displayed under each required input field stating requirements | As expected |
 | 45 | Submit form with invalid Amazon product URL (mazon purchase link must include SKU) | Page reloads with error messages displayed under each required input field stating requirements | As expected |
 | 46 | Submit form with invalid review description (must be at least 20 characters long) | Page reloads with error messages displayed under each required input field stating requirements | As expected |
+| 47 | Submit form with all validation requirements met | Review posted, redirects to new review posted, flash message shown, Amazon purchase link is modified to include site's affiliate reference | As expected |
+| As logged in user on edit review thread form |
+| 48 | Load page | Current review's values pre-populated | As expected |
+| 49 | Enter info that does not meet form validation | Page reloads with new incorrect data pre-populated, but form not submitted | As expected |
+| 50 | Click "Load original values" button | Update review thread page reloads with current saved version of the review data pre-populated | As expected |
+| 51 | Submit form with validation requirements met | Review updated, redirects to new review posted, flash message shown, Amazon purchase link is modified to include site's affiliate reference  | As expected |
+| 52 | Navigate to delete review thread and proceed to delete | Review is deleted and flash message shown. Redirected to all reviews page. | As expected |
+| As logged in user anywhere on website |
+| 53 | Click [log out](https://tgc07-project03.herokuapp.com/users/logout) button on navbar | Logs use out, redirects to log in page, flash message displayed | As expected |
+| Logged in as limited account type user |
+| 54 | Try to access update review thread route of another user by typing in URL | Page does not load and flash error message displayed | As expected |
+| 55 | Try to access delete review thread route of another user by typing in URL | Page does not load and flash error message displayed | As expected |
+| 56 | Try to access update comment thread route of another user by typing in URL | Page does not load and flash error message displayed | As expected |
+| 57 | Try to access delete comment thread route of another user by typing in URL | Page does not load and flash error message displayed | As expected |
+| 58 | Try to access update user account route of another user by typing in URL | Page does not load and flash error message displayed | As expected |
+| 59 | Try to access delete user account route of another user by typing in URL | Page does not load and flash error message displayed | As expected |
+| 60 | Try to access categories route by typing in URL | Page does not load and flash error message displayed | As expected |
+| 61 | Post new comment with to few characters | Error message displayed | As expected |
+| 62 | Post new comment with validation requirements met | Comment posted, reload page | As expected |
+| 63 | Update and delete own comment | Action permitted | As expected |
+| Logged in as admin user |
+| 64 | Try to access update review thread route of another user by typing in URL | Action permitted | As expected |
+| 65 | Try to access delete review thread route of another user by typing in URL | Action permitted | As expected |
+| 66 | Try to access update comment thread route of another user by typing in URL | Action permitted | As expected |
+| 67 | Try to access delete comment thread route of another user by typing in URL | Action permitted | As expected |
+| 68 | Try to access update user account route of another user by typing in URL | Action permitted and has ability to add/remove admin status | As expected |
+| 69 | Try to access delete user account route of another user by typing in URL | Action permitted | As expected |
+| 70 | Try to access categories route by typing in URL | Action permitted | As expected |
+| 71 | Create, update, delete category | Action permitted | As expected |
+| 72 | Create, update, delete sub-category | Action permitted | As expected |
+
 
 
