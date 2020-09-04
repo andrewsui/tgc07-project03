@@ -32,6 +32,9 @@ Owners of the website would like to:
 - Be able to moderate the site content via admin accounts that can edit and delete reviews and comments, to maintain a friendly and welcoming environment for all users.
 - Also be users of the site, by posting and reading reviews/comments related to PC components.
 
+![Desktop reviews page](report/screenshots/reviews-desktop.png "Desktop reviews page")
+![Mobile reviews page](report/screenshots/reviews-mobile.png "Mobile reviews page")
+
 ### Scope
 Content requirements:
 - images of PC components being reviewed
@@ -115,7 +118,7 @@ The website structure will be presented using the hierarchical model. Main secti
 - .env file was used to store environment variables so that Flask secret key and database credentials were not publicly viewable.
 
 ## Database Design
-The ER diagram for this project's database can be viewed [here](report/erd.png) 
+The ER diagram for this project's database can be viewed [here](report/erd/erd.png)
 
 Three MongoDB collections were used:
 1. Users
