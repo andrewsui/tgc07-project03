@@ -205,15 +205,6 @@ def threads_update(collection, updated_record, thread_id):
         }
     })
 
-# def threads_update_username(collection, username, user_id):
-#     return collection.update_many({
-#             'user.user_id': ObjectId(user_id)
-#         },{
-#             '$set': {
-#                 'user.username': username
-#             }
-#         })
-
 def threads_delete(collection, thread_id):
     return collection.remove({
         '_id': ObjectId(thread_id)
@@ -272,19 +263,6 @@ def comments_count(collection, thread_id):
         }, {
             'sub_posts': 1
         })['sub_posts']
-
-# def comments_update_username(collection, username, user_id):
-#     return collection.update_many({
-#             'sub_posts.user': {
-#                 '$elemMatch': {
-#                     'user_id': ObjectId(user_id)
-#                 }
-#             }
-#         },{
-#             '$set': {
-#                 'sub_posts.$.user.username': username
-#             }
-#         })
 
 # Voting
 def vote_up(collection, thread_id):

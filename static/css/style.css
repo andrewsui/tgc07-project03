@@ -78,11 +78,8 @@ option {
 }
 
 .review-thumbnail {
-    /* display: block; */
     max-height: 80%;
-    /* height: auto; */
     max-width: 90%;
-    /* width: auto; */
     margin-left: auto;
     margin-right: auto;
 }
@@ -191,11 +188,3 @@ option {
         height: 120px;
     }
 }
-
-/* @media (min-width: 1440px) {
-    .thread-description {
-        height: 140px;
-    }
-} */
-
-
