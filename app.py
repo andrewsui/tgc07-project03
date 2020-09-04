@@ -588,6 +588,7 @@ def create_thread():
             # If no errors, create review thread
             new_thread_id = m_services.threads_create(
                 db,request.form).inserted_id
+            flash("Review created", "success")
             return redirect(
                 url_for('display_thread', thread_id=new_thread_id))
 
