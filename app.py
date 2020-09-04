@@ -551,9 +551,10 @@ def display_thread(thread_id):
             errors.update(
                 user_not_authenticated = "You must be logged in to post \
                     comments")
-        # If logged in, check if form is empty
-        elif request.form['comment'] == "":
-            errors.update(empty = "Please enter your comments")
+        # If logged in, check comments length
+        elif len(request.form['comment']) < 3:
+            errors.update(empty = "Your comment was too short. Please use \
+                at least 3 characters for your comments")
         # If any errors, give feedback
         if len(errors) > 0:
             thread = m_services.threads_get_one(db, thread_id)
