@@ -624,6 +624,7 @@ def update_thread(thread_id):
         else:
             # If no errors, update thread
             m_services.threads_update(db, request.form, thread_id)
+            flash("Review updated", "success")
             return redirect(url_for('display_thread', thread_id=thread_id))
 
 @app.route('/threads/<thread_id>/delete', methods=['GET','POST'])
@@ -643,6 +644,7 @@ def delete_thread(thread_id):
                 url_for('display_thread', thread_id=thread_id))
     elif request.method == 'POST':
         m_services.threads_delete(db, thread_id)
+        flash("Review deleted", "warning")
         return redirect(url_for('threads'))
 
 @app.route('/threads/<thread_id>/comments/<comment_id>/update', methods=['GET','POST'])
@@ -674,6 +676,7 @@ def update_comment(thread_id, comment_id):
                 previous_values=comment, errors=errors)
         else:
             # If no errors, update comment
+            flash("Comment updated", "success")
             m_services.comments_update(db, request.form, thread_id, comment_id)
             return redirect(url_for('display_thread', thread_id=thread_id))
 
@@ -695,6 +698,7 @@ def delete_comment(thread_id, comment_id):
                 url_for('display_thread', thread_id=thread_id))
     elif request.method == 'POST':
         m_services.comments_delete(db, comment_id)
+        flash("Comment deleted", "warning")
         return redirect(url_for('display_thread', thread_id=thread_id))
 
 @app.route('/api/threads/<thread_id>/comments/count')
