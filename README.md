@@ -114,6 +114,11 @@ The website structure will be presented using the hierarchical model. Main secti
 ## Database Design
 The ER diagram for this project's database can be viewed [here](report/erd.png) 
 
+Three MongoDB collections were used:
+1. Users
+2. Categories - sub-categories were embedded in documents of the categories collection
+3. Threads (Reviews) - comments were embedded in documents of the threads collection
+
 ### Sample MongoDB documents
 Sample database document for user:
 ```
@@ -255,4 +260,14 @@ Sample database document for review thread and embedded comments:
 	]
 }
 ```
+
+Relationships between the review threads and categories and optional sub-categories were implemented using a hybrid approach, whereby _id and respective names were stored as nested objects within the review thread's document.
+
+Relationships between the review threads and users were implemented using a hybrid approach, whereby _id and respective usernames were stored as nested objects within the review thread's document.
+
+Comments were embedded as array elements within the review thread documents, with the respective user's _id and username also captured here.
+
+Up-votes and down-votes were stored as separate arrays embedded within each review thread document. When a user votes, their user _id is stored as an element within the relevant up-vote or down-vote array. Before the user _id is stored, a check is performed to see if the user had previously voted. If user had previously voted on same button currently clicked, then this latest action will remove the vote. If user had previously voted on the opposite vote button, then the opposite vote previously cast will be removed and the new vote cast.
+
+
 
