@@ -13,7 +13,7 @@
                 <form method="post" class="needs-validation" novalidate>
                     <div class="form-group">
                         <label for="username">Username</label>
-                        <input type="text" name="username" id="username" class="form-control {% if 'invalid_username' in errors %} is-invalid {% endif %}" placeholder="username" value="{{ previous_values.username }}" required>
+                        <input type="text" name="username" id="username" class="form-control {% if 'invalid_username' in errors %} is-invalid {% endif %}" value="{{ previous_values.username }}" placeholder="username" required>
                         <div class="invalid-feedback">{{ errors.invalid_username }}</div>
                     </div>
                     {%include 'users/base-user-form.html' %}
