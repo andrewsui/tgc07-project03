@@ -1,6 +1,6 @@
 # PC Hardware Reviews
 
-## Data-Centric Development Milestone Project
+## Python and Data Centric Development Milestone Project
 A demo of this project can be viewed [here](https://tgc07-project03.herokuapp.com/).
 The sample user log in details below can be used to demo the project:
 | Email | Password | Access Rights |
