@@ -45,13 +45,14 @@ Functional specification:
 
 ### Structure
 The website structure will be presented using the hierarchical model. Main sections will be:
-- review threads
-- categories
-- users
+- review threads - summary page of all reviews at the top, accessible by anyone, leading to multiple individual reviews
+- categories - summary of all categories and sub-categories, only accessible by admin users, with create, update, delete links accessible from here
+- users - summary table of all users, only accessible by admin users, with create, update, delete links accessible from here
 
 ### Skeleton
 
 ### Surface
+- Functionality and clarity was the main focus and reason behind the colour scheme and typography choice, as it was assumed that PC hardware enthusiasts would place preference on these aspects. If there had been more time, the colour scheme and styling should be revisited.
 
 ## Features
 
@@ -269,5 +270,61 @@ Comments were embedded as array elements within the review thread documents, wit
 
 Up-votes and down-votes were stored as separate arrays embedded within each review thread document. When a user votes, their user _id is stored as an element within the relevant up-vote or down-vote array. Before the user _id is stored, a check is performed to see if the user had previously voted. If user had previously voted on same button currently clicked, then this latest action will remove the vote. If user had previously voted on the opposite vote button, then the opposite vote previously cast will be removed and the new vote cast.
 
+## Testing
+All testing was done manually, with the following tests performed:
+|  # | Event | Expected Outcome | Actual Outcome |
+|----|-------|------------------|----------------|
+| As logged out user on summary page for [all reviews](https://tgc07-project03.herokuapp.com/threads) |
+|  1 | Load landing page for all reviews | Maximum of 10 review results should be displayed in reverse chronological order (most recent first) and pagination shown if there are more than 10 reviews in total | As expected |
+|  2 | Select category | Sub-categories of selected category should be populated in sub-categories select menu | As expected |
+|  3 | Search by category | Only results matching category should show. Search criteria should also be retained in the input form. | As expected |
+|  4 | Search by category and sub-category | Only results matching category and sub-category should show. Search criteria should also be retained in the input form. | As expected |
+|  5 | Search by text input search box | Only results matching text input with product name, review description or comments section should show. Search criteria should also be retained in the input form. | As expected |
+|  6 | Search by category, sub-category and text input search box | Only results matching category, sub-category and text input should show. Search criteria should also be retained in the input form. | As expected |
+|  7 | Sort results by chronological order (oldest first) | Results should be displayed in order of oldest posting date to newest. Search criteria should also be retained in input fields. | As expected |
+|  8 | Sort results by price (low to high) | Results should be displayed in order of cheapest to most expensive. Search criteria should also be retained in input fields. | As expected |
+|  9 | Sort results by price (high to low) | Results should be displayed in order of most expensive to cheapest. Search criteria should also be retained in input fields. | As expected |
+| 10 | Click different search results pages | Move through the pages of reviews matching the search criteria (if any). Search criteria should also be retained in input fields. | As expected |
+| 11 | Visit first page of search results | "Previous" pagination button should be disabled | As expected |
+| 12 | Visit last page of search results  | "Next" pagination button should be disabled | As expected |
+| 13 | Click a user's username | If that user has posted reviews before, all their reviews should be displayed. If that user has not posted any reviews, a message stating that the user has not posted any reviews yet should be displayed. | As expected |
+| 14 | Click a category at the bottom of a review summary's breadcrumb | Display all reviews matching clicked category | As expected |
+| 15 | Click a sub-category at the bottom of a review summary's breadcrumb | Display all reviews matching clicked sub-category | As expected |
+| 16 | Click Amazon link in a review summary | Open new tab of Amazon page | As expected |
+| 17 | Click comment button | Redirect to review's page | As expected |
+| 18 | Click product title of review summary | Redirect to review's page | As expected |
+| 19 | Click thumbs-up vote button | Flash message asking user to sign up or log in | As expected |
+| 20 | Click thumbs-down vote button | Flash message asking user to sign up or log in | As expected |
+| As logged out user on [sign up](https://tgc07-project03.herokuapp.com/users/signup) page |
+| 21 | Click "Sign up" button will all fields empty | Page reloads with error messages displayed under each required input field stating requirements | As expected |
+| 22 | Submit form with username that does not meet the required criteria (start with a letter, be alphanumeric and be between 4 and 20 characters long) | Page reloads with error messages displayed under each incorrect input field stating requirements. Previously inputted values retained. | As expected |
+| 23 | Submit for with invalid email format | Page reloads with error messages displayed under each incorrect input field stating requirements. Previously inputted values retained. | As expected |
+| 24 | Submit form with invalid password format (minimum of eight characters, and have at least one letter and one number) | Page reloads with error messages displayed under each incorrect input field stating requirements. Previously inputted values retained. | As expected |
+| 25 | Submit form with password confirmation field not matching first password | Page reloads with error messages displayed under each incorrect input field stating requirements. Previously inputted values retained. | As expected |
+| 26 | Submit form without checking terms and conditions checkbox (required field) | Page reloads with error messages displayed under each incorrect input field stating requirements. Previously inputted values retained. | As expected |
+| 27 | Submit form without selecting gender, but all other input field requirements met | Form submits successfully (gender then defaults to "prefer not to say for database") | As expected |
+| 28 | Submit form without selecting marketing, but all other input field requirements met | Form submits successfully (marketing not a required field, defaults to "false" for database) | As expected |
+| 29 | Submit form with all validation requirements met | Form submits, user account created, user automatically logged in, redirects to all reviews page and flash message stating sign up successful shown | As expected |
+| As logged in user, using voting buttons on summary page for [all reviews](https://tgc07-project03.herokuapp.com/threads) |
+| 30 | View vote buttons on reviews user has not cast vote on | Vote button is only outline thumb icon (not filled in) | As expected |
+| 31 | View vote buttons on reviews user has already cast vote on | Vote button is a filled in thumb icon | As expected |
+| 32 | Click a vote button that user has not voted on yet (currently outline thumb icon) | Spinner loading icon temporarily shows, then thumb icon changes to filled in and net votes number updates | As expected |
+| 33 | Click a vote button that user has previously voted on (currently filled in thumb icon) | Spinner loading icon temporarily shows, then thumb icon changes from filled in to outline and net votes number updates | As expected |
+| 33 | Click vote icon that user has previously voted in opposite direction of | Spinner loading icon shown on clicked thumb, opposite vote removed, new vote cast and net votes number updates | As expected |
+| 34 | Navigate to "My Reviews" page | If user has previously posted reviews, displays all user's reviews. Otherwise shows form to post a new review. | As expected |
+| As logged in user on "Profile page" |
+| 35 | View "Profile" page | Shows user's current info, except for password and admin status, in a form for user to update details | As expected |
+| 36 | Submit update profile form with incorrect details | Page reloads with previously entered data pre-populated and error messages stating requirements | As expected |
+| 37 | Submit update profile with validation requirements met | Form submits, page reloads with updated information and flash message shown | As expected |
+| 38 | Navigate to delete account, then proceed to delete account | Account deletes, user logged out, redirects to all threads page, flash message shown | As expected |
+| As logged in user on [create new review](https://tgc07-project03.herokuapp.com/threads/create) page |
+| 39 | Click "create" button with empty form | Page reloads with error messages displayed under each required input field stating requirements | As expected |
+| 40 | Submit form without selecting category | Page reloads with error messages displayed requesting for user to select category | As expected |
+| 41 | Submit form without selecting sub-category (all other fields valid) | Form submits succesfully (sub-category not a required field) | As expected |
+| 42 | Submit form invalid product name (must be at least 8 characters long) | Page reloads with error messages displayed under each required input field stating requirements | As expected |
+| 43 | Submit form invalid MSRP (must be a number) | Page reloads with error messages displayed under each required input field stating requirements | As expected |
+| 44 | Submit for with invalid product image URL (Image URL must start with either https://m.media-amazon.com/images/ or https://images-na.ssl-images-amazon.com/images/) | Page reloads with error messages displayed under each required input field stating requirements | As expected |
+| 45 | Submit form with invalid Amazon product URL (mazon purchase link must include SKU) | Page reloads with error messages displayed under each required input field stating requirements | As expected |
+| 46 | Submit form with invalid review description (must be at least 20 characters long) | Page reloads with error messages displayed under each required input field stating requirements | As expected |
 
 
