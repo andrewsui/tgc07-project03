@@ -362,5 +362,6 @@ All testing was done manually, with the following tests performed:
 | 71 | Create, update, delete category | Action permitted | As expected |
 | 72 | Create, update, delete sub-category | Action permitted | As expected |
 
+## Deployment
 
 
