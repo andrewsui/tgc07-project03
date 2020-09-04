@@ -56,21 +56,27 @@ The website structure will be presented using the hierarchical model. Main secti
 ## Features
 
 ### Current Features
-- Read all reviews, without needing to sign up for user account.
-- Read all comments, without needing to sign up for user account.
-- Sign up for user account, log in, log out.
+#### PC Component Reviews
+- Ability to read all reviews, without needing to sign up for user account.
 - Create, update, delete reviews that were written by yourself.
-- Create, update, delete comments that were written by yourself.
-- Search reviews by category, sub-category and search box to query review title, review description or comments.
 - Sort reviews by chronological order, reverse chronological order, price (low to high), price (high to low).
-- Vote up or down on reviews if user has an account and is logged in. The page does not need to reload in order to cast vote.
-- Update and delete user account details for user's own account.
+- Search reviews by category, sub-category and search box to query review title, review description or comments.
+- Vote up or down on reviews if user has an account and is logged in, without need to reload page.
+- Clicking a vote button will check if user has previously voted. If user had previously voted on same button currently clicked, then this latest action will remove the vote. If user had previously voted on the opposite vote button, then the opposite vote previously cast will be removed and the new vote cast.
 - Update and delete any reviews if user has admin rights.
+- Create and update review thread forms include validation steps that must be passed before being able to proceed. If there are errors, all input fields will be pre-populated with previously entered data on page reload.
+
+#### Review Comments
+- Ability to read all comments, without needing to sign up for user account.
+- Create, update, delete comments that were written by yourself.
+
+#### User accounts
+- Sign up for user account, log in, log out.
+- Update and delete user account details for user's own account.
 - Update and delete any user account details if user has admin rights.
-- Create, update, delete categories and sub-categories if user has admin rights.
 - Add or remove admin rights to users if current logged in user has admin rights.
 - User log in and sign up forms include validation steps that must be passed before being able to proceed. If there are errors all fields except for password will be pre-populated on page reload.
-- Review thread forms include validation steps that must be passed before being able to proceed. If there are errors all fields will be pre-populated on page reload.
+- Create, update, delete categories and sub-categories if user has admin rights.
 
 ### Features Left to Implement:
 - Ability to apply simple formatting of the review and comments text by using a library such as [Summernote](https://summernote.org/).
@@ -87,11 +93,16 @@ The website structure will be presented using the hierarchical model. Main secti
 - JavaScript
 - [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) for cloud hosted database
 - [Flask 1.1.2](https://flask.palletsprojects.com/en/1.1.x/) to create the web app
-- [pymongo](https://pymongo.readthedocs.io/) to communicate with MongoDB database using Python
+- [Flask-Login 0.5.0](https://flask-login.readthedocs.io/en/latest/) for user authentication
+- [passlib 1.7.2](https://passlib.readthedocs.io/en/stable/) for password hashing
+- [Jinja 2.11.2](https://jinja.palletsprojects.com/en/2.11.x/) for templating
+- [pymongo 3.11.0](https://pymongo.readthedocs.io/) to communicate with MongoDB database using Python
 - [dotenv](https://pypi.org/project/python-dotenv/) to use environment variables
 - [JQuery](https://jquery.com/) for DOM manipulation
 - [Axios](https://github.com/axios/axios) for AJAX calls
+- [toastr](https://codeseven.github.io/toastr/) for flash messaging
 - [Bootstrap 4.5](https://getbootstrap.com/docs/4.5/getting-started/introduction/) for web page styling
-- [Font Awesome v4.7.0](https://fontawesome.com/v4.7.0/) for icons
+- [Font Awesome 4.7.0](https://fontawesome.com/v4.7.0/) for icons
 - [Heroku](https://www.heroku.com/) to host the web app
+- [gunicorn 20.0.4](https://gunicorn.org/) as the Python WSGI HTTP Server for deployment
 - [GitHub](https://github.com/) for source control
