@@ -10,7 +10,7 @@
             <div class="col-12 col-md-10 col-lg-8">
                 <h1>Admin panel - Update user profile</h1>
 
-                <form action="" method="post" class="needs-validation" novalidate>
+                <form method="post" class="needs-validation" novalidate>
                     <div class="form-group">
                         <label for="username">Username</label>
                         <input type="text" name="username" id="username" class="form-control {% if 'invalid_username' in errors %} is-invalid {% endif %}" placeholder="username" value="{{ previous_values.username }}" required>

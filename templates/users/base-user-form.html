@@ -1,6 +1,6 @@
 <div class="form-group">
     <label for="email">Email</label>
-    <input type="text" name="email" id="email" class="form-control {% if 'invalid_email' in errors %} is-invalid {% endif %}" placeholder="example@email.com" value="{% if errors.email %}{{ errors.email }}{% elif previous_values.email %}{{ previous_values.email }}{% endif %}" required>
+    <input type="text" name="email" id="email" class="form-control {% if 'invalid_email' in errors %} is-invalid {% endif %}" value="{% if errors.email %}{{ errors.email }}{% elif previous_values.email %}{{ previous_values.email }}{% endif %}" placeholder="example@email.com" required>
     <div class="invalid-feedback">{{ errors.invalid_email }}</div>
 </div>
 <div class="form-group">
