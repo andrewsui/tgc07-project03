@@ -106,3 +106,153 @@ The website structure will be presented using the hierarchical model. Main secti
 - [Heroku](https://www.heroku.com/) to host the web app
 - [gunicorn 20.0.4](https://gunicorn.org/) as the Python WSGI HTTP Server for deployment
 - [GitHub](https://github.com/) for source control
+
+## Programming Methodologies
+- RESTful API was used to allow casting of votes, counting votes, counting comments and retrieving sub-categories via AJAX calls.
+- .env file was used to store environment variables so that Flask secret key and database credentials were not publicly viewable.
+
+## Database Design
+The ER diagram for this project's database can be viewed [here](report/erd.png) 
+
+### Sample MongoDB documents
+Sample database document for user:
+```
+{
+	"_id": {
+		"$oid": "5f486a62d227fba8090e835b"
+	},
+	"username": "limited",
+	"email": "limited@email.com",
+	"gender": "male",
+	"password": "$pbkdf2-sha256$29000$zXlvTSlFqBWiFOIcg9AaQw$cLXdZ7DMJ9WbWlgtkNeQC4.BZGXJAx5xIy6QMY34LYE",
+	"terms_and_conditions": true,
+	"marketing": true,
+	"is_admin": false
+}
+```
+
+Sample database document for category and embedded sub-categories:
+```
+{
+	"_id": {
+		"$oid": "5f51950f7b92d484ae6139ec"
+	},
+	"category": "Fans & Cooling",
+	"parent": null,
+	"sub_categories": [
+		{
+			"_id": {
+				"$oid": "5f519542be635bcd8f73ab1a"
+			},
+			"category": "CPU Cooling",
+			"parent": {
+				"$oid": "5f51950f7b92d484ae6139ec"
+			},
+			"sub_categories": []
+		},
+		{
+			"_id": {
+				"$oid": "5f51954e7b92d484ae6139ed"
+			},
+			"category": "Case Fans",
+			"parent": {
+				"$oid": "5f51950f7b92d484ae6139ec"
+			},
+			"sub_categories": []
+		}
+	]
+}
+```
+
+Sample database document for review thread and embedded comments:
+```
+{
+	"_id": {
+		"$oid": "5f519581be635bcd8f73ab1b"
+	},
+	"datetime": {
+		"$date": {
+			"$numberLong": "1599182209788"
+		}
+	},
+	"user": {
+		"user_id": {
+			"$oid": "5f4f668d3dc5332b97a71828"
+		},
+		"username": "hello"
+	},
+	"category": {
+		"category_id": {
+			"$oid": "5f51950f7b92d484ae6139ec"
+		},
+		"category_name": "Fans & Cooling",
+		"sub_category_id": {
+			"$oid": "5f519542be635bcd8f73ab1a"
+		},
+		"sub_category_name": "CPU Cooling"
+	},
+	"product_name": "Noctua NH-D15 chromax.Black, Dual-Tower CPU Cooler (140mm, Black) ",
+	"price": {
+		"$numberDouble": "99.99"
+	},
+	"image": "https://m.media-amazon.com/images/I/91t48GBv8TL._AC_UL320_.jpg",
+	"affiliate": "https://www.amazon.com/dp/B07Y87YHRH/ref=unique-affiliate-reference-code",
+	"description": " Proven premium heatsink (more than 300 awards and recommendations from international hardware websites), now available in an all-black design that goes great with many colour schemes and RGB LEDs\r\nExtra-wide 140mm dual-tower design with 6 heatpipes and dual fans provides maximum quiet cooling efficiency on a par with many all-in-one watercoolers, ideal for overclockers and silent-enthusiasts!\r\nDual-fan design with renowned, award-winning NF-A15 140mm fans with Low-Noise Adaptors and PWM for automatic speed control: Full cooling performance under load, whisper quiet at idle!\r\nIncludes high-end NT-H1 thermal paste and SecuFirm2 mounting system for easy installation on Intel LGA1150, LGA1151, LGA1155, LGA1156, LGA2011, LGA2066 and AMD AM4, AM3(+), AM2(+), FM1, FM2(+)\r\nRenowned Noctua quality backed up by 6-year manufacturer’s warranty, deluxe choice for Intel Core i9, i7, i5, i3 (e.g. 10900K, 10700K, 10600K, 10980XE) and AMD Ryzen (e.g. 3950X, 3900X, 3700X, 3600X) ",
+	"votes": {
+		"up_votes": [
+			{
+				"$oid": "5f4f668d3dc5332b97a71828"
+			},
+			{
+				"$oid": "5f4e5633fb67782d23775389"
+			}
+		],
+		"down_votes": []
+	},
+	"sub_posts": [
+		{
+			"_id": {
+				"$oid": "5f5195fe7b92d484ae6139ee"
+			},
+			"parent": {
+				"$oid": "5f519581be635bcd8f73ab1b"
+			},
+			"datetime": {
+				"$date": {
+					"$numberLong": "1599182334225"
+				}
+			},
+			"user": {
+				"user_id": {
+					"$oid": "5f4f668d3dc5332b97a71828"
+				},
+				"username": "hello"
+			},
+			"comment": "I'm using this CPU cooler on my Ryzen 3900X. Cool and quiet.",
+			"quote": null
+		},
+		{
+			"_id": {
+				"$oid": "5f51d79f797fe16111bafda8"
+			},
+			"parent": {
+				"$oid": "5f519581be635bcd8f73ab1b"
+			},
+			"datetime": {
+				"$date": {
+					"$numberLong": "1599199135872"
+				}
+			},
+			"user": {
+				"user_id": {
+					"$oid": "5f4e5633fb67782d23775389"
+				},
+				"username": "admin"
+			},
+			"comment": "Such a good cooler. Really like the blackout colour.",
+			"quote": null
+		}
+	]
+}
+```
+
