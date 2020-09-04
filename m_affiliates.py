@@ -1,5 +1,7 @@
 import re
 
+# Function to simulate generating affiliate referral link for site owner
+# This does NOT generate a genuine affiliate link
 def generate_amazon_url(url):
     amazon_SKU_regex = re.compile(r'B\w\w\w\w\w\w\w\w\w')
     match_obj = amazon_SKU_regex.search(url)
