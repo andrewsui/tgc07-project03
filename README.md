@@ -386,6 +386,9 @@ Deployment to Heroku was performed in a debian based linux environment bash term
 Using a file manager:
 - Create a file named `Procfile` without speech-marks or file extension and save `web gunicorn <main flask file name without .py>:app` on the first line of `Procfile` (in my case, the contents of the Procfile was `web gunicorn app:app`)
 
+Using a web browser:
+- Log into [Heroku](https://id.heroku.com/login) and set environment variables for `SECRET_KEY = <your own key>`, `MONGO_URI = <your MongoDB URI>`
+
 Back in the bash terminal:
 - Commit all new changes to GitHub: `git add .` then `git commit -m “[message]"` then `git push`
 - Finally, push to Heroku: `git push heroku master`
