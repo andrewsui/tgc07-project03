@@ -53,9 +53,10 @@ The website structure will be presented using the hierarchical model. Main secti
 - users - summary table of all users, only accessible by admin users, with create, update, delete links accessible from here
 
 ### Skeleton
+Wireframes for the reviews summary page and individual reviews can be viewed [here](report/wireframes). A HTML table will be used to display all the users in the admin panel.
 
 ### Surface
-- Functionality and clarity was the main focus and reason behind the colour scheme and typography choice, as it was assumed that PC hardware enthusiasts would place preference on these aspects. If there had been more time, the colour scheme and styling should be revisited.
+Functionality and clarity was the main focus and reason behind the colour scheme and typography choice, as it was assumed that PC hardware enthusiasts would place preference on these aspects. If there had been more time, the colour scheme and styling should be revisited.
 
 ## Features
 
