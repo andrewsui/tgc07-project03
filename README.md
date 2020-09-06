@@ -369,9 +369,9 @@ A live demo of this project can be viewed [here](https://tgc07-project03.herokua
 All the source code for this project is available [here](https://github.com/andrewsui/tgc07-project03) on GitHub.
 
 Code for the project was committed to GitHub in the following manner:
-- Individual files were added to the next commit staging area by executing the `git add [filename]` command in a command-line interface.
+- Individual files were added to the next commit staging area by executing the `git add <filename>` command in a command-line interface.
 - All changes in the working directory were added to the next commit (stage) by executing the `git add .` command in a command-line interface.
-- Staged content was committed as new commit snapshot by executing the `git commit -m “[message]"` command in a command-line interface.
+- Staged content was committed as new commit snapshot by executing the `git commit -m “<message>"` command in a command-line interface.
 - Local branch commits were pushed to the remote repository master branch by executing the `git push -u origin master` command in a command-line interface.
 - Subsequent local branch commits were pushed to the remote repository master branch by executing the `git push` command in a command-line interface.
 
@@ -381,7 +381,7 @@ Deployment to Heroku was performed in a debian based linux environment bash term
 - Create a new heroku app: `heroku create <app-name>`
 - Verify that the correct remotes have been added: `git remote -v`
 - Setup a python virtual environment in the root folder of the project: `python3 -m venv venv`
-- Activate the python virtual environment whilst being in the root folder of the project: `source venv\bin\activate`
+- Activate the python virtual environment whilst being in the root folder of the project: `source venv/bin/activate`
 - Install the dependencies: `pip install dnspython Flask Flask-Login gunicorn passlib pymongo python-dotenv`
 - Create requirements.txt file to store dependencies `pip freeze > requirements.txt`
 
@@ -392,13 +392,13 @@ Using a web browser:
 - Log into [Heroku](https://id.heroku.com/login) and set environment variables for `SECRET_KEY = <your own key>`, `MONGO_URI = <your MongoDB URI>`
 
 Back in the bash terminal:
-- Commit all new changes to GitHub: `git add .` then `git commit -m “[message]"` then `git push`
+- Commit all new changes to GitHub: `git add .` then `git commit -m “<message>"` then `git push`
 - Finally, push to Heroku: `git push heroku master`
 
 ## Run locally on your own machine on debian based linux OS
 - Clone the [repository](https://github.com/andrewsui/tgc07-project03)
 - Setup a python virtual environment in the root folder of the project: `python3 -m venv venv`
-- Activate the python virtual environment whilst in the root folder of the project: `source venv\bin\activate`
+- Activate the python virtual environment whilst in the root folder of the project: `source venv/bin/activate`
 - Install the dependencies: `pip install -r requirements.txt`
 - In root folder of project, create a `.env` file and set the following environment variables: `export SECRET_KEY = <your own key>`, `export MONGO_URI = <your MongoDB URI>`, `export PORT = <your chosen port>`
 - Run the web app `python app.py`
